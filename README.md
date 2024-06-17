@@ -1,6 +1,6 @@
 # ILMLib
 
-Adds functions for the plugins of @ItsLeMax
+Adds useful methods for minecraft plugin developers to spare time and repetitive code
 
 ## Purpose
 

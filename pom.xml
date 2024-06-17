@@ -10,7 +10,9 @@
     <packaging>jar</packaging>
 
     <name>ILMLib</name>
-    <description>Adds useful methods to spare time and repetitive code</description>
+    <description>
+        Adds useful methods for minecraft plugin developers to spare time and repetitive code
+    </description>
     <url>https://dev.fpm-studio.de/</url>
 
     <properties>
