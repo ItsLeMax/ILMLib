@@ -66,9 +66,9 @@ public class ConfigLib {
      *
      * @author ItsLeMax
      */
-    public static void save(String config) {
+    public static void save(String configName) {
         try {
-            getConfig(config).save(getFile(config));
+            getConfig(configName).save(getFile(configName));
         } catch (IOException error) {
             throw new RuntimeException(error);
         }
@@ -102,15 +102,15 @@ public class ConfigLib {
      * <p>
      * createConfigs("storage", "de_DE", "en_US", "custom_lang");
      *
-     * @param params Dateien, welche erstellt werden sollen
+     * @param names Dateien, welche erstellt werden sollen
      *               <p>
      *               Files, that should be created
      * @author ItsLeMax, Spigot
      * @link <a href="https://spigotmc.org/wiki/config-files/">Spigot Wiki</a>
      */
     @SuppressWarnings("ResultOfMethodCallIgnored")
-    public static void create(String... params) {
-        for (String file : params) {
+    public static void create(String... names) {
+        for (String file : names) {
             initialize(file, new HashMap<>() {{
                 put("file", null);
                 put("config", null);

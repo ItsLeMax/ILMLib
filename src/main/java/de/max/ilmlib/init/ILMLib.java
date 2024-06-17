@@ -9,17 +9,24 @@ public class ILMLib extends JavaPlugin {
     public static JavaPlugin plugin;
 
     /**
-     * @see #init(JavaPlugin, String, String)
+     * @see #init(JavaPlugin, File, String)
      */
     public static void init(final JavaPlugin plugin) {
         set(plugin);
     }
 
     /**
-     * @see #init(JavaPlugin, String, String)
+     * @see #init(JavaPlugin, File, String)
      */
-    public static void init(final JavaPlugin plugin, String path) {
+    public static void init(final JavaPlugin plugin, File path) {
         set(plugin, path);
+    }
+
+    /**
+     * @see #init(JavaPlugin, File, String)
+     */
+    public static void init(final JavaPlugin plugin, String subFolderName) {
+        set(plugin, subFolderName);
     }
 
     /**
@@ -35,7 +42,7 @@ public class ILMLib extends JavaPlugin {
      *                      individual sub folder name inside the plugin folder
      * @author ItsLeMax
      */
-    public static void init(final JavaPlugin plugin, String path, String subFolderName) {
+    public static void init(final JavaPlugin plugin, File path, String subFolderName) {
         set(plugin, path, subFolderName);
     }
 
@@ -50,8 +57,26 @@ public class ILMLib extends JavaPlugin {
      * @author ItsLeMax
      */
     private static void set(Object... data) {
-        plugin = (JavaPlugin) data[0];
-        ConfigLib.path = (data.length == 2) ? (File) data[1] : plugin.getDataFolder();
-        ConfigLib.folderName = (data.length == 3) ? (String) data[2] : "generated";
+        for (Object value : data) {
+            if (value instanceof JavaPlugin) {
+                plugin = (JavaPlugin) value;
+            }
+
+            if (value instanceof File) {
+                ConfigLib.path = (File) value;
+            }
+
+            if (value instanceof String) {
+                ConfigLib.folderName = (String) value;
+            }
+        }
+
+        if (ConfigLib.path == null) {
+            ConfigLib.path = plugin.getDataFolder();
+        }
+
+        if (ConfigLib.folderName == null) {
+            ConfigLib.folderName = "generated";
+        }
     }
 }
