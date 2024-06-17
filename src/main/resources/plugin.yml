@@ -1,0 +1,8 @@
+name: ILMLib
+description: ${project.description}
+author: ItsLeMax
+version: ${project.version}
+website: ${project.url}
+
+main: de.max.ilmlib.init.ILMLib
+api-version: 1.20
