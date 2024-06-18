@@ -6,8 +6,10 @@ Adds useful methods for minecraft plugin developers to spare time and repetitive
 
 1. Download the latest jar [here](https://github.com/ItsLeMax/ILMLib/releases/latest)
 2. Put it into the plugins folder of your server
-3. Open your IDE and navigate to `File > Project Structure > Artifacts`
-4. Add a new Library with the plus sign and choose `Java`
+3. Open your IDE and navigate to `File > Project Structure > Artifacts`\
+   ![project_structure](https://github.com/ItsLeMax/ILMLib/assets/80857459/74ea10a3-f8ba-4af3-8d9b-03a89a0e31b5)
+4. Add a new Library with the plus sign and choose `Java`\
+   ![new_library](https://github.com/ItsLeMax/ILMLib/assets/80857459/9a90cc22-b008-42fb-9973-0f1c9a9a45d3)
 5. Navigate to the library jar file, select it and press `OK`
 6. Click on `Apply`
 
