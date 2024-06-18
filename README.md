@@ -2,10 +2,6 @@
 
 Adds useful methods for minecraft plugin developers to spare time and repetitive code
 
-## Purpose
-
-This library makes a few complex processes doable in an ease.
-
 ## Setup
 
 1. Download the latest jar [here](https://github.com/ItsLeMax/ILMLib/releases/latest)
