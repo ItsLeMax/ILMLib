@@ -2,31 +2,15 @@ package de.max.ilmlib.init;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.io.File;
-
 @SuppressWarnings("unused")
 public class ILMLib extends JavaPlugin {
     public static JavaPlugin plugin;
 
     /**
-     * @see #init(JavaPlugin, File, String)
+     * @see #init(JavaPlugin, String, String)
      */
     public static void init(final JavaPlugin plugin) {
-        set(plugin);
-    }
-
-    /**
-     * @see #init(JavaPlugin, File, String)
-     */
-    public static void init(final JavaPlugin plugin, File path) {
-        set(plugin, path);
-    }
-
-    /**
-     * @see #init(JavaPlugin, File, String)
-     */
-    public static void init(final JavaPlugin plugin, String subFolderName) {
-        set(plugin, subFolderName);
+        set(plugin, null, null);
     }
 
     /**
@@ -42,7 +26,7 @@ public class ILMLib extends JavaPlugin {
      *                      individual sub folder name inside the plugin folder
      * @author ItsLeMax
      */
-    public static void init(final JavaPlugin plugin, File path, String subFolderName) {
+    public static void init(final JavaPlugin plugin, String path, String subFolderName) {
         set(plugin, path, subFolderName);
     }
 
@@ -51,32 +35,17 @@ public class ILMLib extends JavaPlugin {
      * <p>
      * Sets given values while initializing
      *
-     * @param data JavaPlugin, File, String
-     *             <p>
-     *             JavaPlugin, Datei, Text
      * @author ItsLeMax
      */
-    private static void set(Object... data) {
-        for (Object value : data) {
-            if (value instanceof JavaPlugin) {
-                plugin = (JavaPlugin) value;
-            }
+    private static void set(JavaPlugin plugin, String path, String subFolderName) {
+        ILMLib.plugin = plugin;
 
-            if (value instanceof File) {
-                ConfigLib.path = (File) value;
-            }
+        ConfigLib.pluginFolderPath = path != null
+                ? path
+                : plugin.getDataFolder().toString();
 
-            if (value instanceof String) {
-                ConfigLib.folderName = (String) value;
-            }
-        }
-
-        if (ConfigLib.path == null) {
-            ConfigLib.path = plugin.getDataFolder();
-        }
-
-        if (ConfigLib.folderName == null) {
-            ConfigLib.folderName = "generated";
-        }
+        ConfigLib.subFolderName = subFolderName != null
+                ? subFolderName
+                : "generated";
     }
 }

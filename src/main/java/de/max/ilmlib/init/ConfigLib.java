@@ -11,9 +11,9 @@ import java.util.Objects;
 
 @SuppressWarnings("all")
 public class ConfigLib {
-    private static HashMap<String, HashMap<String, Object>> configs = new HashMap<>();
-    public static File path;
-    public static String folderName;
+    public static HashMap<String, HashMap<String, Object>> configs = new HashMap<>();
+    public static String pluginFolderPath;
+    public static String subFolderName;
 
     /**
      * Entnimmt die verlangte Configdatei der HashMap
@@ -103,8 +103,8 @@ public class ConfigLib {
      * createConfigs("storage", "de_DE", "en_US", "custom_lang");
      *
      * @param names Dateien, welche erstellt werden sollen
-     *               <p>
-     *               Files, that should be created
+     *              <p>
+     *              Files, that should be created
      * @author ItsLeMax, Spigot
      * @link <a href="https://spigotmc.org/wiki/config-files/">Spigot Wiki</a>
      */
@@ -117,21 +117,22 @@ public class ConfigLib {
             }});
         }
 
-        File customConfigsFolder = new File(path, folderName);
+        File pluginFolder = new File(pluginFolderPath);
+
+        File customConfigsFolder = new File(pluginFolder, subFolderName);
         if (!customConfigsFolder.exists()) customConfigsFolder.mkdirs();
 
         for (String file : configs.keySet()) {
-            String customConfig = folderName + "/" + file + ".yml";
+            String customConfig = subFolderName + "/" + file + ".yml";
             String fileName = customConfig.split("/")[1];
 
             boolean isFileToCopy = ILMLib.plugin.getResource(customConfig) != null;
             String filePath = isFileToCopy ? customConfig : fileName;
 
-            File configFile = new File(path, filePath);
+            File configFile = new File(pluginFolder, filePath);
 
-            String dataFolder = path.toString();
-            if (isFileToCopy) dataFolder += "/" + fileName;
-            initialize(file, new File(dataFolder));
+            if (isFileToCopy) pluginFolderPath += "/" + fileName;
+            initialize(file, new File(pluginFolderPath));
 
             try {
                 if (!configFile.exists()) {
