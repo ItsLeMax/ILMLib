@@ -20,8 +20,8 @@ Adds useful methods for minecraft plugin developers to spare time and repetitive
 > Initializing the library
 
 ```java
-ILMLib.init(JavaPlugin plugin)
-ILMLib.init(JavaPlugin plugin, String path, String subFolderName)
+ILMLib.init(JavaPlugin plugin) -> void
+ILMLib.init(JavaPlugin plugin, String path, String subFolderName) -> void
 ```
 
 `plugin` is the plugin from `onEnable`.\
@@ -31,25 +31,25 @@ ILMLib.init(JavaPlugin plugin, String path, String subFolderName)
 > Get a config
 
 ```java
-FileConfiguration getConfig(String configName)
+ConfigLib.getConfig(String configName) -> FileConfiguration
 ```
 
 > Get a config file
 
 ```java
-File getFile(String configName)
+ConfigLib.getFile(String configName) -> File
 ```
 
 > Save a config
 
 ```java
-void save(String configName)
+ConfigLib.save(String configName) -> void
 ```
 
 > Load a language key
 
 ```java
-String lang(String path)
+ConfigLib.lang(String path) -> String
 ```
 
 `path` is the path of the config content, seperated by a dot
@@ -57,7 +57,7 @@ String lang(String path)
 > Create config files
 
 ```java
-create(String... names)
+ConfigLib.create(String... names) -> void
 ```
 
 `names` are the names of the configs, seperated by a comma
@@ -108,20 +108,20 @@ Your folder structure could look like this:
 
 ```
 src.main.java
-├ de.max.plugin.main
-├ ...
+├   de.max.plugin.main
+├   ...
 resources
-├ LANGUAGE_FILES
-├ ├ storage.yml
-├ ├ de_DE.yml
-├ └ en_US.yml
-├ config.yml
-└ plugin.yml
+├   LANGUAGE_FILES
+├   ├   storage.yml
+├   ├   de_DE.yml
+├   └   en_US.yml
+├   config.yml
+└   plugin.yml
 ```
 
 ...with `de_DE.yml` content:
 
-```java
+```yaml
 general:
  initial: Hallo!
  error: Ein Fehler ist aufgetreten.
@@ -130,7 +130,7 @@ general:
 
 ...`storage.yml`:
 
-```java
+```yaml
 admin:
  ...
 default:
@@ -141,7 +141,7 @@ default:
 
 ...and `config.yml`:
 
-```java
+```yaml
 language: de_DE
 ```
 
