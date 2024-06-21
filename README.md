@@ -19,7 +19,7 @@ Adds useful methods for minecraft plugin developers to spare time and repetitive
 
 > Initializing the library
 
-```
+```java
 ILMLib.init(JavaPlugin plugin)
 ILMLib.init(JavaPlugin plugin, String path, String subFolderName)
 ```
@@ -30,25 +30,25 @@ ILMLib.init(JavaPlugin plugin, String path, String subFolderName)
 
 > Get a config
 
-```
+```java
 FileConfiguration getConfig(String configName)
 ```
 
 > Get a config file
 
-```
+```java
 File getFile(String configName)
 ```
 
 > Save a config
 
-```
+```java
 void save(String configName)
 ```
 
 > Load a language key
 
-```
+```java
 String lang(String path)
 ```
 
@@ -56,7 +56,7 @@ String lang(String path)
 
 > Create config files
 
-```
+```java
 create(String... names)
 ```
 
@@ -66,7 +66,7 @@ create(String... names)
 
 Lets start with the initialization.
 
-```
+```java
 @Override
 public void onEnable() {
     ILMLib.init(this);
@@ -77,7 +77,7 @@ You can now use the methods listed above.
 
 ### Creating empty *.yml config files to store data
 
-```
+```java
 ConfigLib.create("file_1", "file_2", "file_3");
 ```
 
@@ -98,7 +98,7 @@ Add a key called `language` and assign it the language you want to use (i.e. `en
 Use `saveDefaultConfig();` – optimally in your `onEnable` method – to create it on server start.
 Use the following method call to load a language key value:
 
-```
+```java
 ConfigLib.lang("path.to.key");
 ```
 
@@ -121,7 +121,7 @@ resources
 
 ...with `de_DE.yml` content:
 
-```
+```java
 general:
  initial: Hallo!
  error: Ein Fehler ist aufgetreten.
@@ -130,7 +130,7 @@ general:
 
 ...`storage.yml`:
 
-```
+```java
 admin:
  ...
 default:
@@ -141,13 +141,13 @@ default:
 
 ...and `config.yml`:
 
-```
+```java
 language: de_DE
 ```
 
 ...while having a method call like this:
 
-```
+```java
 @Override
 public void onEnable() {
     saveDefaultConfig();
@@ -159,13 +159,13 @@ public void onEnable() {
 
 You can now load a language String as such:
 
-```
+```java
 ConfigLib.lang("general.initial"); // returns "Hallo!"
 ```
 
 ...get a File and Config like this:
 
-```
+```java
 File storageFile = getFile("storage");
 FileConfiguration storageConfig = getConfig("storage");
 
@@ -178,6 +178,6 @@ storageFile.*
 
 ...and last but not least save it:
 
-```
+```java
 save("storage");
 ```
