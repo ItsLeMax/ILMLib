@@ -75,6 +75,30 @@ public class ConfigLib {
     }
 
     /**
+     * Entnimmt die Standard-Config
+     * <p>
+     * Retrieves the default config
+     *
+     * @return config.yml
+     * @author ItsLeMax
+     */
+    public static FileConfiguration getDefaultConfig() {
+        return ILMLib.plugin.getConfig();
+    }
+
+    /**
+     * Speichert die Standard-Config
+     * <p>
+     * Saves the default config
+     *
+     * @author ItsLeMax
+     */
+    public static void saveDefaultConfig() {
+        ILMLib.plugin.saveDefaultConfig();
+    }
+
+
+    /**
      * Lädt Text je nach gewählter Sprache in der Config
      * <p>
      * Loads text depending on the chosen language inside the config
