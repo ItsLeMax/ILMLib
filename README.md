@@ -34,6 +34,12 @@ ILMLib.init(JavaPlugin plugin, String path, String subFolderName) -> void
 ConfigLib.getConfig(String configName) -> FileConfiguration
 ```
 
+> Get the default config.yml
+
+```java
+ConfigLib.getDefaultConfig(); -> FileConfiguration
+```
+
 > Get a config file
 
 ```java
@@ -44,6 +50,12 @@ ConfigLib.getFile(String configName) -> File
 
 ```java
 ConfigLib.save(String configName) -> void
+```
+
+> Save or create the default config.yml
+
+```java
+ConfigLib.saveDefaultConfig() -> void
 ```
 
 > Load a language key
