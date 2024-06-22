@@ -37,7 +37,7 @@ ConfigLib.getConfig(String configName) -> FileConfiguration
 > Get the default config.yml
 
 ```java
-ConfigLib.getDefaultConfig(); -> FileConfiguration
+ConfigLib.getDefaultConfig() -> FileConfiguration
 ```
 
 > Get a config file
