@@ -7,10 +7,17 @@ public class ILMLib extends JavaPlugin {
     public static JavaPlugin plugin;
 
     /**
-     * @see #init(JavaPlugin, String, String)
+     * @see #set(JavaPlugin, String, String)
      */
     public static void init(final JavaPlugin plugin) {
         set(plugin, null, null);
+    }
+
+    /**
+     * @see #set(JavaPlugin, String, String)
+     */
+    public static void init(final JavaPlugin plugin, String path, String subFolderName) {
+        set(plugin, path, subFolderName);
     }
 
     /**
@@ -24,17 +31,6 @@ public class ILMLib extends JavaPlugin {
      * @param subFolderName individueller Unterordnername inmitten des Pluginordners
      *                      <p>
      *                      individual sub folder name inside the plugin folder
-     * @author ItsLeMax
-     */
-    public static void init(final JavaPlugin plugin, String path, String subFolderName) {
-        set(plugin, path, subFolderName);
-    }
-
-    /**
-     * Legt angegebene Werte beim Initialisieren fest
-     * <p>
-     * Sets given values while initializing
-     *
      * @author ItsLeMax
      */
     private static void set(JavaPlugin plugin, String path, String subFolderName) {
