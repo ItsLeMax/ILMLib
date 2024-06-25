@@ -69,8 +69,8 @@ public class ConfigLib {
     public static void save(String configName) {
         try {
             getConfig(configName).save(getFile(configName));
-        } catch (IOException error) {
-            throw new RuntimeException(error);
+        } catch (IOException ioException) {
+            throw new RuntimeException(ioException);
         }
     }
 
@@ -166,8 +166,8 @@ public class ConfigLib {
                         configFile.createNewFile();
                     }
                 }
-            } catch (IOException error) {
-                throw new RuntimeException(error);
+            } catch (IOException ioException) {
+                throw new RuntimeException(ioException);
             }
 
             initialize(file, configFile);
