@@ -14,7 +14,7 @@ public class ConfigLib {
     public static HashMap<String, HashMap<String, Object>> configs = new HashMap<>();
 
     public static String pluginFolderPath = ILMLib.plugin.getDataFolder().toString();
-    public static String pluginFolderName = ILMLib.plugin.getName();
+    public static String pluginFolderName = ILMLib.plugin.getName(); // Noch unbenutzt
 
     /**
      * Entnimmt die verlangte Configdatei der HashMap
@@ -43,21 +43,6 @@ public class ConfigLib {
     }
 
     /**
-     * Initialisiert eine Variable der HashMap
-     * <p>
-     * Initializes a variable of the HashMap
-     *
-     * @param data Datei oder Config
-     *             <p>
-     *             File or Config
-     * @author ItsLeMax
-     * @see #configs
-     */
-    private static void initialize(String configName, Object data) {
-        configs.get(configName).put(data instanceof File ? "file" : data instanceof FileConfiguration ? "configuration" : "initialize_error", data);
-    }
-
-    /**
      * Speichert eine Config
      * <p>
      * Saves a config
@@ -70,6 +55,21 @@ public class ConfigLib {
         } catch (IOException ioException) {
             throw new RuntimeException(ioException);
         }
+    }
+
+    /**
+     * Initialisiert eine Variable der HashMap
+     * <p>
+     * Initializes a variable of the HashMap
+     *
+     * @param data Datei oder Config
+     *             <p>
+     *             File or Config
+     * @author ItsLeMax
+     * @see #configs
+     */
+    private static void initialize(String configName, Object data) {
+        configs.get(configName).put(data instanceof File ? "file" : data instanceof FileConfiguration ? "configuration" : "initialize_error", data);
     }
 
     /**
@@ -86,8 +86,8 @@ public class ConfigLib {
     public static String lang(String path) {
         String language = getConfig("config").getString("language");
         FileConfiguration config = getConfig(language);
-        if (config == null) config = getConfig("en_US");
 
+        if (config == null) config = getConfig("en_US");
         return config.getString(path) == null ? "§c§lError" : config.getString(path);
     }
 

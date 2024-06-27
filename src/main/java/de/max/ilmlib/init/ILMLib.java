@@ -4,6 +4,33 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 @SuppressWarnings("unused")
 public class ILMLib extends JavaPlugin {
+
+    /**
+     * 1. "plugin" darf offenbar nicht static (und vielleicht auch nicht public) sein, da
+     * die Bibilothek sich sonst selbst überschreibt, wenn diese über mehrere Plugins verwendet
+     * wird (e.g. "Plugin geladen"-Nachricht überall gleich).
+     * <p>
+     * 2. Beim erstmaligen Initialisieren der Konfigurationsdateien kommt durch ein übereiltes
+     * Laden gewisser Methoden ein Fehler zustande, welcher beim Neustart permanent verschwindet.
+     * Dieser ist hier zu sehen:
+     * <pre>
+     * java.lang.NullPointerException: Cannot invoke "java.util.HashMap.get(Object)" because
+     * the return value of "java.util.HashMap.get(Object)" is null
+     * at de.max.ilmlib.init.ConfigLib.getConfig(ConfigLib.java:42) ~[ILMLib.jar:?]
+     * at de.max.ilmlib.init.ConfigLib.lang(ConfigLib.java:88) ~[ILMLib.jar:?]
+     * at de.max.mobilecrafting.inventories.Recipe.register(Recipe.java:31) ~[MobileCrafting-1.20_v1.1.jar:?]
+     * <pre>
+     * - Die Zeilen weichen -womöglich- leicht ab, der Fehlercode ist einige Änderungen abseits.
+     * - Die Methode des letzten "at" wird ausgeführt, obwohl laut Code diese erst
+     *   nach dem Initialisieren der Bibliothek ausgeführt werden sollte, also
+     *   - annehmbar - wenn alles initialisiert ist?
+     *   Das Problem ließ sich nicht mal lösen mit 5 Sekunden Delay via
+     *   Bukkit.getScheduler().scheduleSyncDelayedTask() in meinen Plugins
+     *   und ist somit offenbar eines der Library.
+     * Es hängt vielleicht mit der Standard "config.yml" zusammen. Das Problem
+     * bestand, wenn ich mich richtig entsinne, nicht, als ich saveDefaultConfig() genutzt habe.
+     */
+
     public static JavaPlugin plugin;
 
     /**
