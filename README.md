@@ -97,7 +97,7 @@ ConfigLib.create("file_1", "file_2", "file_3");
 
 The above method will create empty configs except if they do already exist in a special folder. If so, their content
 will be copied. To create configs that are filled you need to create a folder inside `resources` of your project.
-It should be called `generated`. A custom name like `languages` is possible and requires an additional parameter in
+It should be called `custom`. A custom name like `languages` is possible and requires an additional parameter in
 the `ILMLib.init` method call. Create a yml file in the newly created folder and write data into it.
 
 ### Using the prefilled configs to load languages
@@ -164,7 +164,7 @@ language: de_DE
 public void onEnable() {
     saveDefaultConfig();
 
-    ILMLib.init(this, getDataFolder() + "../", "LANGUAGE_FILES");
+    ILMLib.init(this, plugin.getServer().getWorldContainer(), "MyPlugin", "LANGUAGE_FILES");
     ConfigLib.create("storage", "de_DE", "en_US");
 }
 ```

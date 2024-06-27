@@ -5,15 +5,16 @@ import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.HashMap;
-import java.util.Objects;
 
 @SuppressWarnings("all")
 public class ConfigLib {
     public static HashMap<String, HashMap<String, Object>> configs = new HashMap<>();
-    public static String pluginFolderPath;
-    public static String subFolderName;
+
+    public static String pluginFolderPath = ILMLib.plugin.getDataFolder().toString();
+    public static String pluginFolderName = ILMLib.plugin.getName();
 
     /**
      * Entnimmt die verlangte Configdatei der HashMap
@@ -38,7 +39,7 @@ public class ConfigLib {
      * @see #configs
      */
     public static FileConfiguration getConfig(String configName) {
-        return (FileConfiguration) configs.get(configName).get("config");
+        return (FileConfiguration) configs.get(configName).get("configuration");
     }
 
     /**
@@ -53,10 +54,7 @@ public class ConfigLib {
      * @see #configs
      */
     private static void initialize(String configName, Object data) {
-        String type = data instanceof File ? "file" : data instanceof FileConfiguration ? "config" : null;
-
-        configs.put(configName, new HashMap<>());
-        configs.get(configName).put(type, data);
+        configs.get(configName).put(data instanceof File ? "file" : data instanceof FileConfiguration ? "configuration" : "initialize_error", data);
     }
 
     /**
@@ -75,30 +73,6 @@ public class ConfigLib {
     }
 
     /**
-     * Entnimmt die Standard-Config
-     * <p>
-     * Retrieves the default config
-     *
-     * @return config.yml
-     * @author ItsLeMax
-     */
-    public static FileConfiguration getDefaultConfig() {
-        return ILMLib.plugin.getConfig();
-    }
-
-    /**
-     * Speichert die Standard-Config
-     * <p>
-     * Saves the default config
-     *
-     * @author ItsLeMax
-     */
-    public static void saveDefaultConfig() {
-        ILMLib.plugin.saveDefaultConfig();
-    }
-
-
-    /**
      * Lädt Text je nach gewählter Sprache in der Config
      * <p>
      * Loads text depending on the chosen language inside the config
@@ -110,68 +84,71 @@ public class ConfigLib {
      * @author ItsLeMax
      */
     public static String lang(String path) {
-        FileConfiguration config = getConfig(ILMLib.plugin.getConfig().getString("language"));
+        String language = getConfig("config").getString("language");
+        FileConfiguration config = getConfig(language);
+        if (config == null) config = getConfig("en_US");
 
-        if (config == null) {
-            config = getConfig("en_US");
-        }
+        return config.getString(path) == null ? "§c§lError" : config.getString(path);
+    }
 
-        return config.getString(path) == null ? "§c§lError in language file" : config.getString(path);
+
+    /**
+     * @see #create(String, String...)
+     */
+    public static void createDefaults(String... fileNames) {
+        create(null, fileNames);
+    }
+
+    /**
+     * @see #create(String, String...)
+     */
+    public static void createInsideDirectory(String folderName, String... fileNames) {
+        create(folderName, fileNames);
     }
 
     /**
      * Erstellt die Konfigurationsdateien (mitsamt Ordner) sofern nicht vorhanden
      * <p>
      * Creates the configuration files (with folder) if they do not exist
-     * <p>
-     * createConfigs("storage", "de_DE", "en_US", "custom_lang");
      *
-     * @param names Dateien, welche erstellt werden sollen
-     *              <p>
-     *              Files, that should be created
+     * @param folderName Unterordner
+     *                   <p>
+     *                   Sub directory
+     * @param fileNames  Dateien, welche erstellt werden sollen
+     *                   <p>
+     *                   Files, that should be created
      * @author ItsLeMax, Spigot
      * @link <a href="https://spigotmc.org/wiki/config-files/">Spigot Wiki</a>
      */
     @SuppressWarnings("ResultOfMethodCallIgnored")
-    public static void create(String... names) {
-        for (String file : names) {
-            initialize(file, new HashMap<>() {{
-                put("file", null);
-                put("config", null);
-            }});
-        }
+    private static void create(String folderName, String... fileNames) {
+        for (String fileName : fileNames) {
+            String filePath = fileName + ".yml";
+            if (folderName != null) filePath = folderName + "/" + filePath;
 
-        File pluginFolder = new File(pluginFolderPath);
+            File newlyCreatedConfig = new File(pluginFolderPath, filePath);
 
-        File customConfigsFolder = new File(pluginFolder, subFolderName);
-        if (!customConfigsFolder.exists()) customConfigsFolder.mkdirs();
+            configs.put(fileName, new HashMap<>());
+            initialize(fileName, newlyCreatedConfig);
+            initialize(fileName, YamlConfiguration.loadConfiguration(newlyCreatedConfig));
 
-        for (String file : configs.keySet()) {
-            String customConfig = subFolderName + "/" + file + ".yml";
-            String fileName = customConfig.split("/")[1];
-
-            boolean isFileToCopy = ILMLib.plugin.getResource(customConfig) != null;
-            String filePath = isFileToCopy ? customConfig : fileName;
-
-            File configFile = new File(pluginFolder, filePath);
-
-            if (isFileToCopy) pluginFolderPath += "/" + fileName;
-            initialize(file, new File(pluginFolderPath));
+            if (newlyCreatedConfig.exists()) continue;
+            if (!newlyCreatedConfig.getParentFile().exists()) {
+                newlyCreatedConfig.getParentFile().mkdirs();
+            }
 
             try {
-                if (!configFile.exists()) {
-                    if (isFileToCopy) {
-                        Files.copy(Objects.requireNonNull(ILMLib.plugin.getResource(filePath)), configFile.toPath());
-                    } else {
-                        configFile.createNewFile();
-                    }
+                InputStream configFromResources = ILMLib.plugin.getResource(filePath);
+
+                if (configFromResources != null) {
+                    Files.copy(configFromResources, newlyCreatedConfig.toPath());
+                    continue;
                 }
+
+                newlyCreatedConfig.createNewFile();
             } catch (IOException ioException) {
                 throw new RuntimeException(ioException);
             }
-
-            initialize(file, configFile);
-            initialize(file, YamlConfiguration.loadConfiguration(configFile));
         }
     }
 }
