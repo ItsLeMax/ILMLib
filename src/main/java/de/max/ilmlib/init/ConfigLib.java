@@ -13,13 +13,18 @@ import java.util.HashMap;
 @SuppressWarnings("all")
 public class ConfigLib {
     private JavaPlugin plugin;
+    private String pluginFolderPath = plugin.getDataFolder().toString();
+    private HashMap<String, HashMap<String, Object>> configs = new HashMap<>();
 
     /**
-     * WiP
+     * Legt das Plugin fest
+     * <p>
+     * Sets the plugin
+     *
+     * @author Kurty00
      */
     public ConfigLib(JavaPlugin javaPlugin) {
         plugin = javaPlugin;
-        pluginFolderPath = plugin.getDataFolder().toString();
     }
 
     /**
@@ -28,14 +33,11 @@ public class ConfigLib {
      * Sets the path of the plugin folder
      *
      * @param pluginFolderPath
-     * @author ItsLeMax
+     * @author Kurty00
      */
     public void setPluginFolderPath(String pluginFolderPath) {
         this.pluginFolderPath = pluginFolderPath;
     }
-
-    private HashMap<String, HashMap<String, Object>> configs = new HashMap<>();
-    private String pluginFolderPath;
 
     /**
      * Entnimmt die verlangte Configdatei der HashMap
@@ -60,10 +62,6 @@ public class ConfigLib {
      * @see #configs
      */
     public FileConfiguration getConfig(String configName) {
-        if (configs.get(configName) == null) {
-            return null;
-        }
-
         return (FileConfiguration) configs.get(configName).get("configuration");
     }
 
@@ -136,20 +134,20 @@ public class ConfigLib {
      * <p>
      * Creates the configuration files (with folder) if they do not exist
      *
-     * @param folderName Unterordner
-     *                   <p>
-     *                   Sub directory
-     * @param fileNames  Dateien, welche erstellt werden sollen
-     *                   <p>
-     *                   Files, that should be created
+     * @param directoryName Unterordnername
+     *                      <p>
+     *                      Sub directory name
+     * @param fileNames     Dateien, welche erstellt werden sollen
+     *                      <p>
+     *                      Files, that should be created
      * @author ItsLeMax, Spigot
      * @link <a href="https://spigotmc.org/wiki/config-files/">Spigot Wiki</a>
      */
     @SuppressWarnings("ResultOfMethodCallIgnored")
-    private void create(String folderName, String... fileNames) {
+    private void create(String directoryName, String... fileNames) {
         for (String fileName : fileNames) {
             String filePath = fileName + ".yml";
-            if (folderName != null) filePath = folderName + "/" + filePath;
+            if (directoryName != null) filePath = directoryName + "/" + filePath;
 
             File newlyCreatedConfig = new File(pluginFolderPath, filePath);
 

@@ -5,25 +5,15 @@ import org.bukkit.plugin.java.JavaPlugin;
 @SuppressWarnings("all")
 public class ILMLib {
     private JavaPlugin plugin;
-    private ConfigLib configLib;
 
-    /**
-     * Gibt eine Instanz der Klasse ConfigLib wieder
-     * <p>
-     * returns an instance of the class ConfigLib
-     *
-     * @return ConfigLib
-     * @author Kurty00
-     */
-    public ConfigLib getConfigLib() {
-        return this.configLib;
-    }
+    private ConfigLib configLib;
 
     /**
      * @see #ILMLib(JavaPlugin, String)
      */
     public ILMLib(JavaPlugin javaPlugin) {
         plugin = javaPlugin;
+
         configLib = new ConfigLib(plugin);
     }
 
@@ -45,5 +35,17 @@ public class ILMLib {
     public ILMLib(JavaPlugin javaPlugin, String pluginFolderPath) {
         this(javaPlugin);
         configLib.setPluginFolderPath(pluginFolderPath);
+    }
+
+    /**
+     * Gibt eine Instanz der Klasse ConfigLib wieder
+     * <p>
+     * returns an instance of the class ConfigLib
+     *
+     * @return ConfigLib
+     * @author Kurty00
+     */
+    public ConfigLib getConfigLib() {
+        return this.configLib;
     }
 }
