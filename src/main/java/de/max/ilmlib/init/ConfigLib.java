@@ -2,6 +2,7 @@ package de.max.ilmlib.init;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,10 +12,30 @@ import java.util.HashMap;
 
 @SuppressWarnings("all")
 public class ConfigLib {
-    public static HashMap<String, HashMap<String, Object>> configs = new HashMap<>();
+    private JavaPlugin plugin;
 
-    public static String pluginFolderPath = ILMLib.plugin.getDataFolder().toString();
-    public static String pluginFolderName = ILMLib.plugin.getName(); // Noch unbenutzt
+    /**
+     * WiP
+     */
+    public ConfigLib(JavaPlugin javaPlugin) {
+        plugin = javaPlugin;
+        pluginFolderPath = plugin.getDataFolder().toString();
+    }
+
+    /**
+     * Setzt den Pfad des Pluginordners
+     * <p>
+     * Sets the path of the plugin folder
+     *
+     * @param pluginFolderPath
+     * @author ItsLeMax
+     */
+    public void setPluginFolderPath(String pluginFolderPath) {
+        this.pluginFolderPath = pluginFolderPath;
+    }
+
+    private HashMap<String, HashMap<String, Object>> configs = new HashMap<>();
+    private String pluginFolderPath;
 
     /**
      * Entnimmt die verlangte Configdatei der HashMap
@@ -25,7 +46,7 @@ public class ConfigLib {
      * @author ItsLeMax
      * @see #configs
      */
-    public static File getFile(String configName) {
+    public File getFile(String configName) {
         return (File) configs.get(configName).get("file");
     }
 
@@ -38,7 +59,11 @@ public class ConfigLib {
      * @author ItsLeMax
      * @see #configs
      */
-    public static FileConfiguration getConfig(String configName) {
+    public FileConfiguration getConfig(String configName) {
+        if (configs.get(configName) == null) {
+            return null;
+        }
+
         return (FileConfiguration) configs.get(configName).get("configuration");
     }
 
@@ -49,7 +74,7 @@ public class ConfigLib {
      *
      * @author ItsLeMax
      */
-    public static void save(String configName) {
+    public void save(String configName) {
         try {
             getConfig(configName).save(getFile(configName));
         } catch (IOException ioException) {
@@ -68,7 +93,7 @@ public class ConfigLib {
      * @author ItsLeMax
      * @see #configs
      */
-    private static void initialize(String configName, Object data) {
+    private void initialize(String configName, Object data) {
         configs.get(configName).put(data instanceof File ? "file" : data instanceof FileConfiguration ? "configuration" : "initialize_error", data);
     }
 
@@ -83,7 +108,7 @@ public class ConfigLib {
      * @return String mit Text in der gewählten Sprache <p> String with text in the chosen language
      * @author ItsLeMax
      */
-    public static String lang(String path) {
+    public String lang(String path) {
         String language = getConfig("config").getString("language");
         FileConfiguration config = getConfig(language);
 
@@ -95,14 +120,14 @@ public class ConfigLib {
     /**
      * @see #create(String, String...)
      */
-    public static void createDefaults(String... fileNames) {
+    public void createDefaults(String... fileNames) {
         create(null, fileNames);
     }
 
     /**
      * @see #create(String, String...)
      */
-    public static void createInsideDirectory(String folderName, String... fileNames) {
+    public void createInsideDirectory(String folderName, String... fileNames) {
         create(folderName, fileNames);
     }
 
@@ -121,7 +146,7 @@ public class ConfigLib {
      * @link <a href="https://spigotmc.org/wiki/config-files/">Spigot Wiki</a>
      */
     @SuppressWarnings("ResultOfMethodCallIgnored")
-    private static void create(String folderName, String... fileNames) {
+    private void create(String folderName, String... fileNames) {
         for (String fileName : fileNames) {
             String filePath = fileName + ".yml";
             if (folderName != null) filePath = folderName + "/" + filePath;
@@ -138,7 +163,7 @@ public class ConfigLib {
             }
 
             try {
-                InputStream configFromResources = ILMLib.plugin.getResource(filePath);
+                InputStream configFromResources = plugin.getResource(filePath);
 
                 if (configFromResources != null) {
                     Files.copy(configFromResources, newlyCreatedConfig.toPath());
