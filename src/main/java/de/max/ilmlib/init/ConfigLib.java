@@ -13,18 +13,19 @@ import java.util.HashMap;
 @SuppressWarnings("all")
 public class ConfigLib {
     private JavaPlugin plugin;
-    private String pluginFolderPath = plugin.getDataFolder().toString();
+    private String pluginFolderPath;
     private HashMap<String, HashMap<String, Object>> configs = new HashMap<>();
 
     /**
-     * Legt das Plugin fest
+     * Legt das Plugin und dessen Pfad fest
      * <p>
-     * Sets the plugin
+     * Sets the plugin and its path
      *
      * @author Kurty00
      */
     public ConfigLib(JavaPlugin javaPlugin) {
         plugin = javaPlugin;
+        pluginFolderPath = plugin.getDataFolder().toString();
     }
 
     /**
@@ -118,15 +119,17 @@ public class ConfigLib {
     /**
      * @see #create(String, String...)
      */
-    public void createDefaults(String... fileNames) {
+    public ConfigLib createDefaults(String... fileNames) {
         create(null, fileNames);
+        return this;
     }
 
     /**
      * @see #create(String, String...)
      */
-    public void createInsideDirectory(String folderName, String... fileNames) {
+    public ConfigLib createInsideDirectory(String folderName, String... fileNames) {
         create(folderName, fileNames);
+        return this;
     }
 
     /**
@@ -165,6 +168,7 @@ public class ConfigLib {
 
                 if (configFromResources != null) {
                     Files.copy(configFromResources, newlyCreatedConfig.toPath());
+                    initialize(fileName, YamlConfiguration.loadConfiguration(newlyCreatedConfig));
                     continue;
                 }
 

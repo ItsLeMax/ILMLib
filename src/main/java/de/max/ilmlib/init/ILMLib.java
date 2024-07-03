@@ -5,7 +5,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 @SuppressWarnings("all")
 public class ILMLib {
     private JavaPlugin plugin;
-
     private ConfigLib configLib;
 
     /**
@@ -13,7 +12,6 @@ public class ILMLib {
      */
     public ILMLib(JavaPlugin javaPlugin) {
         plugin = javaPlugin;
-
         configLib = new ConfigLib(plugin);
     }
 
@@ -29,7 +27,7 @@ public class ILMLib {
      * @param pluginFolderPath individueller Pfad zum Pluginordner, in welchem die Konfigurationsdateien gespeichert werden
      *                         <p>
      *                         individual path to the plugin folder, in which the configs are stored
-     * @author Kurty00, ItsLeMax
+     * @author Kurty00
      * @see <a href="https://github.com/itslemax/ilmlib">GitHub Repository</a>
      */
     public ILMLib(JavaPlugin javaPlugin, String pluginFolderPath) {
