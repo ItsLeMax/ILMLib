@@ -6,7 +6,7 @@
 
     <groupId>de.max</groupId>
     <artifactId>ILMLib</artifactId>
-    <version>1.0</version>
+    <version>1.21</version>
     <packaging>jar</packaging>
 
     <name>ILMLib</name>
