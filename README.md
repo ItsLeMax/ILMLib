@@ -143,7 +143,7 @@ resources
 
 ```yaml
 general:
- initial: Hallo!
+ initial: Hallo Welt!
  error: Ein Fehler ist aufgetreten.
  debug: sout erreicht.
 ```
@@ -181,7 +181,7 @@ public void onEnable() {
 ```java
 import static de.max.storageterminal.init.StorageTerminal.configLib;
 
-configLib.lang("general.initial"); // returns "Hallo!"
+Bukkit.getConsoleSender().sendMessage(configLib.lang("general.initial")); // sends "Hallo Welt!"
 ```
 
 ...getting a File and Config like this:
@@ -193,6 +193,8 @@ FileConfiguration storageConfig = configLib.getConfig("storage");
 if (storageConfig.getBoolean("badWordsEnabled")) {
     Bukkit.getConsoleSender().sendMessage("Filter up and running.")
 }
+
+storageConfig.set("myBelovedBoolean", true);
 
 // Feel free to use the file however you want.
 storageFile.*
