@@ -24,7 +24,7 @@ new ILMLib(JavaPlugin plugin, String pluginFolderPath) -> void
 ```
 
 `plugin` is the plugin from `onEnable`.\
-`pluginFolderPath` is a custom path you can choose for your plugin configs folder.\
+`pluginFolderPath` is a custom path you can choose for your plugin configs folder.
 
 ### ConfigLib: Class
 
