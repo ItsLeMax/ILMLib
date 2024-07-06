@@ -4,8 +4,8 @@ Adds useful methods for minecraft plugin developers to spare time and repetitive
 
 ## Setup
 
-1. Download the latest jar [here](https://github.com/ItsLeMax/ILMLib/releases/latest)
-2. Put them into the plugins folder of your server
+1. Download the latest jar file [here](https://github.com/ItsLeMax/ILMLib/releases/latest)
+2. Put it into the plugins folder of your server
 3. Open your IDE (IntelliJ in this example) and navigate to either
    `File > Project Structure > Global Libraries` or inside your project alone to `Libraries`\
    ![project_structure](https://github.com/ItsLeMax/ILMLib/assets/80857459/74ea10a3-f8ba-4af3-8d9b-03a89a0e31b5)
