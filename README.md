@@ -169,7 +169,7 @@ public static ConfigLib configLib;
 
 @Override
 public void onEnable() {
-    configLib = new ILMLib(this, plugin.getServer().getWorldContainer()).getConfigLib();
+    configLib = new ILMLib(this, this.getServer().getWorldContainer()).getConfigLib();
     configLib
         .createDefaults("config", "storage");
         .createInsideDirectory("language_data", "de_DE", "en_US");
