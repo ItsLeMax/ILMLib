@@ -1,5 +1,6 @@
 package de.max.ilmlib.init;
 
+import de.max.ilmlib.libraries.ConfigLib;
 import org.bukkit.plugin.java.JavaPlugin;
 
 @SuppressWarnings("all")
