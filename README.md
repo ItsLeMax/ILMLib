@@ -5,18 +5,26 @@ Adds useful methods for minecraft plugin developers to spare time and repetitive
 
 ## Setup
 
-1. Download the latest jar file [here](https://github.com/ItsLeMax/ILMLib/releases/latest)\
+1. Download the latest jar file [here](https://github.com/ItsLeMax/ILMLib/releases/latest).\
 ![1 0 0-download](https://github.com/user-attachments/assets/67d8dd0e-159c-4439-a517-07217bb8c2a6)
-2. Put it into the plugins folder of your server\
+2. Put it into the plugins folder of your server.\
 ![plugins](https://github.com/user-attachments/assets/f220cbd4-c510-4441-803a-7ff7abd101b3)
-3. Open your IDE (IntelliJ in this example) and navigate to either `File > Project Structure > Global Libraries` or inside your project alone to `Libraries`\
+3. Open your IDE (IntelliJ in this example) and navigate to either `File > Project Structure > Global Libraries` or inside your project alone to `Libraries`.\
 ![1 0 0-project_structure](https://github.com/user-attachments/assets/2e0169b9-df05-4503-a7ec-4ab9185cfa03)
-4. Add a new Library with the plus sign and choose `Java`\
+4. Add a new Library with the plus sign and choose `Java`.\
 ![1 0 0-library](https://github.com/user-attachments/assets/8fc6fd00-9873-472a-8bea-a7c482c1b19f)
-5. Navigate to the library jar file, select it and press `OK`
+5. Navigate to the library jar file, select it and press `OK`.
 ![1 0 0-select](https://github.com/user-attachments/assets/17b1b5c5-a327-4eba-abab-495e4517e88a)
-6. Click on `Apply`\
+6. Click on `Apply`.\
 ![1 0 0-apply](https://github.com/user-attachments/assets/21bcba00-332d-479c-9290-b4cc5d1cc956)
+
+## Supported Minecraft Versions
+
+| Library | Description | Version |
+| --- | --- | --- |
+| ConfigLib | Allows the creation of empty or prewritten `yml` configuration files | Every version (since it only uses the file system) |
+| ItemLib | Creates items easily | `???` |
+| MessageLib | Sends messages with a unified visual | `???` |
 
 ## Documentation for the latest version
 

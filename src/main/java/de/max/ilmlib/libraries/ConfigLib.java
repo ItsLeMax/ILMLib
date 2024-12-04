@@ -1,4 +1,4 @@
-package de.max.ilmlib.init;
+package de.max.ilmlib.libraries;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -26,6 +26,8 @@ public class ConfigLib {
     public ConfigLib(JavaPlugin javaPlugin) {
         plugin = javaPlugin;
         pluginFolderPath = plugin.getDataFolder().toString();
+        // System hier hinzufügen, mit welchem ggf. neue Einträge der
+        // yml-Dateien des Plugins in den Benutzergenerierten hinzugefügt werden
     }
 
     /**
