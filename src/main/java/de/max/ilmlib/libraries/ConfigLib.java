@@ -14,6 +14,7 @@ import java.util.HashMap;
 public class ConfigLib {
     private JavaPlugin plugin;
     private String pluginFolderPath;
+
     private HashMap<String, HashMap<String, Object>> configs = new HashMap<>();
 
     /**
@@ -23,8 +24,8 @@ public class ConfigLib {
      *
      * @author Kurty00
      */
-    public ConfigLib(JavaPlugin javaPlugin) {
-        plugin = javaPlugin;
+    public ConfigLib(JavaPlugin plugin) {
+        this.plugin = plugin;
         pluginFolderPath = plugin.getDataFolder().toString();
         // System hier hinzufügen, mit welchem ggf. neue Einträge der
         // yml-Dateien des Plugins in den Benutzergenerierten hinzugefügt werden
