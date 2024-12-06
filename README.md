@@ -253,14 +253,14 @@ messageLib.setPrefix("Plugin Info:", true);
 ```
 
 The method with `seperateLine` set to `true` creates one like this:
-| plugin info:            |
+| Plugin Info:            |
 | ----------------------- |
 | This is an information. |
 
 If `addSpacing()` was called before, the message would look like this:
 | ⠀                       |
 | ----------------------- |
-| plugin info:            |
+| **Plugin Info:**        |
 | This is an information. |
 | ⠀                       |
 
