@@ -130,8 +130,8 @@ public class ConfigLib {
     /**
      * @see #create(String, String...)
      */
-    public ConfigLib createInsideDirectory(String folderName, String... fileNames) {
-        create(folderName, fileNames);
+    public ConfigLib createInsideDirectory(String folderName, String... configNames) {
+        create(folderName, configNames);
         return this;
     }
 
