@@ -20,11 +20,11 @@ Adds useful methods for Minecraft plugin developers to spare time and repetitive
 
 ## Libraries and their supported Minecraft versions
 
-| Library | Description | Version |
-| --- | --- | --- |
-| ConfigLib | Allows the easy creation and management of `yml` files, both prefilled and empty | `1.5 - 1.21+` |
-| MessageLib | lets you send messages with a pre-determined unified design | `1.5 - 1.21+` |
-| ItemLib | Creates items easily without the need of having to extract the item meta | `???` |
+| Library    | Description                                                                      | Version     |
+| ---------- | -------------------------------------------------------------------------------- | ----------- |
+| ConfigLib  | Allows the easy creation and management of `yml` files, both prefilled and empty | `1.5-1.21+` |
+| MessageLib | lets you send messages with a pre-determined unified design                      | `1.5-1.21+` |
+| ItemLib    | Creates items easily without the need of having to extract the item meta         | `???`       |
 
 ## Documentation for the latest version
 
@@ -121,7 +121,7 @@ being at least `config` to create it on server start.
 
 Your folder structure could look like this:
 
-```
+```as
 src.main.java
 ├  de.max.plugin.init.main
 ├  ...
@@ -236,79 +236,86 @@ configLib.save("storage");
 `prefix` is a message you want as prefix.
 `seperateLine` creates a new one for the message prefix alone when set to `true`.
 
-### Setting a prefix message
+### Different types of messages
 
 ```java
-messageLib.setPrefix("plugin info");
+messageLib.setPrefix("Plugin Info >");
 ```
 
 Using this method will create a message like this:
-| [PREFIX] This is an information. |
-| --- |
+| Plugin Info > This is an information. |
+| ------------------------------------- |
 
 A space will be added after the prefix automatically.
 
 ```java
-messageLib.setPrefix("plugin info", true);
+messageLib.setPrefix("Plugin Info:", true);
 ```
 
 The method with `seperateLine` set to `true` creates one like this:
-| [PREFIX] |
-| --- |
+| plugin info:            |
+| ----------------------- |
 | This is an information. |
+
+If `addSpacing()` was called before, the message would look like this:
+| ⠀                       |
+| ----------------------- |
+| plugin info:            |
+| This is an information. |
+| ⠀                       |
 
 ### Templates
 
 There are a few templates to choose from:
 
-| template | default color | default sound |
-| --- | --- | --- |
-| Success | a (lime) | ENTITY_EXPERIENCE_ORB_PICKUP |
-| Warning/Info | e (yellow) | UI_BUTTON_CLICK |
-| Danger | c (light red) | BLOCK_ANVIL_PLACE |
+| template     | default color  | default sound                |
+| ------------ | -------------- | ---------------------------- |
+| Success      | a (green)      | ENTITY_EXPERIENCE_ORB_PICKUP |
+| Warning/Info | e (yellow)     | UI_BUTTON_CLICK              |
+| Danger       | c (red)        | BLOCK_ANVIL_PLACE            |
 
 Using one of the colors from above will determine the sound played automatically.
 
 > Allows to overwrite default colors and sound values for specified templates
 
-| Method | Parameters | Return value |
-| --- | --- | --- |
-| ```setSuccess()``` <br> ```setWarning()``` <br> ```setError()``` | ```char colorCode``` <br> ```Sound sound``` <br> ```both``` | ```-> MessageLib``` |
+| Method                                         | Parameters                                | Return value  |
+| ---------------------------------------------- | ----------------------------------------- | ------------- |
+| setSuccess() <br> setWarning() <br> setError() | char colorCode <br> Sound sound <br> both | -> MessageLib |
 
 `colorCode` describes the single character one from Minecraft.\
 `sound` is one played to a player when the message gets send.
 
 Color codes can be seen here:
 
-| Color | Code | Hex aquivalent |
-| --- | --- | --- |
-| Black | 0 | #000000 |
-| Dark Blue | 1 | #0000AA |
-| Dark Green | 2 | #00AA00 |
-| Dark Aqua | 3 | #00AAAA |
-| Dark Red | 4 | #AA0000 |
-| Dark Purple | 5 | #AA00AA |
-| Gold | 6 | #FFAA00 |
-| Gray | 7 | #AAAAAA |
-| Dark Gray | 8 | #555555 |
-| Blue | 9 | #5555FF |
-| Green | a | #55FF55 |
-| Aqua | b | #55FFFF |
-| Red | c | #FF5555 |
-| Light Purple | d | #FF55FF |
-| Yellow | e | #FFFF55 |
-| White | f | #FFFFFF |
+| Color        | Code | Hex aquivalent |
+| ------------ | -    | -------------- |
+| Black        | 0    | `#000000`      |
+| Dark Blue    | 1    | `#0000AA`      |
+| Dark Green   | 2    | `#00AA00`      |
+| Dark Aqua    | 3    | `#00AAAA`      |
+| Dark Red     | 4    | `#AA0000`      |
+| Dark Purple  | 5    | `#AA00AA`      |
+| Gold         | 6    | `#FFAA00`      |
+| Gray         | 7    | `#AAAAAA`      |
+| Dark Gray    | 8    | `#555555`      |
+| Blue         | 9    | `#5555FF`      |
+| Green        | a    | `#55FF55`      |
+| Aqua         | b    | `#55FFFF`      |
+| Red          | c    | `#FF5555`      |
+| Purple       | d    | `#FF55FF`      |
+| Yellow       | e    | `#FFFF55`      |
+| White        | f    | `#FFFFFF`      |
 
 You may also use formatting:
 
-| Description | Formatting Code |
-| --- | --- |
-| Obfuscated | k |
-| Bold | l |
-| Strikethrough | m |
-| Underline | n |
-| Italic | o |
-| Reset | r |
+| Description   | Formatting Code |
+| ------------- | --------------- |
+| Obfuscated    | k               |
+| Bold          | l               |
+| Strikethrough | m               |
+| Underline     | n               |
+| Italic        | o               |
+| Reset         | r               |
 
 > Creates defaults for mentioned templates
 
