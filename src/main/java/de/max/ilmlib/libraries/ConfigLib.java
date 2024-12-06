@@ -122,8 +122,8 @@ public class ConfigLib {
     /**
      * @see #create(String, String...)
      */
-    public ConfigLib createDefaults(String... fileNames) {
-        create(null, fileNames);
+    public ConfigLib createDefaults(String... configNames) {
+        create(null, configNames);
         return this;
     }
 

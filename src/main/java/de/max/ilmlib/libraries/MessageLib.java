@@ -25,18 +25,18 @@ public class MessageLib {
         return this;
     }
 
-    public MessageLib setSuccess(char color) {
-        COLOR_SUCCESS = color;
+    public MessageLib setSuccess(char colorCode) {
+        COLOR_SUCCESS = colorCode;
         return this;
     }
 
-    public MessageLib setWarning(char color) {
-        COLOR_WARNING = color;
+    public MessageLib setWarning(char colorCode) {
+        COLOR_WARNING = colorCode;
         return this;
     }
 
-    public MessageLib setError(char color) {
-        COLOR_ERROR = color;
+    public MessageLib setError(char colorCode) {
+        COLOR_ERROR = colorCode;
         return this;
     }
 
@@ -55,7 +55,7 @@ public class MessageLib {
     }
 
     private void setPrefixVariable(String prefix) {
-        this.prefix = prefix;
+        this.prefix = prefix + " ";
     }
 
     private void loggerWarning() {
@@ -101,7 +101,7 @@ public class MessageLib {
     public MessageLib createDefaultSounds() {
         try {
             setSuccess(Sound.ENTITY_EXPERIENCE_ORB_PICKUP);
-            setWarning(Sound.ITEM_GOAT_HORN_SOUND_7); // UI_BUTTON_CLICK
+            setWarning(Sound.UI_BUTTON_CLICK);
             setError(Sound.BLOCK_ANVIL_PLACE);
         } catch (NoSuchFieldError ignored) {
             loggerWarning();
@@ -109,25 +109,33 @@ public class MessageLib {
         return this;
     }
 
-    public MessageLib setSuccess(char color, Sound sound) {
-        setSuccess(color);
+    public MessageLib setSuccess(char colorCode, Sound sound) {
+        setSuccess(colorCode);
         setSuccess(sound);
         return this;
     }
 
-    public MessageLib setWarning(char color, Sound sound) {
-        setWarning(color);
+    public MessageLib setWarning(char colorCode, Sound sound) {
+        setWarning(colorCode);
         setWarning(sound);
         return this;
     }
 
-    public MessageLib setError(char color, Sound sound) {
-        setError(color);
+    public MessageLib setError(char colorCode, Sound sound) {
+        setError(colorCode);
         setError(sound);
         return this;
     }
 
+    public void sendInfo(CommandSender sender, String message) {
+        send(sender, '7', message);
+    }
+
     public void sendInfo(CommandSender sender, char colorCode, String message) {
+        send(sender, colorCode, message);
+    }
+
+    private void send(CommandSender sender, char colorCode, String message) {
         sender.sendMessage(addSpacing + prefix + "§" + colorCode + message + addSpacing);
 
         if (!(sender instanceof Player player)) {

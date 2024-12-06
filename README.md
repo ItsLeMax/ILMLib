@@ -1,6 +1,6 @@
 # ILMLib
 
-Adds useful methods for minecraft plugin developers to spare time and repetitive code
+Adds useful methods for Minecraft plugin developers to spare time and repetitive code
 ![1 0 0-methods](https://github.com/user-attachments/assets/5ba9accf-274b-4c66-881f-fccdba0842bd)
 
 ## Setup
@@ -18,129 +18,112 @@ Adds useful methods for minecraft plugin developers to spare time and repetitive
 6. Click on `Apply`.\
 ![1 0 0-apply](https://github.com/user-attachments/assets/21bcba00-332d-479c-9290-b4cc5d1cc956)
 
-## Supported Minecraft Versions
+## Libraries and their supported Minecraft versions
 
 | Library | Description | Version |
 | --- | --- | --- |
-| ConfigLib | Allows the creation of empty or prewritten `yml` configuration files | Every version (since it only uses the file system) |
-| ItemLib | Creates items easily | `???` |
-| MessageLib | Sends messages with a unified visual | `???` |
+| ConfigLib | Allows the easy creation and management of `yml` files, both prefilled and empty | `1.5 - 1.21+` |
+| MessageLib | lets you send messages with a pre-determined unified design | `1.5 - 1.21+` |
+| ItemLib | Creates items easily without the need of having to extract the item meta | `???` |
 
 ## Documentation for the latest version
 
 > Initializing the library
 
 ```java
-new ILMLib(JavaPlugin plugin) -> void
-new ILMLib(JavaPlugin plugin, String pluginFolderPath) -> void
+new ILMLib(JavaPlugin plugin) -> ILMLib
 ```
 
-`plugin` is the plugin from `onEnable`.\
-`pluginFolderPath` is a custom path you can choose for your plugin configs folder.
+`plugin` is one from `onEnable`.
 
-### ConfigLib: Class
+## ConfigLib
 
-> Get the ConfigLib class with its Methods
+### Class
+
+> Gets the ConfigLib class with its methods
 
 ```java
 #getConfigLib() -> ConfigLib
 ```
 
-### ConfigLib: Methods
+### Methods
 
-> Get a config
-
-```java
-#getConfig(String configName) -> FileConfiguration
-```
-
-> Get a config file
+> Sets the path of the plugin config folder (allows path traversal)
 
 ```java
-#getFile(String configName) -> File
+#setPluginFolderPath(String pluginFolderPath) -> void
 ```
 
-> Save a config
+`pluginFolderPath` is mentioned path.
+
+> [!WARNING]
+> Call this method first or it will not take effect.
+
+> Creates configs
 
 ```java
-#save(String configName) -> void
+#createDefaults(String... configNames) -> ConfigLib
 ```
 
-`configName` is the name of the config as text
-
-> Load a language key
+> Creates configs inside a directory
 
 ```java
-#lang(String path) -> String
+#createInsideDirectory(String directoryName, String... configNames) -> ConfigLib
 ```
 
-`path` is the path of the config content, seperated by a dot
+`directoryName` is one of the folder.\
+`configNames` are those of the configurations, strings seperated by a comma.
 
-> Create config files
-
-```java
-#createDefaults(String... fileNames) -> ConfigLib
-```
-
-> Create config files inside a directory
-
-```java
-#createInsideDirectory(String directoryName, String... fileNames) -> ConfigLib
-```
-
-`directoryName` is the name of the directory
-`fileNames` are the names of the configs, seperated by a comma
-
-### ConfigLib: Practical usage
-
-Lets start with the initialization.
-
-```java
-public static ConfigLib configLib;
-
-@Override
-public void onEnable() {
-    configLib = new ILMLib(plugin).getConfigLib();
-}
-```
-
-You can now use the methods listed above.
-
-### ConfigLib: Creating empty *.yml config files to store data
-
-```java
-configLib
-    .createDefaults("file_1", "file_2");
-    .createInsideDirectory("languages", "file_3", "file_4");
-```
-
-### ConfigLib: Prefilled configs
+### Prefilled configs
 
 The above methods will create empty configs except if they do already exist in the same path inside your projects `resources`.
 If so, their content will be copied. Using `createDefaults` requires the configs to exist inside `resources` directly, while
 `createInsideDirectory` requires an additional folder with the configs inside with the same name as mentioned in the method call.
 
-### ConfigLib: Using the prefilled configs to load languages
+### Using the prefilled configs to load languages
 
 You can fill the configs with language keys and values. A Method for loading language Strings is part of this library.
-
-```java
-configLib.lang("path.to.key");
-```
-
 If you want to use other language files besides the default `en_US.yml` (not provided), you need a custom `config.yml`.
 Create it inside `resources` or any sub directory of your project if it does not exist yet.
 Add a key called `language` and assign it the language you want to use (i.e. `en_US` without `.yml`).
 Use `createDefaults` (or `createInsideDirectory` if the file is inside a sub directory) with parameter `fileNames`
 being at least `config` to create it on server start.
 
-### ConfigLib: Summarizing Example
+> Gets a config
+
+```java
+#getConfig(String configName) -> FileConfiguration
+```
+
+> Gets a config file
+
+```java
+#getFile(String configName) -> File
+```
+
+> Saves a config
+
+```java
+#save(String configName) -> void
+```
+
+`configName` is one for the configuration.
+
+> Loads a language key
+
+```java
+#lang(String path) -> String
+```
+
+`path` is one of the config content, seperated by dots.
+
+### Summarizing example
 
 Your folder structure could look like this:
 
 ```
 src.main.java
-├  de.max.plugin.main
+├  de.max.plugin.init.main
 ├  ...
 resources
 ├  language_data
@@ -181,9 +164,13 @@ public static ConfigLib configLib;
 
 @Override
 public void onEnable() {
-    configLib = new ILMLib(this, this.getServer().getWorldContainer()).getConfigLib();
+    configLib = new ILMLib(this).getConfigLib();
     configLib
-        .createDefaults("config", "storage");
+        // plugin folder created one directory above inside server folder
+        .setPluginFolderPath(this.getServer().getWorldContainer())
+        // ...
+        .createDefaults("config", "storage")
+        // language yml files
         .createInsideDirectory("language_data", "de_DE", "en_US");
 }
 ```
@@ -191,29 +178,184 @@ public void onEnable() {
 ...with this language call inside a different class:
 
 ```java
-import static de.max.storageterminal.init.StorageTerminal.configLib;
+import static de.max.plugin.init.Main.configLib;
 
-Bukkit.getConsoleSender().sendMessage(configLib.lang("general.initial")); // sends "Hallo Welt!"
+// sends "Hallo Welt!"
+Bukkit.getConsoleSender().sendMessage(configLib.lang("general.initial"));
 ```
 
-...getting a File and Config like this:
+...getting a file and config like this:
 
 ```java
 File storageFile = configLib.getFile("storage");
 FileConfiguration storageConfig = configLib.getConfig("storage");
 
 if (storageConfig.getBoolean("badWordsEnabled")) {
-    Bukkit.getConsoleSender().sendMessage("Filter up and running.")
+    Bukkit.getConsoleSender().sendMessage("Filter up and running.");
 }
 
 storageConfig.set("myBelovedBoolean", true);
 
 // Feel free to use the file however you want.
-storageFile.*
+storageFile.*;
 ```
 
 ...and last but not least saving it:
 
 ```java
 configLib.save("storage");
+```
+
+## MessageLib
+
+### Class
+
+> Gets the MessageLib class with its methods
+
+```java
+#getMessageLib() -> MessageLib
+```
+
+### Methods
+
+> Creates an empty line before and after the message, thus creating space
+
+```java
+#addSpacing() -> MessageLib
+```
+
+> Sets a prefix message that gets shown right before the information
+
+```java
+#setPrefix(String prefix) -> MessageLib
+```
+```java
+#setPrefix(String prefix, boolean seperateLine) -> MessageLib
+```
+
+`prefix` is a message you want as prefix.
+`seperateLine` creates a new one for the message prefix alone when set to `true`.
+
+### Setting a prefix message
+
+```java
+messageLib.setPrefix("plugin info");
+```
+
+Using this method will create a message like this:
+| [PREFIX] This is an information. |
+| --- |
+
+A space will be added after the prefix automatically.
+
+```java
+messageLib.setPrefix("plugin info", true);
+```
+
+The method with `seperateLine` set to `true` creates one like this:
+| [PREFIX] |
+| --- |
+| This is an information. |
+
+### Templates
+
+There are a few templates to choose from:
+
+| template | default color | default sound |
+| --- | --- | --- |
+| Success | a (lime) | ENTITY_EXPERIENCE_ORB_PICKUP |
+| Warning/Info | e (yellow) | UI_BUTTON_CLICK |
+| Danger | c (light red) | BLOCK_ANVIL_PLACE |
+
+Using one of the colors from above will determine the sound played automatically.
+
+> Allows to overwrite default colors and sound values for specified templates
+
+| Method | Parameters | Return value |
+| --- | --- | --- |
+| ```setSuccess()``` <br> ```setWarning()``` <br> ```setError()``` | ```char colorCode``` <br> ```Sound sound``` <br> ```both``` | ```-> MessageLib``` |
+
+`colorCode` describes the single character one from Minecraft.\
+`sound` is one played to a player when the message gets send.
+
+Color codes can be seen here:
+
+| Color | Code | Hex aquivalent |
+| --- | --- | --- |
+| Black | 0 | #000000 |
+| Dark Blue | 1 | #0000AA |
+| Dark Green | 2 | #00AA00 |
+| Dark Aqua | 3 | #00AAAA |
+| Dark Red | 4 | #AA0000 |
+| Dark Purple | 5 | #AA00AA |
+| Gold | 6 | #FFAA00 |
+| Gray | 7 | #AAAAAA |
+| Dark Gray | 8 | #555555 |
+| Blue | 9 | #5555FF |
+| Green | a | #55FF55 |
+| Aqua | b | #55FFFF |
+| Red | c | #FF5555 |
+| Light Purple | d | #FF55FF |
+| Yellow | e | #FFFF55 |
+| White | f | #FFFFFF |
+
+You may also use formatting:
+
+| Description | Formatting Code |
+| --- | --- |
+| Obfuscated | k |
+| Bold | l |
+| Strikethrough | m |
+| Underline | n |
+| Italic | o |
+| Reset | r |
+
+> Creates defaults for mentioned templates
+
+```java
+#createDefaultSounds() -> MessageLib
+```
+
+> Generates a message using the specifications from earlier or default values
+
+```java
+#sendInfo(CommandSender sender, char colorCode, String message) -> void
+```
+```java
+#sendInfo(CommandSender sender, String message) -> void
+```
+
+`sender` is the `commandSender` (console) or casted player `((Player) commandSender)`.\
+`colorCode`, as defined above, is '7' (gray) if skipped.\
+`message` is one that the player is supposed to see.
+
+### Summarizing example
+
+The initialization may look like this:
+
+```java
+public static MessageLib messageLib;
+
+@Override
+public void onEnable() {
+    messageLib = new ILMLib(this).getMessageLib();
+    messageLib
+        .addSpacing()
+        .setPrefix("§e§lFPM §7§l>", true)
+        .setSuccess('2', Sound.BLOCK_NOTE_BLOCK_BELL)
+        .setWarning('6', Sound.ITEM_TRIDENT_RIPTIDE_1)
+        .setError('4', Sound.ENTITY_SKELETON_HORSE_HURT);
+}
+```
+
+...and creating messages inside other classes is as easy as this:
+
+```java
+import static de.max.plugin.init.Main.messageLib;
+
+@Override
+public boolean onCommand(@NotNull CommandSender sender /* and so on */) {
+    // COLOR_SUCCESS causes ENTITY_EXPERIENCE_ORB_PICKUP to play as seen above
+    messageLib.sendInfo((Player) sender, messageLib.COLOR_SUCCESS, "Client created successfully.");
+}
 ```
