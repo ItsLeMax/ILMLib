@@ -22,8 +22,8 @@ Adds useful methods for Minecraft plugin developers to spare time and repetitive
 
 | Library    | Description                                                                      | Version     |
 | ---------- | -------------------------------------------------------------------------------- | ----------- |
-| ConfigLib  | Allows the easy creation and management of `yml` files, both prefilled and empty | `1.5-1.21+` |
-| MessageLib | lets you send messages with a pre-determined unified design                      | `1.5-1.21+` |
+| ConfigLib  | Allows the easy creation and management of `yml` files, both prefilled and empty | `1.5-1.20+` |
+| MessageLib | lets you send messages with a pre-determined unified design                      | `1.8-1.20+` |
 | ItemLib    | Creates items easily without the need of having to extract the item meta         | `???`       |
 
 ## Documentation for the latest version
@@ -322,6 +322,10 @@ You may also use formatting:
 ```java
 #createDefaultSounds() -> MessageLib
 ```
+
+> [!NOTE]
+> If you choose to set the defaults manually using the template classes, you need to call this method first.
+> It will overwrite your settings otherwise.
 
 > Generates a message using the specifications from earlier or default values
 
