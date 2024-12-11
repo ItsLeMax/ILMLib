@@ -33,7 +33,7 @@ Adds useful methods for Minecraft plugin developers to spare time and repetitive
 > Initializing the library
 
 ```java
-new ILMLib(JavaPlugin plugin) -> ILMLib
+new ILMLib(JavaPlugin: plugin) -> ILMLib
 ```
 
 `plugin` is one from `onEnable`.
@@ -50,27 +50,27 @@ new ILMLib(JavaPlugin plugin) -> ILMLib
 
 ### Methods
 
+> [!WARNING]
+> Call this method first or it will not take effect.
+
 > Sets the path of the plugin config folder (allows path traversal)
 
 ```java
-#setPluginFolderPath(String pluginFolderPath) -> void
+#setPluginFolderPath(String: pluginFolderPath) -> void
 ```
 
 `pluginFolderPath` is mentioned path.
 
-> [!WARNING]
-> Call this method first or it will not take effect.
-
 > Creates configs
 
 ```java
-#createDefaults(String... configNames) -> ConfigLib
+#createDefaults(String...: configNames) -> ConfigLib
 ```
 
 > Creates configs inside a directory
 
 ```java
-#createInsideDirectory(String directoryName, String... configNames) -> ConfigLib
+#createInsideDirectory(String: directoryName, String...: configNames) -> ConfigLib
 ```
 
 `directoryName` is one of the folder.\
@@ -87,26 +87,26 @@ If so, their content will be copied. Using `createDefaults` requires the configs
 You can fill the configs with language keys and values. A Method for loading language Strings is part of this library.
 If you want to use other language files besides the default `en_US.yml` (not provided), you need a custom `config.yml`.
 Create it inside `resources` or any sub directory of your project if it does not exist yet.
-Add a key called `language` and assign it the language you want to use (i.e. `en_US` without `.yml`).
+Add a key called `language` and assign it the language you want to use (i.e. `de_DE` without `.yml`).
 Use `createDefaults` (or `createInsideDirectory` if the file is inside a sub directory) with parameter `fileNames`
 being at least `config` to create it on server start.
 
 > Gets a config
 
 ```java
-#getConfig(String configName) -> FileConfiguration
+#getConfig(String: configName) -> FileConfiguration
 ```
 
 > Gets a config file
 
 ```java
-#getFile(String configName) -> File
+#getFile(String: configName) -> File
 ```
 
 > Saves a config
 
 ```java
-#save(String configName) -> void
+#save(String: configName) -> void
 ```
 
 `configName` is one for the configuration.
@@ -114,7 +114,7 @@ being at least `config` to create it on server start.
 > Loads a language key
 
 ```java
-#lang(String path) -> String
+#lang(String: path) -> String
 ```
 
 `path` is one of the config content, seperated by dots.
@@ -125,7 +125,7 @@ Your folder structure could look like this:
 
 ```as
 src.main.java
-├  de.max.plugin.init.main
+├  de.max.plugin.init.Main
 ├  ...
 resources
 ├  language_data
@@ -168,11 +168,11 @@ public static ConfigLib configLib;
 public void onEnable() {
     configLib = new ILMLib(this).getConfigLib();
     configLib
-        // plugin folder created one directory above inside server folder
+        // plugin folder created one directory above, inside the server folder
         .setPluginFolderPath(this.getServer().getWorldContainer())
-        // ...
+        // basic config files
         .createDefaults("config", "storage")
-        // language yml files
+        // language config files
         .createInsideDirectory("language_data", "de_DE", "en_US");
 }
 ```
@@ -198,7 +198,7 @@ if (storageConfig.getBoolean("badWordsEnabled")) {
 
 storageConfig.set("myBelovedBoolean", true);
 
-// Feel free to use the file however you want.
+// Feel free to use however you want
 storageFile.*;
 ```
 
@@ -229,7 +229,7 @@ configLib.save("storage");
 > Sets a prefix message that gets shown right before the information
 
 ```java
-#setPrefix(String prefix, boolean? seperateLine) -> MessageLib
+#setPrefix(String: prefix, boolean?: seperateLine) -> MessageLib
 ```
 
 `prefix` is a message you want as prefix.
@@ -272,11 +272,11 @@ If `addSpacing()` was called before, the message would look like this:
 > Generates a message using the specifications from earlier or default values
 
 ```java
-#sendInfo(CommandSender sender, char? formattingCode String message, HoverText? hoverText) -> void
+#sendInfo(CommandSender: sender, char?: formattingCode, String: message, HoverText?: hoverText) -> void
 ```
 
 `sender` is the `commandSender` (console) or casted player `((Player) commandSender)`.\
-`formattingCode` describes the single character one from Minecraft.
+`formattingCode` describes the single character one from Minecraft.\
 `message` is one that the player is supposed to see.\
 `hoverText` is one showing when the mouse cursor is above the message using a special class.
 
@@ -305,7 +305,7 @@ Color codes can be seen here:
 
 You may also use non color formatting:
 
-| Description   | Formatting Code |
+| Description   | Formatting code |
 | ------------- | --------------- |
 | Obfuscated    | k               |
 | Bold          | l               |
@@ -320,22 +320,22 @@ You may also use non color formatting:
 
 > Initializing the library
 
-| Template Class  |
-| --------------- |
-| SuccessTemplate |
-| WarningTemplate |
-| ErrorTemplate   |
+| Template class      | Return value       |
+| ------------------- | ------------------ |
+| new SuccessTemplate | -> SuccessTemplate |
+| new WarningTemplate | -> WarningTemplate |
+| new ErrorTemplate   | -> ErrorTemplate   |
 
 ### Default values
 
-| Template Class  | default format | default sound                | default suffix |
+| Template class  | Default format | Default sound                | Default suffix |
 | --------------- | -------------- | ---------------------------- | -------------- |
 | SuccessTemplate | a (green)      | ENTITY_EXPERIENCE_ORB_PICKUP | `Success! §7»` |
 | WarningTemplate | e (yellow)     | UI_BUTTON_CLICK              | `Warning! §7»` |
 | ErrorTemplate   | c (red)        | BLOCK_ANVIL_PLACE            | `Error! §7»`   |
 | Neither         | 7 (gray)       | None                         | None           |
 
-Using one of the changable template formats from above will determine its equivalent sound played later as seen in the example later.
+Using one of the template formats from above will determine its equivalent sound played later as seen in the example later.
 
 ### Methods
 
@@ -346,22 +346,22 @@ Using one of the changable template formats from above will determine its equiva
 > Allows to overwrite the default format code
 
 ```java
-#setFormattingCode(char formattingCode)
+#setFormattingCode(char: formattingCode)
 ```
 
 > Allows to overwrite the default sound
 
 ```java
-#setSound(Sound sound, Float? volume)
+#setSound(Sound: sound, Float?: volume)
 ```
 
-`sound` is one played to a player when the message gets send.
+`sound` is one played to a player when the message gets send.\
 `volume` is the playback loudness.
 
 > Allows to overwrite the default suffix
 
 ```java
-#setSuffix(String suffix)
+#setSuffix(String: suffix)
 ```
 
 `suffix` is one following right after the prefix.
@@ -382,7 +382,7 @@ public void onEnable() {
         .setPrefix("§e§lFPM §7§l>", true)
         .createDefaults();
 
-    // Creates (overwrites the specific default in this case) custom values for the warning template
+    // Creates (or overwrites the specific default in this case) custom values for the warning template
     new WarningTemplate()
         .setFormattingCode('9')
         .setSound(Sound.AMBIENT_SOUL_SAND_VALLEY_MOOD, .5)
