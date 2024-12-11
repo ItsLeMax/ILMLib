@@ -28,6 +28,8 @@ Adds useful methods for Minecraft plugin developers to spare time and repetitive
 
 ## Documentation for the latest version
 
+### Main Class
+
 > Initializing the library
 
 ```java
@@ -38,7 +40,7 @@ new ILMLib(JavaPlugin plugin) -> ILMLib
 
 ## ConfigLib
 
-### Class
+### Sub Class
 
 > Gets the ConfigLib class with its methods
 
@@ -208,7 +210,7 @@ configLib.save("storage");
 
 ## MessageLib
 
-### Class
+### Sub Class
 
 > Gets the MessageLib class with its methods
 
@@ -227,10 +229,7 @@ configLib.save("storage");
 > Sets a prefix message that gets shown right before the information
 
 ```java
-#setPrefix(String prefix) -> MessageLib
-```
-```java
-#setPrefix(String prefix, boolean seperateLine) -> MessageLib
+#setPrefix(String prefix, boolean? seperateLine) -> MessageLib
 ```
 
 `prefix` is a message you want as prefix.
@@ -264,26 +263,24 @@ If `addSpacing()` was called before, the message would look like this:
 | This is an information. |
 | ⠀                       |
 
-### Templates
+> Creates default values for templates (as seen later)
 
-There are a few templates to choose from:
+```java
+#createDefaults() -> MessageLib
+```
 
-| template     | default color  | default sound                |
-| ------------ | -------------- | ---------------------------- |
-| Success      | a (green)      | ENTITY_EXPERIENCE_ORB_PICKUP |
-| Warning/Info | e (yellow)     | UI_BUTTON_CLICK              |
-| Danger       | c (red)        | BLOCK_ANVIL_PLACE            |
+> Generates a message using the specifications from earlier or default values
 
-Using one of the colors from above will determine the sound played automatically.
+```java
+#sendInfo(CommandSender sender, char? formattingCode String message, HoverText? hoverText) -> void
+```
 
-> Allows to overwrite default colors and sound values for specified templates
+`sender` is the `commandSender` (console) or casted player `((Player) commandSender)`.\
+`formattingCode` describes the single character one from Minecraft.
+`message` is one that the player is supposed to see.\
+`hoverText` is one showing when the mouse cursor is above the message using a special class.
 
-| Method                                         | Parameters                                | Return value  |
-| ---------------------------------------------- | ----------------------------------------- | ------------- |
-| setSuccess() <br> setWarning() <br> setError() | char colorCode <br> Sound sound <br> both | -> MessageLib |
-
-`colorCode` describes the single character one from Minecraft.\
-`sound` is one played to a player when the message gets send.
+### Formatting Codes
 
 Color codes can be seen here:
 
@@ -306,7 +303,7 @@ Color codes can be seen here:
 | Yellow       | e    | `#FFFF55`      |
 | White        | f    | `#FFFFFF`      |
 
-You may also use formatting:
+You may also use non color formatting:
 
 | Description   | Formatting Code |
 | ------------- | --------------- |
@@ -317,28 +314,57 @@ You may also use formatting:
 | Italic        | o               |
 | Reset         | r               |
 
-> Creates defaults for mentioned templates
+## Templates
 
-```java
-#createDefaultSounds() -> MessageLib
-```
+### Main Classes
+
+> Initializing the library
+
+| Template Class  |
+| --------------- |
+| SuccessTemplate |
+| WarningTemplate |
+| ErrorTemplate   |
+
+### Default values
+
+| Template Class  | default format | default sound                | default suffix |
+| --------------- | -------------- | ---------------------------- | -------------- |
+| SuccessTemplate | a (green)      | ENTITY_EXPERIENCE_ORB_PICKUP | `Success! §7»` |
+| WarningTemplate | e (yellow)     | UI_BUTTON_CLICK              | `Warning! §7»` |
+| ErrorTemplate   | c (red)        | BLOCK_ANVIL_PLACE            | `Error! §7»`   |
+| Neither         | 7 (gray)       | None                         | None           |
+
+Using one of the changable template formats from above will determine its equivalent sound played later as seen in the example later.
+
+### Methods
 
 > [!NOTE]
-> If you choose to set the defaults manually using the template classes, you need to call this method first.
+> If you choose to set the default values manually, you need to call these methods after `#createDefaults()`.
 > It will overwrite your settings otherwise.
 
-> Generates a message using the specifications from earlier or default values
+> Allows to overwrite the default format code
 
 ```java
-#sendInfo(CommandSender sender, char colorCode, String message) -> void
-```
-```java
-#sendInfo(CommandSender sender, String message) -> void
+#setFormattingCode(char formattingCode)
 ```
 
-`sender` is the `commandSender` (console) or casted player `((Player) commandSender)`.\
-`colorCode`, as defined above, is '7' (gray) if skipped.\
-`message` is one that the player is supposed to see.
+> Allows to overwrite the default sound
+
+```java
+#setSound(Sound sound, Float? volume)
+```
+
+`sound` is one played to a player when the message gets send.
+`volume` is the playback loudness.
+
+> Allows to overwrite the default suffix
+
+```java
+#setSuffix(String suffix)
+```
+
+`suffix` is one following right after the prefix.
 
 ### Summarizing example
 
@@ -350,12 +376,17 @@ public static MessageLib messageLib;
 @Override
 public void onEnable() {
     messageLib = new ILMLib(this).getMessageLib();
+
     messageLib
         .addSpacing()
         .setPrefix("§e§lFPM §7§l>", true)
-        .setSuccess('2', Sound.BLOCK_NOTE_BLOCK_BELL)
-        .setWarning('6', Sound.ITEM_TRIDENT_RIPTIDE_1)
-        .setError('4', Sound.ENTITY_SKELETON_HORSE_HURT);
+        .createDefaults();
+
+    // Creates (overwrites the specific default in this case) custom values for the warning template
+    new WarningTemplate()
+        .setFormattingCode('9')
+        .setSound(Sound.AMBIENT_SOUL_SAND_VALLEY_MOOD, .5)
+        .setSuffix("[Info]:");
 }
 ```
 
@@ -366,7 +397,17 @@ import static de.max.plugin.init.Main.messageLib;
 
 @Override
 public boolean onCommand(@NotNull CommandSender sender /* and so on */) {
-    // COLOR_SUCCESS causes ENTITY_EXPERIENCE_ORB_PICKUP to play as seen above
-    messageLib.sendInfo((Player) sender, messageLib.COLOR_SUCCESS, "Client created successfully.");
+    if (COMMAND_DISABLED) {
+        // FORMATTING_WARNING (custom blue color '9' from above) causes AMBIENT_SOUL_SAND_VALLEY_MOOD to play
+        messageLib.sendInfo(sender, messageLib.FORMATTING_WARNING, "You do not have permissions to execute this command.");
+        return true;
+    }
+
+    if (sender instance of Player player) {
+        // FORMATTING_SUCCESS (default green color 'a' from *.createDefaults) causes ENTITY_EXPERIENCE_ORB_PICKUP to play
+        messageLib.sendInfo(player, messageLib.FORMATTING_SUCCESS, "Client created successfully.");
+    }
+
+    return true;
 }
 ```
