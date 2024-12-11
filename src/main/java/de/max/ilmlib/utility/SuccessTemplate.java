@@ -6,8 +6,8 @@ import org.jetbrains.annotations.NotNull;
 
 @SuppressWarnings("all")
 public class SuccessTemplate {
-    public SuccessTemplate setColorCode(@NotNull char colorCode) {
-        MessageLib.COLOR_SUCCESS = colorCode;
+    public SuccessTemplate setFormattingCode(@NotNull char formattingCode) {
+        MessageLib.FORMATTING_SUCCESS = formattingCode;
         return this;
     }
 

@@ -6,8 +6,8 @@ import org.jetbrains.annotations.NotNull;
 
 @SuppressWarnings("all")
 public class WarningTemplate {
-    public WarningTemplate setColorCode(@NotNull char colorCode) {
-        MessageLib.COLOR_WARNING = colorCode;
+    public WarningTemplate setFormattingCode(@NotNull char formattingCode) {
+        MessageLib.FORMATTING_WARNING = formattingCode;
         return this;
     }
 

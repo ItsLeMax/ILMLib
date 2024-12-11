@@ -6,8 +6,8 @@ import org.jetbrains.annotations.NotNull;
 
 @SuppressWarnings("all")
 public class ErrorTemplate {
-    public ErrorTemplate setColorCode(@NotNull char colorCode) {
-        MessageLib.COLOR_ERROR = colorCode;
+    public ErrorTemplate setFormattingCode(@NotNull char formattingCode) {
+        MessageLib.FORMATTING_ERROR = formattingCode;
         return this;
     }
 
