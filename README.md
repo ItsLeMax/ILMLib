@@ -272,11 +272,12 @@ If `addSpacing()` was called before, the message would look like this:
 > Generates a message using the specifications from earlier or default values
 
 ```java
-#sendInfo(CommandSender: sender, char?: formattingCode, String: message, HoverText?: hoverText) -> void
+#sendInfo(CommandSender: sender, char?: formattingCode | Template?: template, String: message, HoverText?: hoverText) -> void
 ```
 
 `sender` is the `commandSender` (console) or casted player `((Player) commandSender)`.\
 `formattingCode` describes the single character one from Minecraft.\
+`template` is an enum one you can use.\
 `message` is one that the player is supposed to see.\
 `hoverText` is one showing when the mouse cursor is above the message using a special class.
 
@@ -335,7 +336,7 @@ You may also use non color formatting:
 | ErrorTemplate   | c (red)        | BLOCK_ANVIL_PLACE            | `Error! §7»`   |
 | Neither         | 7 (gray)       | None                         | None           |
 
-Using one of the template formats from above will determine its equivalent sound played later as seen in the example later.
+Using one of the template formats from above will determine its equivalent sound played later as seen in the example coming soon.
 
 ### Methods
 
@@ -384,8 +385,11 @@ public void onEnable() {
 
     // Creates (or overwrites the specific default in this case) custom values for the warning template
     new WarningTemplate()
+        // blue
         .setFormattingCode('9')
-        .setSound(Sound.AMBIENT_SOUL_SAND_VALLEY_MOOD, .5)
+        // half as loud
+        .setSound(Sound.ENTITY_HORSE_AMBIENT, .5f)
+        // using the warning template as info instead
         .setSuffix("[Info]:");
 }
 ```
@@ -398,14 +402,14 @@ import static de.max.plugin.init.Main.messageLib;
 @Override
 public boolean onCommand(@NotNull CommandSender sender /* and so on */) {
     if (COMMAND_DISABLED) {
-        // FORMATTING_WARNING (custom blue color '9' from above) causes AMBIENT_SOUL_SAND_VALLEY_MOOD to play
-        messageLib.sendInfo(sender, messageLib.FORMATTING_WARNING, "You do not have permissions to execute this command.");
+        // FORMATTING_WARNING (custom blue color '9' from above) causes ENTITY_HORSE_AMBIENT to play
+        messageLib.sendInfo(sender, messageLib.Template.WARNING, "This command was disabled by the author.", new HoverText("§7Contact an administrator for more details."));
         return true;
     }
 
     if (sender instance of Player player) {
         // FORMATTING_SUCCESS (default green color 'a' from *.createDefaults) causes ENTITY_EXPERIENCE_ORB_PICKUP to play
-        messageLib.sendInfo(player, messageLib.FORMATTING_SUCCESS, "Client created successfully.");
+        messageLib.sendInfo(player, messageLib.Template.SUCCESS, "Client created successfully.");
     }
 
     return true;
