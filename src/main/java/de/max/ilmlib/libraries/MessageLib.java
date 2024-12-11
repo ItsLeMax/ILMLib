@@ -5,7 +5,6 @@ import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -34,6 +33,12 @@ public class MessageLib {
     public static String SUFFIX_SUCCESS;
     public static String SUFFIX_WARNING;
     public static String SUFFIX_ERROR;
+
+    public enum Template {
+        SUCCESS,
+        WARNING,
+        ERROR
+    }
 
     public MessageLib addSpacing() {
         addSpacing = true;
@@ -84,21 +89,29 @@ public class MessageLib {
         send(sender, FORMATTING_DEFAULT, message, null);
     }
 
-    public void sendInfo(@NotNull CommandSender sender, @NotNull char formattingCode, @NotNull String message) {
-        send(sender, formattingCode, message, null);
-    }
-
     public void sendInfo(@NotNull CommandSender sender, @NotNull String message, @NotNull HoverText hoverText) {
         send(sender, FORMATTING_DEFAULT, message, hoverText);
+    }
+
+    public void sendInfo(@NotNull CommandSender sender, @NotNull char formattingCode, @NotNull String message) {
+        send(sender, formattingCode, message, null);
     }
 
     public void sendInfo(@NotNull CommandSender sender, @NotNull char formattingCode, @NotNull String message, @NotNull HoverText hoverText) {
         send(sender, formattingCode, message, hoverText);
     }
 
-    private void send(CommandSender sender, char formattingCode, String message, HoverText hoverText) {
-        if (formattingCode == '\u0000') {
-            formattingCode = FORMATTING_DEFAULT;
+    public void sendInfo(@NotNull CommandSender sender, @NotNull Enum template, @NotNull String message) {
+        send(sender, template, message, null);
+    }
+
+    public void sendInfo(@NotNull CommandSender sender, @NotNull Enum template, @NotNull String message, @NotNull HoverText hoverText) {
+        send(sender, template, message, hoverText);
+    }
+
+    private void send(CommandSender sender, Object formatOrEnum, String message, HoverText hoverText) {
+        if (formatOrEnum == null) {
+            formatOrEnum = FORMATTING_DEFAULT;
         }
 
         if (sender == null || message == null) {
@@ -106,21 +119,48 @@ public class MessageLib {
         }
 
         TextComponent textContainer = new TextComponent();
-        String suffix = new String();
 
-        if (formattingCode == FORMATTING_SUCCESS) suffix = SUFFIX_SUCCESS;
-        if (formattingCode == FORMATTING_WARNING) suffix = SUFFIX_WARNING;
-        if (formattingCode == FORMATTING_ERROR) suffix = SUFFIX_ERROR;
+        Object colorCode = null;
+        String suffix = null;
+        Sound sound = null;
 
-        if (addSpacing) sender.sendMessage("");
+        if (formatOrEnum instanceof Enum) {
+            switch ((Template) formatOrEnum) {
+                case SUCCESS:
+                    colorCode = FORMATTING_SUCCESS;
+                    suffix = SUFFIX_SUCCESS;
+                    sound = SOUND_SUCCESS;
+                    break;
+                case WARNING:
+                    colorCode = FORMATTING_WARNING;
+                    suffix = SUFFIX_WARNING;
+                    sound = SOUND_WARNING;
+                    break;
+                case ERROR:
+                    colorCode = FORMATTING_ERROR;
+                    suffix = SUFFIX_ERROR;
+                    sound = SOUND_ERROR;
+                    break;
+            }
+        }
+
+        if (colorCode == null) {
+            colorCode = formatOrEnum;
+        }
+
+        if (addSpacing) {
+            sender.sendMessage("");
+        }
 
         String text = new String();
 
         if (prefix != null) text += prefix + " ";
-        if (suffix != null) text += "§" + formattingCode + suffix + " ";
+        text += "§" + colorCode;
+        if (suffix != null) text += suffix + " ";
         if (seperateLine) text += "\n";
+        text += "§" + colorCode;
+        text += message;
 
-        text += "§" + formattingCode + message;
         textContainer.setText(text);
 
         if (hoverText != null) {
@@ -129,21 +169,14 @@ public class MessageLib {
 
         sender.spigot().sendMessage(textContainer);
 
-        if (addSpacing) sender.sendMessage("");
+        if (addSpacing) {
+            sender.sendMessage("");
+        }
 
-        if (!(sender instanceof Player player)) {
+        if (!(sender instanceof Player player) || sound == null) {
             return;
         }
 
-        Location location = player.getLocation();
-        if (SOUND_SUCCESS != null && formattingCode == FORMATTING_SUCCESS) {
-            player.playSound(location, SOUND_SUCCESS, VOLUME_SUCCESS != null ? VOLUME_SUCCESS : 1, 1);
-        }
-        if (SOUND_WARNING != null && formattingCode == FORMATTING_WARNING) {
-            player.playSound(location, SOUND_WARNING, VOLUME_WARNING != null ? VOLUME_WARNING : 1, 1);
-        }
-        if (SOUND_ERROR != null && formattingCode == FORMATTING_ERROR) {
-            player.playSound(location, SOUND_ERROR, VOLUME_ERROR != null ? VOLUME_ERROR : 1, 1);
-        }
+        player.playSound(player.getLocation(), sound, VOLUME_ERROR != null ? VOLUME_ERROR : 1, 1);
     }
 }
