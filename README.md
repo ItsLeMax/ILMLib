@@ -232,7 +232,7 @@ configLib.save("storage");
 #setPrefix(String: prefix, boolean?: seperateLine) -> MessageLib
 ```
 
-`prefix` is a message you want as prefix.
+`prefix` is a message you want as prefix.\
 `seperateLine` creates a new one for the message prefix alone when set to `true`.
 
 ### Different types of messages
