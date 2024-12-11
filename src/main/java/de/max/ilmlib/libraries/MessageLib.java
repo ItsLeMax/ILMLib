@@ -17,11 +17,11 @@ public class MessageLib {
     private boolean seperateLine;
     private String prefix;
 
-    private final char COLOR_DEFAULT = '7';
+    private final char FORMATTING_DEFAULT = '7';
 
-    public static char COLOR_SUCCESS;
-    public static char COLOR_WARNING;
-    public static char COLOR_ERROR;
+    public static char FORMATTING_SUCCESS;
+    public static char FORMATTING_WARNING;
+    public static char FORMATTING_ERROR;
 
     public static Sound SOUND_SUCCESS;
     public static Sound SOUND_WARNING;
@@ -56,9 +56,9 @@ public class MessageLib {
     }
 
     public MessageLib createDefaults() {
-        COLOR_SUCCESS = 'a';
-        COLOR_WARNING = 'e';
-        COLOR_ERROR = 'c';
+        FORMATTING_SUCCESS = 'a';
+        FORMATTING_WARNING = 'e';
+        FORMATTING_ERROR = 'c';
 
         try {
             SOUND_SUCCESS = Sound.ENTITY_EXPERIENCE_ORB_PICKUP;
@@ -81,24 +81,24 @@ public class MessageLib {
     }
 
     public void sendInfo(@NotNull CommandSender sender, @NotNull String message) {
-        send(sender, COLOR_DEFAULT, message, null);
+        send(sender, FORMATTING_DEFAULT, message, null);
     }
 
-    public void sendInfo(@NotNull CommandSender sender, @NotNull char colorCode, @NotNull String message) {
-        send(sender, colorCode, message, null);
+    public void sendInfo(@NotNull CommandSender sender, @NotNull char formattingCode, @NotNull String message) {
+        send(sender, formattingCode, message, null);
     }
 
     public void sendInfo(@NotNull CommandSender sender, @NotNull String message, @NotNull HoverText hoverText) {
-        send(sender, COLOR_DEFAULT, message, hoverText);
+        send(sender, FORMATTING_DEFAULT, message, hoverText);
     }
 
-    public void sendInfo(@NotNull CommandSender sender, @NotNull char colorCode, @NotNull String message, @NotNull HoverText hoverText) {
-        send(sender, colorCode, message, hoverText);
+    public void sendInfo(@NotNull CommandSender sender, @NotNull char formattingCode, @NotNull String message, @NotNull HoverText hoverText) {
+        send(sender, formattingCode, message, hoverText);
     }
 
-    private void send(CommandSender sender, char colorCode, String message, HoverText hoverText) {
-        if (colorCode == '\u0000') {
-            colorCode = COLOR_DEFAULT;
+    private void send(CommandSender sender, char formattingCode, String message, HoverText hoverText) {
+        if (formattingCode == '\u0000') {
+            formattingCode = FORMATTING_DEFAULT;
         }
 
         if (sender == null || message == null) {
@@ -108,19 +108,19 @@ public class MessageLib {
         TextComponent textContainer = new TextComponent();
         String suffix = new String();
 
-        if (colorCode == COLOR_SUCCESS) suffix = SUFFIX_SUCCESS;
-        if (colorCode == COLOR_WARNING) suffix = SUFFIX_WARNING;
-        if (colorCode == COLOR_ERROR) suffix = SUFFIX_ERROR;
+        if (formattingCode == FORMATTING_SUCCESS) suffix = SUFFIX_SUCCESS;
+        if (formattingCode == FORMATTING_WARNING) suffix = SUFFIX_WARNING;
+        if (formattingCode == FORMATTING_ERROR) suffix = SUFFIX_ERROR;
 
         if (addSpacing) sender.sendMessage("");
 
         String text = new String();
 
         if (prefix != null) text += prefix + " ";
-        if (suffix != null) text += "§" + colorCode + suffix + " ";
+        if (suffix != null) text += "§" + formattingCode + suffix + " ";
         if (seperateLine) text += "\n";
 
-        text += "§" + colorCode + message;
+        text += "§" + formattingCode + message;
         textContainer.setText(text);
 
         if (hoverText != null) {
@@ -136,13 +136,13 @@ public class MessageLib {
         }
 
         Location location = player.getLocation();
-        if (SOUND_SUCCESS != null && colorCode == COLOR_SUCCESS) {
+        if (SOUND_SUCCESS != null && formattingCode == FORMATTING_SUCCESS) {
             player.playSound(location, SOUND_SUCCESS, VOLUME_SUCCESS != null ? VOLUME_SUCCESS : 1, 1);
         }
-        if (SOUND_WARNING != null && colorCode == COLOR_WARNING) {
+        if (SOUND_WARNING != null && formattingCode == FORMATTING_WARNING) {
             player.playSound(location, SOUND_WARNING, VOLUME_WARNING != null ? VOLUME_WARNING : 1, 1);
         }
-        if (SOUND_ERROR != null && colorCode == COLOR_ERROR) {
+        if (SOUND_ERROR != null && formattingCode == FORMATTING_ERROR) {
             player.playSound(location, SOUND_ERROR, VOLUME_ERROR != null ? VOLUME_ERROR : 1, 1);
         }
     }
