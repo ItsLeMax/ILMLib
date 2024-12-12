@@ -276,7 +276,7 @@ If `addSpacing()` was called before, the message would look like this:
 #sendInfo(CommandSender: sender, char?: formattingCode | Template?: template, String: message, HoverText?: hoverText) -> void
 ```
 
-`sender` is either a console (`ConsoleSender`) or casted player `((Player) commandSender)`.\
+`sender` is either a console or player.\
 `formattingCode` describes the single character one from Minecraft.\
 `template` is an enum one you can use.\
 `message` is one that the player is supposed to see.\
