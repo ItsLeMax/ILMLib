@@ -23,12 +23,12 @@ Adds useful methods for Minecraft plugin developers to spare time and repetitive
 | Library    | Description                                                                      | Version     |
 | ---------- | -------------------------------------------------------------------------------- | ----------- |
 | ConfigLib  | Allows the easy creation and management of `yml` files, both prefilled and empty | `1.5-1.20+` |
-| MessageLib | lets you send messages with a pre-determined unified design                      | `1.8-1.20+` |
+| MessageLib | Lets you send messages with a pre-determined unified design                      | `1.8-1.20+` |
 | ItemLib    | Creates items easily without the need of having to extract the item meta         | `???`       |
 
 ## Documentation for the latest version
 
-### Main Class
+### Main class
 
 > Initializing the library
 
@@ -40,7 +40,7 @@ new ILMLib(JavaPlugin: plugin) -> ILMLib
 
 ## ConfigLib
 
-### Sub Class
+### Sub class
 
 > Gets the ConfigLib class with its methods
 
@@ -167,6 +167,7 @@ public static ConfigLib configLib;
 @Override
 public void onEnable() {
     configLib = new ILMLib(this).getConfigLib();
+
     configLib
         // plugin folder created one directory above, inside the server folder
         .setPluginFolderPath(this.getServer().getWorldContainer())
@@ -210,7 +211,7 @@ configLib.save("storage");
 
 ## MessageLib
 
-### Sub Class
+### Sub class
 
 > Gets the MessageLib class with its methods
 
@@ -263,7 +264,7 @@ If `addSpacing()` was called before, the message would look like this:
 | This is an information. |
 | ⠀                       |
 
-> Creates default values for templates (as seen later)
+> Creates default values for templates (format/color, sound and suffix, as seen later)
 
 ```java
 #createDefaults() -> MessageLib
@@ -275,13 +276,13 @@ If `addSpacing()` was called before, the message would look like this:
 #sendInfo(CommandSender: sender, char?: formattingCode | Template?: template, String: message, HoverText?: hoverText) -> void
 ```
 
-`sender` is the `commandSender` (console) or casted player `((Player) commandSender)`.\
+`sender` is either a console (`ConsoleSender`) or casted player `((Player) commandSender)`.\
 `formattingCode` describes the single character one from Minecraft.\
 `template` is an enum one you can use.\
 `message` is one that the player is supposed to see.\
 `hoverText` is one showing when the mouse cursor is above the message using a special class.
 
-### Formatting Codes
+### Formatting codes
 
 Color codes can be seen here:
 
@@ -317,15 +318,15 @@ You may also use non color formatting:
 
 ## Templates
 
-### Main Classes
+### Main classes
 
 > Initializing the library
 
-| Template class      | Return value       |
-| ------------------- | ------------------ |
-| new SuccessTemplate | -> SuccessTemplate |
-| new WarningTemplate | -> WarningTemplate |
-| new ErrorTemplate   | -> ErrorTemplate   |
+| Template initializer  | Return value       |
+| --------------------- | ------------------ |
+| new SuccessTemplate() | -> SuccessTemplate |
+| new WarningTemplate() | -> WarningTemplate |
+| new ErrorTemplate()   | -> ErrorTemplate   |
 
 ### Default values
 
@@ -336,21 +337,19 @@ You may also use non color formatting:
 | ErrorTemplate   | c (red)        | BLOCK_ANVIL_PLACE            | `Error! §7»`   |
 | Neither         | 7 (gray)       | None                         | None           |
 
-Using one of the template formats from above will determine its equivalent sound played later as seen in the example coming soon.
-
 ### Methods
 
 > [!NOTE]
 > If you choose to set the default values manually, you need to call these methods after `#createDefaults()`.
 > It will overwrite your settings otherwise.
 
-> Allows to overwrite the default format code
+> Allows to overwrite the default format code for the messages
 
 ```java
 #setFormattingCode(char: formattingCode)
 ```
 
-> Allows to overwrite the default sound
+> Allows to overwrite the default sound played to players on method call
 
 ```java
 #setSound(Sound: sound, Float?: volume)
@@ -359,13 +358,13 @@ Using one of the template formats from above will determine its equivalent sound
 `sound` is one played to a player when the message gets send.\
 `volume` is the playback loudness.
 
-> Allows to overwrite the default suffix
+> Allows to overwrite the default suffix shown behind the prefix
 
 ```java
 #setSuffix(String: suffix)
 ```
 
-`suffix` is one following right after the prefix.
+`suffix` is an additional text.
 
 ### Summarizing example
 
@@ -403,13 +402,13 @@ import static de.max.plugin.init.Main.messageLib;
 public boolean onCommand(@NotNull CommandSender sender /* and so on */) {
     if (COMMAND_DISABLED) {
         // FORMATTING_WARNING (custom blue color '9' from above) causes ENTITY_HORSE_AMBIENT to play
-        messageLib.sendInfo(sender, messageLib.Template.WARNING, "This command was disabled by the author.", new HoverText("§7Contact an administrator for more details."));
+        messageLib.sendInfo(sender, MessageLib.Template.WARNING, "This command was disabled by the author.", new HoverText("§7Contact an administrator for more details."));
         return true;
     }
 
     if (sender instance of Player player) {
         // FORMATTING_SUCCESS (default green color 'a' from *.createDefaults) causes ENTITY_EXPERIENCE_ORB_PICKUP to play
-        messageLib.sendInfo(player, messageLib.Template.SUCCESS, "Client created successfully.");
+        messageLib.sendInfo(player, MessageLib.Template.SUCCESS, "Client created successfully.");
     }
 
     return true;
