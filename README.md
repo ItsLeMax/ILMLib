@@ -416,12 +416,12 @@ public boolean onCommand(@NotNull CommandSender sender /* and so on */) {
 
 ## ItemLib (WiP)
 
-### Sub class
+### Main class
 
-> Gets the ItemLib class with its methods while creating a basic item
+> Initializing the library
 
 ```java
-#getItemLib(Material material, int amount) -> ItemLib
+new ItemLib(Material material, int amount) -> ItemLib
 ```
 
 ### Methods
