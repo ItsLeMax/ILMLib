@@ -57,7 +57,7 @@ new ILMLib() -> ILMLib
 #setPlugin(JavaPlugin: plugin, String?: pluginFolderPath) -> ConfigLib
 ```
 
-`plugin` is one from `onEnable`.
+`plugin` is one from `onEnable`.\
 `pluginFolderPath` is mentioned one.
 
 > Creates configs
@@ -220,7 +220,7 @@ configLib.save("storage");
 
 ### Methods
 
-> Creates an empty line before and after the message, thus creating space
+> Creates an empty line before and after the message
 
 ```java
 #addSpacing() -> MessageLib
