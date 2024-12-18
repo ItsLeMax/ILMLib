@@ -33,10 +33,8 @@ Adds useful methods for Minecraft plugin developers to spare time and repetitive
 > Initializing the library
 
 ```java
-new ILMLib(JavaPlugin: plugin) -> ILMLib
+new ILMLib() -> ILMLib
 ```
-
-`plugin` is one from `onEnable`.
 
 ## ConfigLib
 
@@ -51,15 +49,16 @@ new ILMLib(JavaPlugin: plugin) -> ILMLib
 ### Methods
 
 > [!WARNING]
-> Call this method first or it will not take effect.
+> Call this method before creating configs or it will not take effect.
 
-> Sets the path of the plugin config folder (allows path traversal)
+> Sets the plugin necessary for creating configs and the path of the plugin config folder (allows path traversal)
 
 ```java
-#setPluginFolderPath(String: pluginFolderPath) -> void
+#setPlugin(JavaPlugin: plugin, String?: pluginFolderPath) -> ConfigLib
 ```
 
-`pluginFolderPath` is mentioned path.
+`plugin` is one from `onEnable`.
+`pluginFolderPath` is mentioned one.
 
 > Creates configs
 
@@ -166,11 +165,11 @@ public static ConfigLib configLib;
 
 @Override
 public void onEnable() {
-    configLib = new ILMLib(this).getConfigLib();
+    configLib = new ILMLib().getConfigLib();
 
     configLib
-        // plugin folder created one directory above, inside the server folder
-        .setPluginFolderPath(this.getServer().getWorldContainer())
+        // plugin folder created (using the plugin) one directory above / inside the server folder
+        .setPlugin(this, this.getServer().getWorldContainer())
         // basic config files
         .createDefaults("config", "storage")
         // language config files
@@ -339,7 +338,7 @@ You may also use non color formatting:
 
 ### Methods
 
-> [!NOTE]
+> [!WARNING]
 > If you choose to set the default values manually, you need to call these methods after `#createDefaults()`.
 > It will overwrite your settings otherwise.
 
@@ -401,13 +400,13 @@ import static de.max.plugin.init.Main.messageLib;
 @Override
 public boolean onCommand(@NotNull CommandSender sender /* and so on */) {
     if (COMMAND_DISABLED) {
-        // FORMATTING_WARNING (custom blue color '9' from above) causes ENTITY_HORSE_AMBIENT to play
+        // Template.WARNING (custom blue color '9' from above) causes ENTITY_HORSE_AMBIENT to play
         messageLib.sendInfo(sender, MessageLib.Template.WARNING, "This command was disabled by the author.", new HoverText("§7Contact an administrator for more details."));
         return true;
     }
 
     if (sender instance of Player player) {
-        // FORMATTING_SUCCESS (default green color 'a' from *.createDefaults) causes ENTITY_EXPERIENCE_ORB_PICKUP to play
+        // Template.SUCCESS (default green color 'a' from *.createDefaults) causes ENTITY_EXPERIENCE_ORB_PICKUP to play
         messageLib.sendInfo(player, MessageLib.Template.SUCCESS, "Client created successfully.");
     }
 
