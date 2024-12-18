@@ -63,7 +63,7 @@ public class MessageLib {
     /**
      * @see #setPrefixVariable(String, boolean)
      */
-    public MessageLib setPrefix(@NotNull String prefix, boolean seperateLine) {
+    public MessageLib setPrefix(@NotNull String prefix, @NotNull boolean seperateLine) {
         setPrefixVariable(prefix, seperateLine);
         return this;
     }
