@@ -3,6 +3,7 @@ package de.max.ilmlib.libraries;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 
@@ -20,10 +21,9 @@ public class ItemLib {
      *               <p>
      *               Amount of items of the stack
      */
-    public ItemLib create(Material material, int amount) {
+    public ItemLib(@NotNull Material material, @NotNull int amount) {
         this.item = new ItemStack(material, amount);
         this.meta = item.getItemMeta();
-        return this;
     }
 
     /**
@@ -35,7 +35,7 @@ public class ItemLib {
      *                    <p>
      *                    Display name of the item
      */
-    public ItemLib setName(String displayName) {
+    public ItemLib setName(@NotNull String displayName) {
         meta.setDisplayName(displayName);
         return this;
     }
@@ -49,7 +49,7 @@ public class ItemLib {
      *             <p>
      *             Lores or subtitles
      */
-    public ItemLib setLore(String... lore) {
+    public ItemLib setLore(@NotNull String... lore) {
         meta.setLore(Arrays.asList(lore));
         return this;
     }
