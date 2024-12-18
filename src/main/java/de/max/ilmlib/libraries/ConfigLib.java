@@ -19,30 +19,38 @@ public class ConfigLib {
     private HashMap<String, HashMap<String, Object>> configs = new HashMap<>();
 
     /**
-     * Legt das Plugin und dessen Standardpfad fest
-     * <p>
-     * Sets the plugin and its default path
-     *
-     * @author Kurty00
+     * @see #set(JavaPlugin, String)
      */
     public ConfigLib setPlugin(@NotNull JavaPlugin plugin) {
-        this.plugin = plugin;
+        set(plugin, null);
+        return this;
+    }
+
+
+    /**
+     * @see #set(JavaPlugin, String)
+     */
+    public ConfigLib setPlugin(@NotNull JavaPlugin plugin, String pluginFolderPath) {
+        set(plugin, pluginFolderPath);
         return this;
     }
 
     /**
-     * Setzt den Pfad des Pluginordners
+     * Legt das Plugin und dessen Standardpfad fest
      * <p>
-     * Sets the path of the plugin folder
+     * Sets the plugin and its default path
      *
      * @param pluginFolderPath Dateipfad zum vorgesehenen Ordner des Plugins
      *                         <p>
      *                         File path to the planned folder of the plugin
-     * @author Kurty00
+     * @author Kurty00, ItsLeMax
      */
-    public ConfigLib setPluginFolderPath(@NotNull String pluginFolderPath) {
-        this.pluginFolderPath = pluginFolderPath;
-        return this;
+    private void set(JavaPlugin plugin, String pluginFolderPath) {
+        this.plugin = plugin;
+
+        if (pluginFolderPath != null) {
+            this.pluginFolderPath = pluginFolderPath;
+        }
     }
 
     /**
