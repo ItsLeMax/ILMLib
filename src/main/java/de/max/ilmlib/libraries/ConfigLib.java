@@ -25,8 +25,9 @@ public class ConfigLib {
      *
      * @author Kurty00
      */
-    public void setPlugin(@NotNull JavaPlugin plugin) {
+    public ConfigLib setPlugin(@NotNull JavaPlugin plugin) {
         this.plugin = plugin;
+        return this;
     }
 
     /**
@@ -39,8 +40,9 @@ public class ConfigLib {
      *                         File path to the planned folder of the plugin
      * @author Kurty00
      */
-    public void setPluginFolderPath(@NotNull String pluginFolderPath) {
+    public ConfigLib setPluginFolderPath(@NotNull String pluginFolderPath) {
         this.pluginFolderPath = pluginFolderPath;
+        return this;
     }
 
     /**
