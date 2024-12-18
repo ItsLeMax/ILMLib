@@ -40,26 +40,59 @@ public class MessageLib {
         ERROR
     }
 
+    /**
+     * Fügt eine leere Zeile zu Beginn und Ende der Nachricht hinzu
+     * <p>
+     * Adds an empty line at the beginning and ending of the message
+     *
+     * @author ItsLeMax
+     */
     public MessageLib addSpacing() {
         addSpacing = true;
         return this;
     }
 
+    /**
+     * @see #setPrefixVariable(String, boolean)
+     */
     public MessageLib setPrefix(@NotNull String prefix) {
         setPrefixVariable(prefix, false);
         return this;
     }
 
+    /**
+     * @see #setPrefixVariable(String, boolean)
+     */
     public MessageLib setPrefix(@NotNull String prefix, boolean seperateLine) {
         setPrefixVariable(prefix, seperateLine);
         return this;
     }
 
+    /**
+     * Setzt den Präfix der Nachrichten
+     * <p>
+     * Sets the prefix of the messages
+     *
+     * @param prefix       Präfix vor der Nachricht
+     *                     <p>
+     *                     Prefix in front of the message
+     * @param seperateLine Soll eine extra Zeile beansprucht werden
+     *                     <p>
+     *                     Should an additional line be used?
+     * @author ItsLeMax
+     */
     private void setPrefixVariable(String prefix, boolean seperateLine) {
         this.seperateLine = seperateLine;
         this.prefix = prefix;
     }
 
+    /**
+     * Setzt die Standardwerte aller Templates
+     * <p>
+     * Sets the default values of every template
+     *
+     * @author ItsLeMax
+     */
     public MessageLib createDefaults() {
         FORMATTING_SUCCESS = 'a';
         FORMATTING_WARNING = 'e';
@@ -71,7 +104,7 @@ public class MessageLib {
             SOUND_ERROR = Sound.BLOCK_ANVIL_PLACE;
         } catch (NoSuchFieldError ignored) {
             Bukkit.getLogger().warning("\n" +
-                    "A sound from the 'createDefaults' method call inside one of your plugins is not available " +
+                    "A sound from the #createDefaults method call inside one of your plugins is not available " +
                     "in your server version. Please set the sounds manually using the template classes (as seen in the docs)." + "\n" +
                     "You may use this resource as help: https://helpch.at/docs/" +
                     Bukkit.getServer().getVersion().split("MC: ")[1].split("\\)")[0] +
@@ -109,13 +142,32 @@ public class MessageLib {
         send(sender, template, message, hoverText);
     }
 
+    /**
+     * Sendet eine schematische Nachricht an einen Benutzer
+     * <p>
+     * Sends a message with scheme to a user
+     *
+     * @param sender       Sender, Spieler oder Konsole
+     *                     <p>
+     *                     Sender, player or console
+     * @param formatOrEnum Farb- oder Formatierungscode von Minecraft oder Template-Enum
+     *                     <p>
+     *                     Color or formatting code from Minecraft or template enum
+     * @param message      Nachricht für eine Person
+     *                     <p>
+     *                     Message for a person
+     * @param hoverText    Hovertext, welcher erscheint mit dem Mauszeiger über dem Text
+     *                     <p>
+     *                     Hover text, which will show with the mouse cursor above the text
+     * @author ItsLeMax
+     */
     private void send(CommandSender sender, Object formatOrEnum, String message, HoverText hoverText) {
         if (formatOrEnum == null) {
             formatOrEnum = FORMATTING_DEFAULT;
         }
 
         if (sender == null || message == null) {
-            throw new NullPointerException("The sendInfo method requires parameter 'sender' and 'message' to not be null. The message was not created.");
+            throw new NullPointerException("The #sendInfo method of MessageLib requires parameter 'sender' and 'message' to not be null. Use it accordingly.");
         }
 
         TextComponent textContainer = new TextComponent();
