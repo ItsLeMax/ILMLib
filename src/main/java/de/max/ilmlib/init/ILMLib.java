@@ -1,19 +1,17 @@
 package de.max.ilmlib.init;
 
 import de.max.ilmlib.libraries.ConfigLib;
-import de.max.ilmlib.libraries.ItemLib;
 import de.max.ilmlib.libraries.MessageLib;
 
 @SuppressWarnings("all")
 public class ILMLib {
     private ConfigLib configLib;
     private MessageLib messageLib;
-    private ItemLib itemLib;
 
     /**
-     * Initialisiert die Bibliothek und Variablen
+     * Macht die Bibliothek zugänglich für die Getter
      * <p>
-     * Initializes the library and variables
+     * Makes the libraries accessable for the getters
      *
      * @author Kurty00
      * @see <a href="https://github.com/itslemax/ilmlib">GitHub Repository</a>
@@ -21,7 +19,6 @@ public class ILMLib {
     public ILMLib() {
         configLib = new ConfigLib();
         messageLib = new MessageLib();
-        itemLib = new ItemLib();
     }
 
     /**
@@ -46,17 +43,5 @@ public class ILMLib {
      */
     public MessageLib getMessageLib() {
         return this.messageLib;
-    }
-
-    /**
-     * Gibt eine Instanz der Klasse ItemLib wieder
-     * <p>
-     * returns an instance of the class ItemLib
-     *
-     * @return ItemLib
-     * @author ItsLeMax
-     */
-    public ItemLib getItemLib() {
-        return this.itemLib;
     }
 }
