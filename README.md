@@ -374,7 +374,7 @@ public static MessageLib messageLib;
 
 @Override
 public void onEnable() {
-    messageLib = new ILMLib(this).getMessageLib();
+    messageLib = new ILMLib().getMessageLib();
 
     messageLib
         .addSpacing()
@@ -412,4 +412,45 @@ public boolean onCommand(@NotNull CommandSender sender /* and so on */) {
 
     return true;
 }
+```
+
+## ItemLib (WiP)
+
+### Sub class
+
+> Gets the ItemLib class with its methods while creating a basic item
+
+```java
+#getItemLib(Material material, int amount) -> ItemLib
+```
+
+### Methods
+
+> Sets the title of the item
+
+```java
+#setName(String displayName) -> ItemLib
+```
+
+> Sets the subtext of the item
+
+```java
+#setLore(String... lore) -> ItemLib
+```
+
+> Returns the item to use
+
+```java
+#build() -> ItemStack
+```
+
+### Summarizing example
+
+You can create an item like this:
+
+```java
+ItemStack compass = new ItemLib(Material.COMPASS, 1)
+    .setName("§cNavigator")
+    .setLore("§7Opens a GUI", "§7Contains Warps")
+    .build();
 ```
