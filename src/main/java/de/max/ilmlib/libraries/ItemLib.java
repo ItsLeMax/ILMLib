@@ -1,6 +1,7 @@
 package de.max.ilmlib.libraries;
 
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
@@ -31,12 +32,12 @@ public class ItemLib {
      * <p>
      * Sets the name of the ItemStack
      *
-     * @param displayName Display-Name des Items
-     *                    <p>
-     *                    Display name of the item
+     * @param name Name des Items
+     *             <p>
+     *             name of the item
      */
-    public ItemLib setName(@NotNull String displayName) {
-        meta.setDisplayName(displayName);
+    public ItemLib setName(@NotNull String name) {
+        meta.setDisplayName(name);
         return this;
     }
 
@@ -51,6 +52,11 @@ public class ItemLib {
      */
     public ItemLib setLore(@NotNull String... lore) {
         meta.setLore(Arrays.asList(lore));
+        return this;
+    }
+
+    public ItemLib addEnchant(@NotNull Enchantment enchantment) {
+        // WiP
         return this;
     }
 
