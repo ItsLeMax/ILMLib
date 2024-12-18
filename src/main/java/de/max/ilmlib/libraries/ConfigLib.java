@@ -26,7 +26,6 @@ public class ConfigLib {
         return this;
     }
 
-
     /**
      * @see #set(JavaPlugin, String)
      */
