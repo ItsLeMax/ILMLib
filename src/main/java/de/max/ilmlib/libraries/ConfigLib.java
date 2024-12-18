@@ -3,6 +3,7 @@ package de.max.ilmlib.libraries;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.IOException;
@@ -18,17 +19,14 @@ public class ConfigLib {
     private HashMap<String, HashMap<String, Object>> configs = new HashMap<>();
 
     /**
-     * Legt das Plugin und dessen Pfad fest
+     * Legt das Plugin und dessen Standardpfad fest
      * <p>
-     * Sets the plugin and its path
+     * Sets the plugin and its default path
      *
      * @author Kurty00
      */
-    public ConfigLib(JavaPlugin plugin) {
+    public void setPlugin(@NotNull JavaPlugin plugin) {
         this.plugin = plugin;
-        pluginFolderPath = plugin.getDataFolder().toString();
-        // System hier hinzufügen, mit welchem ggf. neue Einträge der
-        // yml-Dateien des Plugins in den Benutzergenerierten hinzugefügt werden
     }
 
     /**
@@ -36,10 +34,12 @@ public class ConfigLib {
      * <p>
      * Sets the path of the plugin folder
      *
-     * @param pluginFolderPath
+     * @param pluginFolderPath Dateipfad zum vorgesehenen Ordner des Plugins
+     *                         <p>
+     *                         File path to the planned folder of the plugin
      * @author Kurty00
      */
-    public void setPluginFolderPath(String pluginFolderPath) {
+    public void setPluginFolderPath(@NotNull String pluginFolderPath) {
         this.pluginFolderPath = pluginFolderPath;
     }
 
@@ -48,11 +48,11 @@ public class ConfigLib {
      * <p>
      * Retrieves the config file from the HashMap
      *
-     * @return Datei <p> File
+     * @return File Datei <p> File file
      * @author ItsLeMax
      * @see #configs
      */
-    public File getFile(String configName) {
+    public File getFile(@NotNull String configName) {
         return (File) configs.get(configName).get("file");
     }
 
@@ -61,11 +61,11 @@ public class ConfigLib {
      * <p>
      * Retrieves the config from the HashMap
      *
-     * @return FileConfiguration Config
+     * @return FileConfiguration Config <p> FileConfiguration Konfiguration
      * @author ItsLeMax
      * @see #configs
      */
-    public FileConfiguration getConfig(String configName) {
+    public FileConfiguration getConfig(@NotNull String configName) {
         return (FileConfiguration) configs.get(configName).get("configuration");
     }
 
@@ -76,7 +76,7 @@ public class ConfigLib {
      *
      * @author ItsLeMax
      */
-    public void save(String configName) {
+    public void save(@NotNull String configName) {
         try {
             getConfig(configName).save(getFile(configName));
         } catch (IOException ioException) {
@@ -110,11 +110,14 @@ public class ConfigLib {
      * @return String mit Text in der gewählten Sprache <p> String with text in the chosen language
      * @author ItsLeMax
      */
-    public String lang(String path) {
+    public String lang(@NotNull String path) {
         String language = getConfig("config").getString("language");
         FileConfiguration config = getConfig(language);
 
-        if (config == null) config = getConfig("en_US");
+        if (config == null) {
+            config = getConfig("en_US");
+        }
+
         return config.getString(path) == null ? "§c§lError" : config.getString(path);
     }
 
@@ -122,7 +125,7 @@ public class ConfigLib {
     /**
      * @see #create(String, String...)
      */
-    public ConfigLib createDefaults(String... configNames) {
+    public ConfigLib createDefaults(@NotNull String... configNames) {
         create(null, configNames);
         return this;
     }
@@ -130,7 +133,7 @@ public class ConfigLib {
     /**
      * @see #create(String, String...)
      */
-    public ConfigLib createInsideDirectory(String folderName, String... configNames) {
+    public ConfigLib createInsideDirectory(@NotNull String folderName, @NotNull String... configNames) {
         create(folderName, configNames);
         return this;
     }
@@ -149,8 +152,15 @@ public class ConfigLib {
      * @author ItsLeMax, Spigot
      * @link <a href="https://spigotmc.org/wiki/config-files/">Spigot Wiki</a>
      */
-    @SuppressWarnings("ResultOfMethodCallIgnored")
     private void create(String directoryName, String... fileNames) {
+        if (plugin == null) {
+            throw new NullPointerException("The file creation methods of ConfigLib require parameter 'plugin' to not be null. Use method #setPlugin accordingly.");
+        }
+
+        if (pluginFolderPath == null) {
+            pluginFolderPath = plugin.getDataFolder().toString();
+        }
+
         for (String fileName : fileNames) {
             String filePath = fileName + ".yml";
             if (directoryName != null) filePath = directoryName + "/" + filePath;
