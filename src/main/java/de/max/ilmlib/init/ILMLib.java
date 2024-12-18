@@ -3,12 +3,9 @@ package de.max.ilmlib.init;
 import de.max.ilmlib.libraries.ConfigLib;
 import de.max.ilmlib.libraries.ItemLib;
 import de.max.ilmlib.libraries.MessageLib;
-import org.bukkit.plugin.java.JavaPlugin;
 
 @SuppressWarnings("all")
 public class ILMLib {
-    private JavaPlugin plugin;
-
     private ConfigLib configLib;
     private MessageLib messageLib;
     private ItemLib itemLib;
@@ -21,10 +18,8 @@ public class ILMLib {
      * @author Kurty00
      * @see <a href="https://github.com/itslemax/ilmlib">GitHub Repository</a>
      */
-    public ILMLib(JavaPlugin plugin) {
-        this.plugin = plugin;
-
-        configLib = new ConfigLib(plugin);
+    public ILMLib() {
+        configLib = new ConfigLib();
         messageLib = new MessageLib();
         itemLib = new ItemLib();
     }
