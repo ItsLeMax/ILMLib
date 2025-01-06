@@ -55,7 +55,7 @@ public class ItemLib {
         return this;
     }
 
-    public ItemLib addEnchant(@NotNull Enchantment enchantment) {
+    public ItemLib addEnchantment(@NotNull Enchantment enchantment) {
         // WiP
         return this;
     }
@@ -67,7 +67,7 @@ public class ItemLib {
      *
      * @return ItemStack item
      */
-    public ItemStack build() {
+    public ItemStack create() {
         item.setItemMeta(meta);
         return item;
     }

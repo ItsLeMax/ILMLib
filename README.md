@@ -399,14 +399,17 @@ import static de.max.plugin.init.Main.messageLib;
 
 @Override
 public boolean onCommand(@NotNull CommandSender sender /* and so on */) {
+    // Sending a simple red message without template to the console
+    messageLib.sendInfo(Bukkit.getConsoleSender(), 'c', "Command executed.");
+
     if (COMMAND_DISABLED) {
-        // Template.WARNING (custom blue color '9' from above) causes ENTITY_HORSE_AMBIENT to play
+        // MessageLib.Template.WARNING (custom blue color '9' from above) causes ENTITY_HORSE_AMBIENT to play
         messageLib.sendInfo(sender, MessageLib.Template.WARNING, "This command was disabled by the author.", new HoverText("§7Contact an administrator for more details."));
         return true;
     }
 
     if (sender instance of Player player) {
-        // Template.SUCCESS (default green color 'a' from *.createDefaults) causes ENTITY_EXPERIENCE_ORB_PICKUP to play
+        // MessageLib.Template.SUCCESS (default green color 'a' from *.createDefaults) causes ENTITY_EXPERIENCE_ORB_PICKUP to play
         messageLib.sendInfo(player, MessageLib.Template.SUCCESS, "Client created successfully.");
     }
 
@@ -424,13 +427,18 @@ public boolean onCommand(@NotNull CommandSender sender /* and so on */) {
 new ItemLib(Material material, int amount) -> ItemLib
 ```
 
+`material` is one you want the item to have.\
+`amount` is one of a stack.
+
 ### Methods
 
 > Sets the title of the item
 
 ```java
-#setName(String displayName) -> ItemLib
+#setName(String name) -> ItemLib
 ```
+
+`name` is the text of the item
 
 > Sets the subtext of the item
 
@@ -438,10 +446,12 @@ new ItemLib(Material material, int amount) -> ItemLib
 #setLore(String... lore) -> ItemLib
 ```
 
+`lore` is the sub text below the name, visible inside any inventory
+
 > Returns the item to use
 
 ```java
-#build() -> ItemStack
+#create() -> ItemStack
 ```
 
 ### Summarizing example
@@ -452,5 +462,5 @@ You can create an item like this:
 ItemStack compass = new ItemLib(Material.COMPASS, 1)
     .setName("§cNavigator")
     .setLore("§7Opens a GUI", "§7Contains Warps")
-    .build();
+    .create();
 ```
