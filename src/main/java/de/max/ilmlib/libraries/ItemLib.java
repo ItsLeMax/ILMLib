@@ -14,15 +14,32 @@ public class ItemLib {
     private ItemMeta meta;
 
     /**
+     * @see #createItem(Material, int)
+     */
+    public ItemLib(@NotNull Material material) {
+        createItem(material, 1);
+    }
+
+    /**
+     * @see #createItem(Material, int)
+     */
+    public ItemLib(@NotNull Material material, @NotNull int amount) {
+        createItem(material, amount);
+    }
+
+    /**
      * Erstellt ein ItemStack mitsamt ItemMeta, bereit zur Bearbeitung
      * <p>
      * Creates an ItemStack with ItemMeta, ready to edit
      *
-     * @param amount Anzahl der Items im Stack
-     *               <p>
-     *               Amount of items of the stack
+     * @param material Material, welches das Item haben soll
+     *                 <p>
+     *                 Material that the item is supposed to have
+     * @param amount   Anzahl des Items
+     *                 <p>
+     *                 Amount of the item
      */
-    public ItemLib(@NotNull Material material, @NotNull int amount) {
+    private void createItem(Material material, int amount) {
         this.item = new ItemStack(material, amount);
         this.meta = item.getItemMeta();
     }
