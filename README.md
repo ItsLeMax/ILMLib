@@ -424,7 +424,7 @@ public boolean onCommand(@NotNull CommandSender sender /* and so on */) {
 > Initializing the library
 
 ```java
-new ItemLib(Material material, int amount) -> ItemLib
+new ItemLib(Material: material, int?: amount) -> ItemLib
 ```
 
 `material` is one you want the item to have.\
@@ -435,7 +435,7 @@ new ItemLib(Material material, int amount) -> ItemLib
 > Sets the title of the item
 
 ```java
-#setName(String name) -> ItemLib
+#setName(String: name) -> ItemLib
 ```
 
 `name` is the text of the item
@@ -443,7 +443,7 @@ new ItemLib(Material material, int amount) -> ItemLib
 > Sets the subtext of the item
 
 ```java
-#setLore(String... lore) -> ItemLib
+#setLore(String...: lore) -> ItemLib
 ```
 
 `lore` is the sub text below the name, visible inside any inventory
