@@ -216,7 +216,7 @@ public class MessageLib {
         textContainer.setText(text);
 
         if (hoverText != null) {
-            textContainer.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder(hoverText.retrieve()).create()));
+            textContainer.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§" + FORMATTING_DEFAULT + hoverText.retrieve()).create()));
         }
 
         sender.spigot().sendMessage(textContainer);
