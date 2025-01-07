@@ -26,24 +26,16 @@ Adds useful methods for Minecraft plugin developers to spare time and repetitive
 | MessageLib | Lets you send messages with a pre-determined unified design                      | `1.8-1.20+` |
 | ItemLib    | Creates items easily without the need of having to extract the item meta         | `???`       |
 
-## Documentation for the latest version
-
-### Main class
-
-> Initializing the library
-
-```java
-new ILMLib() -> ILMLib
-```
+# Documentation for the latest version
 
 ## ConfigLib
 
-### Sub class
+### Main class
 
 > Gets the ConfigLib class with its methods
 
 ```java
-#getConfigLib() -> ConfigLib
+new ConfigLib() -> ConfigLib
 ```
 
 ### Methods
@@ -149,7 +141,6 @@ general:
 ```yaml
 badWordsEnabled: true
 badWords: [damn, darn it]
-boop: false
 ```
 
 ...and `config.yml`:
@@ -165,9 +156,7 @@ public static ConfigLib configLib;
 
 @Override
 public void onEnable() {
-    configLib = new ILMLib().getConfigLib();
-
-    configLib
+    configLib = new ConfigLib()
         // plugin folder created (using the plugin) one directory above / inside the server folder
         .setPlugin(this, this.getServer().getWorldContainer())
         // basic config files
@@ -210,12 +199,12 @@ configLib.save("storage");
 
 ## MessageLib
 
-### Sub class
+### Main class
 
 > Gets the MessageLib class with its methods
 
 ```java
-#getMessageLib() -> MessageLib
+new MessageLib() -> MessageLib
 ```
 
 ### Methods
@@ -374,9 +363,7 @@ public static MessageLib messageLib;
 
 @Override
 public void onEnable() {
-    messageLib = new ILMLib().getMessageLib();
-
-    messageLib
+    messageLib = new MessageLib()
         .addSpacing()
         .setPrefix("§e§lFPM §7§l>", true)
         .createDefaults();
@@ -421,7 +408,7 @@ public boolean onCommand(@NotNull CommandSender sender /* and so on */) {
 
 ### Main class
 
-> Initializing the library
+> Gets the ItemLib class with its methods
 
 ```java
 new ItemLib(Material: material, int?: amount) -> ItemLib
