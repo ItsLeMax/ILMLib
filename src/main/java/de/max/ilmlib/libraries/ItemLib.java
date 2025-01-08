@@ -12,8 +12,8 @@ import java.util.List;
 
 @SuppressWarnings("all")
 public class ItemLib {
-    private ItemStack lastItem;
-    private ItemMeta lastMeta;
+    public ItemStack lastItem;
+    public ItemMeta lastMeta;
 
     /**
      * @see #item(Material, int)
