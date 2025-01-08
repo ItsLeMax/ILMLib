@@ -53,18 +53,18 @@ public class MessageLib {
     }
 
     /**
-     * @see #setPrefixVariable(String, boolean)
+     * @see #set(String, boolean)
      */
     public MessageLib setPrefix(@NotNull String prefix) {
-        setPrefixVariable(prefix, false);
+        set(prefix, false);
         return this;
     }
 
     /**
-     * @see #setPrefixVariable(String, boolean)
+     * @see #set(String, boolean)
      */
     public MessageLib setPrefix(@NotNull String prefix, @NotNull boolean seperateLine) {
-        setPrefixVariable(prefix, seperateLine);
+        set(prefix, seperateLine);
         return this;
     }
 
@@ -81,9 +81,9 @@ public class MessageLib {
      *                     Should an additional line be used?
      * @author ItsLeMax
      */
-    private void setPrefixVariable(String prefix, boolean seperateLine) {
-        this.seperateLine = seperateLine;
+    private void set(String prefix, boolean seperateLine) {
         this.prefix = prefix;
+        this.seperateLine = seperateLine;
     }
 
     /**
@@ -118,26 +118,44 @@ public class MessageLib {
         return this;
     }
 
+    /**
+     * @see #send(CommandSender, Object, String, HoverText)
+     */
     public void sendInfo(@NotNull CommandSender sender, @NotNull String message) {
         send(sender, FORMATTING_DEFAULT, message, null);
     }
 
+    /**
+     * @see #send(CommandSender, Object, String, HoverText)
+     */
     public void sendInfo(@NotNull CommandSender sender, @NotNull String message, @NotNull HoverText hoverText) {
         send(sender, FORMATTING_DEFAULT, message, hoverText);
     }
 
+    /**
+     * @see #send(CommandSender, Object, String, HoverText)
+     */
     public void sendInfo(@NotNull CommandSender sender, @NotNull char formattingCode, @NotNull String message) {
         send(sender, formattingCode, message, null);
     }
 
+    /**
+     * @see #send(CommandSender, Object, String, HoverText)
+     */
     public void sendInfo(@NotNull CommandSender sender, @NotNull char formattingCode, @NotNull String message, @NotNull HoverText hoverText) {
         send(sender, formattingCode, message, hoverText);
     }
 
+    /**
+     * @see #send(CommandSender, Object, String, HoverText)
+     */
     public void sendInfo(@NotNull CommandSender sender, @NotNull Enum template, @NotNull String message) {
         send(sender, template, message, null);
     }
 
+    /**
+     * @see #send(CommandSender, Object, String, HoverText)
+     */
     public void sendInfo(@NotNull CommandSender sender, @NotNull Enum template, @NotNull String message, @NotNull HoverText hoverText) {
         send(sender, template, message, hoverText);
     }

@@ -10,21 +10,36 @@ import java.util.Arrays;
 
 @SuppressWarnings("all")
 public class ItemLib {
-    private ItemStack item;
-    private ItemMeta meta;
+    public ItemStack lastItem;
+    public ItemMeta lastMeta;
 
     /**
-     * @see #createItem(Material, int)
+     * @see #item(Material, int)
      */
     public ItemLib(@NotNull Material material) {
-        createItem(material, 1);
+        item(material, 1);
     }
 
     /**
-     * @see #createItem(Material, int)
+     * @see #item(Material, int)
      */
     public ItemLib(@NotNull Material material, @NotNull int amount) {
-        createItem(material, amount);
+        item(material, amount);
+    }
+
+    /**
+     * Bildet die Grundlage zum Bearbeiten eines bereits existierenden Items
+     * <p>
+     * Creates the fundamentals of editing an already existing item
+     *
+     * @param item Item zum Bearbeiten
+     *             <p>
+     *             Item to edit
+     * @author ItsLeMax
+     */
+    public ItemLib(@NotNull ItemStack item) {
+        this.lastItem = item;
+        this.lastMeta = item.getItemMeta();
     }
 
     /**
@@ -39,9 +54,9 @@ public class ItemLib {
      *                 <p>
      *                 Amount of the item
      */
-    private void createItem(Material material, int amount) {
-        this.item = new ItemStack(material, amount);
-        this.meta = item.getItemMeta();
+    private void item(Material material, int amount) {
+        this.lastItem = new ItemStack(material, amount);
+        this.lastMeta = lastItem.getItemMeta();
     }
 
     /**
@@ -54,7 +69,7 @@ public class ItemLib {
      *             name of the item
      */
     public ItemLib setName(@NotNull String name) {
-        meta.setDisplayName(name);
+        lastMeta.setDisplayName(name);
         return this;
     }
 
@@ -68,7 +83,7 @@ public class ItemLib {
      *             Lores or subtitles
      */
     public ItemLib setLore(@NotNull String... lore) {
-        meta.setLore(Arrays.asList(lore));
+        lastMeta.setLore(Arrays.asList(lore));
         return this;
     }
 
@@ -85,7 +100,7 @@ public class ItemLib {
      * @return ItemStack item
      */
     public ItemStack create() {
-        item.setItemMeta(meta);
-        return item;
+        lastItem.setItemMeta(lastMeta);
+        return lastItem;
     }
 }
