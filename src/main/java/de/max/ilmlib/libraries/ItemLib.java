@@ -132,6 +132,18 @@ public class ItemLib {
         return this;
     }
 
+    /**
+     * @param enchantment Verzauberung zum Anwenden
+     *                    <p>
+     *                    Enchantment to apply
+     * @param level       Level of the enchantment
+     *                    <p>
+     *                    Stufe der Verzauberung
+     * @param hideNBT     Soll die Verzauberung beim Hovern über das Item versteckt sein?
+     *                    <p>
+     *                    Should the enchantment be hidden while hovering over the item?
+     * @author ItsLeMax
+     */
     private void add(Enchantment enchantment, int level, boolean hideNBT) {
         lastMeta.addEnchant(enchantment, level, true);
         if (hideNBT) {
