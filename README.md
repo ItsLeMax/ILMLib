@@ -412,10 +412,12 @@ public boolean onCommand(@NotNull CommandSender sender /* and so on */) {
 
 ```java
 new ItemLib(Material: material, int?: amount) -> ItemLib
+new ItemLib(ItemStack: item) -> ItemLib
 ```
 
 `material` is one you want the item to have.\
-`amount` is one of a stack.
+`amount` is one of a stack.\
+`item` is an existing one you can use to edit
 
 ### Methods
 
