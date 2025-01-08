@@ -449,13 +449,43 @@ new ItemLib(ItemStack?: item) -> ItemLib
 #create() -> ItemStack
 ```
 
+### Flexibility
+
+You can imagine the ItemLib class as an item builder:
+One can create items using the methods until it is finished using `create()`, meaning it is possible
+to call the editor later again and continue where you stopped before without using variables to store.
+This way you have the option to use if statements instead of using unpleasent ternary operators.
+
+```java
+@EventHandler
+public static void inventoryClick(InventoryClickEvent event) {
+    ItemLib itemLib = new ItemLib();
+
+    // creating a basic item
+    itemLib.setItem(Material.ANVIL).setName("§cRepair Anvil");
+
+    if (event.getCurrentItem() == null) return;
+    if (event.getCurrentItem().getType().equals(Material.ANVIL) && event.getClick().isRightClick()) {
+        // adding an enchantment under certain circumstances
+        itemLib.addEnchantment(Enchantment.ARROW_INFINITE, true);
+    }
+
+    // finalized item with #setItem, #setName and, if true, #addEnchantment
+    ItemStack finalItem = itemLib.create();
+}
+```
+
 ### Summarizing example
 
 You can create an item like this:
 
 ```java
-ItemStack compass = new ItemLib(Material.COMPASS, 1)
-    .setName("§cNavigator")
-    .setLore("§7Opens a GUI", "§7Contains Warps")
+ItemStack compass = new ItemLib()
+    // four cookies
+    .setItem(Material.COOKIE, 4)
+    .setName("§dGrandmas Cookie")
+    .setLore("§7Made with love. §c❤")
+    // Sharpness IV, not visible as usual below lore
+    .addEnchantment(Enchantment.SHARPNESS, 4, true)
     .create();
 ```

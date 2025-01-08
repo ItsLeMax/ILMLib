@@ -2,6 +2,7 @@ package de.max.ilmlib.libraries;
 
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
@@ -99,9 +100,43 @@ public class ItemLib {
         return this;
     }
 
+    /**
+     * @see #add(Enchantment, int)
+     */
     public ItemLib addEnchantment(@NotNull Enchantment enchantment) {
-        // WiP
+        add(enchantment, 1, false);
         return this;
+    }
+
+    /**
+     * @see #add(Enchantment, int)
+     */
+    public ItemLib addEnchantment(@NotNull Enchantment enchantment, int level) {
+        add(enchantment, level, false);
+        return this;
+    }
+
+    /**
+     * @see #add(Enchantment, int)
+     */
+    public ItemLib addEnchantment(@NotNull Enchantment enchantment, boolean hideNBT) {
+        add(enchantment, 1, hideNBT);
+        return this;
+    }
+
+    /**
+     * @see #add(Enchantment, int)
+     */
+    public ItemLib addEnchantment(@NotNull Enchantment enchantment, int level, boolean hideNBT) {
+        add(enchantment, level, hideNBT);
+        return this;
+    }
+
+    private void add(Enchantment enchantment, int level, boolean hideNBT) {
+        lastMeta.addEnchant(enchantment, level, true);
+        if (hideNBT) {
+            lastMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        }
     }
 
     /**
