@@ -404,7 +404,7 @@ public boolean onCommand(@NotNull CommandSender sender /* and so on */) {
 }
 ```
 
-## ItemLib (WiP)
+## ItemLib
 
 ### Main class
 
