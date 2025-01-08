@@ -7,24 +7,27 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
+import java.util.List;
 
 @SuppressWarnings("all")
 public class ItemLib {
-    public ItemStack lastItem;
-    public ItemMeta lastMeta;
+    private ItemStack lastItem;
+    private ItemMeta lastMeta;
 
     /**
      * @see #item(Material, int)
      */
-    public ItemLib(@NotNull Material material) {
+    public ItemLib setItem(@NotNull Material material) {
         item(material, 1);
+        return this;
     }
 
     /**
      * @see #item(Material, int)
      */
-    public ItemLib(@NotNull Material material, @NotNull int amount) {
+    public ItemLib setItem(@NotNull Material material, @NotNull int amount) {
         item(material, amount);
+        return this;
     }
 
     /**
@@ -37,9 +40,10 @@ public class ItemLib {
      *             Item to edit
      * @author ItsLeMax
      */
-    public ItemLib(@NotNull ItemStack item) {
+    public ItemLib setItem(@NotNull ItemStack item) {
         this.lastItem = item;
         this.lastMeta = item.getItemMeta();
+        return this;
     }
 
     /**
@@ -70,6 +74,14 @@ public class ItemLib {
      */
     public ItemLib setName(@NotNull String name) {
         lastMeta.setDisplayName(name);
+        return this;
+    }
+
+    /**
+     * @see #setLore(String...)
+     */
+    public ItemLib setLore(@NotNull List<String> lore) {
+        lastMeta.setLore(lore);
         return this;
     }
 
