@@ -127,7 +127,7 @@ public class ConfigLib {
             config = getConfig("en_US");
         }
 
-        return config.getString(path) == null ? "§c§lError" : config.getString(path);
+        return config.getString(path) == null ? "§rtext_not_found" : config.getString(path);
     }
 
 
