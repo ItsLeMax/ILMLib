@@ -19,37 +19,28 @@ public class ConfigLib {
     private HashMap<String, HashMap<String, Object>> configs = new HashMap<>();
 
     /**
-     * @see #set(JavaPlugin, String)
-     */
-    public ConfigLib setPlugin(@NotNull JavaPlugin plugin) {
-        set(plugin, null);
-        return this;
-    }
-
-    /**
-     * @see #set(JavaPlugin, String)
-     */
-    public ConfigLib setPlugin(@NotNull JavaPlugin plugin, String pluginFolderPath) {
-        set(plugin, pluginFolderPath);
-        return this;
-    }
-
-    /**
-     * Legt das Plugin und dessen Standardpfad fest
+     * Legt das Plugin fest
      * <p>
-     * Sets the plugin and its default path
+     * Sets the plugin
      *
-     * @param pluginFolderPath Dateipfad zum vorgesehenen Ordner des Plugins
-     *                         <p>
-     *                         File path to the planned folder of the plugin
-     * @author Kurty00, ItsLeMax
+     * @author Kurty00
      */
-    private void set(JavaPlugin plugin, String pluginFolderPath) {
+    public ConfigLib(@NotNull JavaPlugin plugin) {
         this.plugin = plugin;
+    }
 
-        if (pluginFolderPath != null) {
-            this.pluginFolderPath = pluginFolderPath;
-        }
+    /**
+     * Setzt den Pfad des Pluginordners
+     * <p>
+     * Sets the path of the plugin folder
+     *
+     * @param pluginFolderPath Pfad zum Pluginordnerziel
+     *                         <p>
+     *                         Path to the plugin folder destiny
+     * @author Kurty00
+     */
+    public void setPluginFolderPath(String pluginFolderPath) {
+        this.pluginFolderPath = pluginFolderPath;
     }
 
     /**
@@ -162,10 +153,6 @@ public class ConfigLib {
      * @link <a href="https://spigotmc.org/wiki/config-files/">Spigot Wiki</a>
      */
     private void create(String directoryName, String... fileNames) {
-        if (plugin == null) {
-            throw new NullPointerException("The file creation methods of ConfigLib require parameter 'plugin' to not be null. Use method #setPlugin accordingly.");
-        }
-
         if (pluginFolderPath == null) {
             pluginFolderPath = plugin.getDataFolder().toString();
         }
