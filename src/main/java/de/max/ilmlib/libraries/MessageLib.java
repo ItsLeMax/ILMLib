@@ -1,6 +1,6 @@
 package de.max.ilmlib.libraries;
 
-import de.max.ilmlib.utility.HoverText;
+import de.max.ilmlib.init.HoverText;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -10,34 +10,40 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @SuppressWarnings("all")
 public class MessageLib {
     private boolean addSpacing;
-    private boolean seperateLine;
     private String prefix;
+    private boolean seperateLine;
 
-    private final char FORMATTING_DEFAULT = '7';
-
-    public static char FORMATTING_SUCCESS;
-    public static char FORMATTING_WARNING;
-    public static char FORMATTING_ERROR;
-
-    public static Sound SOUND_SUCCESS;
-    public static Sound SOUND_WARNING;
-    public static Sound SOUND_ERROR;
-
-    public static Float VOLUME_SUCCESS;
-    public static Float VOLUME_WARNING;
-    public static Float VOLUME_ERROR;
-
-    public static String SUFFIX_SUCCESS;
-    public static String SUFFIX_WARNING;
-    public static String SUFFIX_ERROR;
+    private HashMap<Template, HashMap<String, Object>> templateData = new HashMap<>();
 
     public enum Template {
         SUCCESS,
         WARNING,
-        ERROR
+        ERROR,
+        INFO
+    }
+
+    /**
+     * Initialisiert die Templates
+     * <p>
+     * Initializes the templates
+     *
+     * @author ItsLeMax
+     */
+    public MessageLib() {
+        for (Template template : Template.values()) {
+            templateData.put(template, new HashMap() {{
+                put("formatting", null);
+                put("sound", null);
+                put("volume", null);
+                put("suffix", null);
+            }});
+        }
     }
 
     /**
@@ -53,15 +59,15 @@ public class MessageLib {
     }
 
     /**
-     * @see #set(String, boolean)
+     * @see #set(String, Boolean)
      */
     public MessageLib setPrefix(@NotNull String prefix) {
-        set(prefix, false);
+        set(prefix, null);
         return this;
     }
 
     /**
-     * @see #set(String, boolean)
+     * @see #set(String, Boolean)
      */
     public MessageLib setPrefix(@NotNull String prefix, @NotNull boolean seperateLine) {
         set(prefix, seperateLine);
@@ -76,12 +82,12 @@ public class MessageLib {
      * @param prefix       Präfix vor der Nachricht
      *                     <p>
      *                     Prefix in front of the message
-     * @param seperateLine Soll eine extra Zeile beansprucht werden
+     * @param seperateLine Soll eine Extrazeile belegt werden?
      *                     <p>
      *                     Should an additional line be used?
      * @author ItsLeMax
      */
-    private void set(String prefix, boolean seperateLine) {
+    private void set(String prefix, Boolean seperateLine) {
         this.prefix = prefix;
         this.seperateLine = seperateLine;
     }
@@ -94,14 +100,15 @@ public class MessageLib {
      * @author ItsLeMax
      */
     public MessageLib createDefaults() {
-        FORMATTING_SUCCESS = 'a';
-        FORMATTING_WARNING = 'e';
-        FORMATTING_ERROR = 'c';
+        templateData.get(Template.SUCCESS).put("formatting", 'a');
+        templateData.get(Template.WARNING).put("formatting", 'e');
+        templateData.get(Template.ERROR).put("formatting", 'c');
+        templateData.get(Template.INFO).put("formatting", '9');
 
         try {
-            SOUND_SUCCESS = Sound.ENTITY_EXPERIENCE_ORB_PICKUP;
-            SOUND_WARNING = Sound.UI_BUTTON_CLICK;
-            SOUND_ERROR = Sound.BLOCK_ANVIL_PLACE;
+            templateData.get(Template.SUCCESS).put("sound", Sound.ENTITY_EXPERIENCE_ORB_PICKUP);
+            templateData.get(Template.WARNING).put("sound", Sound.UI_BUTTON_CLICK);
+            templateData.get(Template.ERROR).put("sound", Sound.BLOCK_ANVIL_PLACE);
         } catch (NoSuchFieldError ignored) {
             Bukkit.getLogger().warning("\n" +
                     "A sound from the #createDefaults method call inside one of your plugins is not available " +
@@ -112,9 +119,111 @@ public class MessageLib {
             );
         }
 
-        SUFFIX_SUCCESS = "Success! §7»";
-        SUFFIX_WARNING = "Warning! §7»";
-        SUFFIX_ERROR = "Error! §7»";
+        templateData.get(Template.SUCCESS).put("suffix", "Success! §7»");
+        templateData.get(Template.WARNING).put("suffix", "Warning! §7»");
+        templateData.get(Template.ERROR).put("suffix", "Error! §7»");
+        templateData.get(Template.INFO).put("suffix", "Info! §7»");
+        return this;
+    }
+
+    /**
+     * Setzt den Formatierungscode zur Anwendung in den Templates
+     * <p>
+     * Sets the formatting code for usage inside the templates
+     *
+     * @param formattingCode Formatierungscode, welcher gesetzt werden soll
+     *                       <p>
+     *                       Formatting code that is supposed to be set
+     * @author ItsLeMax
+     * @see #setSuffix(Template, String)
+     */
+    public MessageLib setFormattingCode(@NotNull Template template, @NotNull Character formattingCode) {
+        templateData.get(template).put("formatting", formattingCode);
+        return this;
+    }
+
+    /**
+     * @param formattingCodes Formatierungscodes mehrerer Templates
+     *                        <p>
+     *                        Formatting codes of mulitple templates
+     * @see #setFormattingCode(Template, Character)
+     */
+    public MessageLib setFormattingCode(HashMap<Template, Character> formattingCodes) {
+        for (Map.Entry<Template, Character> entry : formattingCodes.entrySet()) {
+            setFormattingCode(entry.getKey(), entry.getValue());
+        }
+        return this;
+    }
+
+    /**
+     * Setzt den Ton zur Anwendung in den Templates
+     * <p>
+     * Sets the sound for usage inside the templates
+     *
+     * @param sound Sound, welcher gesetzt werden soll
+     *              <p>
+     *              Sound that is supposed to be set
+     * @author ItsLeMax
+     * @see #setSuffix(Template, String)
+     */
+    public MessageLib setSound(@NotNull Template template, @NotNull Sound sound) {
+        templateData.get(template).put("sound", sound);
+        return this;
+    }
+
+    /**
+     * @param volume Lautstärke, welche gesetzt werden soll
+     *               <p>
+     *               Volume that is supposed to be set
+     * @see #setSound(Template, Sound)
+     */
+    public MessageLib setSound(@NotNull Template template, @NotNull Sound sound, @NotNull Float volume) {
+        setSound(template, sound);
+        templateData.get(template).put("volume", volume);
+        return this;
+    }
+
+    /**
+     * @param sound Sound mehrerer Templates
+     *              <p>
+     *              Sound of mulitple templates
+     * @see #setSound(Template, Sound)
+     */
+    public MessageLib setSound(HashMap<Template, Sound> sound) {
+        for (Map.Entry<Template, Sound> entry : sound.entrySet()) {
+            setSound(entry.getKey(), entry.getValue());
+        }
+        return this;
+    }
+
+    /**
+     * Setzt den Suffix zur Anwendung in den Templates
+     * <p>
+     * Sets the suffix for usage inside the templates
+     *
+     * @param template Template zum Überschreiben
+     *                 <p>
+     *                 Template to overwrite
+     * @param suffix   Suffix, welcher gesetzt werden soll
+     *                 <p>
+     *                 Suffix that is supposed to be set
+     * @author ItsLeMax
+     */
+    public MessageLib setSuffix(@NotNull Template template, @NotNull String suffix) {
+        templateData.get(template).put("suffix", suffix);
+        return this;
+    }
+
+    /**
+     * @param suffix Suffix mehrerer Templates
+     *               <p>
+     *               Suffix of mulitple templates
+     * @see #setSuffix(Template, String)
+     */
+    public MessageLib setSuffix(HashMap<Template, String> suffix) {
+        for (Map.Entry<Template, String> entry : suffix.entrySet()) {
+            setSuffix(entry.getKey(), entry.getValue());
+        }
         return this;
     }
 
@@ -122,14 +231,14 @@ public class MessageLib {
      * @see #send(CommandSender, Object, String, HoverText)
      */
     public void sendInfo(@NotNull CommandSender sender, @NotNull String message) {
-        send(sender, FORMATTING_DEFAULT, message, null);
+        send(sender, null, message, null);
     }
 
     /**
      * @see #send(CommandSender, Object, String, HoverText)
      */
     public void sendInfo(@NotNull CommandSender sender, @NotNull String message, @NotNull HoverText hoverText) {
-        send(sender, FORMATTING_DEFAULT, message, hoverText);
+        send(sender, null, message, hoverText);
     }
 
     /**
@@ -165,7 +274,7 @@ public class MessageLib {
      * <p>
      * Sends a message with scheme to a user
      *
-     * @param sender       Sender, Spieler oder Konsole
+     * @param sender       Sendender, Spieler oder Konsole
      *                     <p>
      *                     Sender, player or console
      * @param formatOrEnum Farb- oder Formatierungscode von Minecraft oder Template-Enum
@@ -180,42 +289,28 @@ public class MessageLib {
      * @author ItsLeMax
      */
     private void send(CommandSender sender, Object formatOrEnum, String message, HoverText hoverText) {
-        if (formatOrEnum == null) {
-            formatOrEnum = FORMATTING_DEFAULT;
-        }
-
         if (sender == null || message == null) {
             throw new NullPointerException("The #sendInfo method of MessageLib requires parameter 'sender' and 'message' to not be null. Use it accordingly.");
         }
 
-        TextComponent textContainer = new TextComponent();
-
-        Object colorCode = null;
-        String suffix = null;
-        Sound sound = null;
-
-        if (formatOrEnum instanceof Enum) {
-            switch ((Template) formatOrEnum) {
-                case SUCCESS:
-                    colorCode = FORMATTING_SUCCESS;
-                    suffix = SUFFIX_SUCCESS;
-                    sound = SOUND_SUCCESS;
-                    break;
-                case WARNING:
-                    colorCode = FORMATTING_WARNING;
-                    suffix = SUFFIX_WARNING;
-                    sound = SOUND_WARNING;
-                    break;
-                case ERROR:
-                    colorCode = FORMATTING_ERROR;
-                    suffix = SUFFIX_ERROR;
-                    sound = SOUND_ERROR;
-                    break;
-            }
+        if (formatOrEnum == null || (!(formatOrEnum instanceof Template) && !(formatOrEnum instanceof Character))) {
+            formatOrEnum = '7';
         }
 
-        if (colorCode == null) {
-            colorCode = formatOrEnum;
+        TextComponent textContainer = new TextComponent();
+
+        Object formatting = null;
+        String suffix = null;
+        Sound sound = null;
+        Float volume = null;
+
+        if (formatOrEnum instanceof Enum) {
+            formatting = templateData.get(formatOrEnum).get("formatting");
+            suffix = (String) templateData.get(formatOrEnum).get("suffix");
+            sound = (Sound) templateData.get(formatOrEnum).get("sound");
+            volume = (Float) templateData.get(formatOrEnum).get("volume");
+        } else {
+            formatting = formatOrEnum;
         }
 
         if (addSpacing) {
@@ -225,16 +320,16 @@ public class MessageLib {
         String text = new String();
 
         if (prefix != null) text += prefix + " ";
-        text += "§" + colorCode;
+        text += "§" + formatting;
         if (suffix != null) text += suffix + " ";
         if (seperateLine) text += "\n";
-        text += "§" + colorCode;
+        text += "§" + formatting;
         text += message;
 
         textContainer.setText(text);
 
         if (hoverText != null) {
-            textContainer.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§" + FORMATTING_DEFAULT + hoverText.retrieve()).create()));
+            textContainer.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§7" + hoverText.retrieve()).create()));
         }
 
         sender.spigot().sendMessage(textContainer);
@@ -247,6 +342,6 @@ public class MessageLib {
             return;
         }
 
-        player.playSound(player.getLocation(), sound, VOLUME_ERROR != null ? VOLUME_ERROR : 1, 1);
+        player.playSound(player.getLocation(), sound, volume != null ? volume : 1, 1);
     }
 }
