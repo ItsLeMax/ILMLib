@@ -164,7 +164,12 @@ public class ItemLib {
      */
     public ItemStack create() {
         lastItem.setItemMeta(lastMeta);
-        return lastItem;
+
+        ItemStack newItem = lastItem;
+        lastItem = null;
+        lastMeta = null;
+
+        return newItem;
     }
 
     /**

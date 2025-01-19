@@ -137,7 +137,7 @@ public class MessageLib {
      * @author ItsLeMax
      * @see #setSuffix(Template, String)
      */
-    public MessageLib setFormattingCode(@NotNull Template template, @NotNull Character formattingCode) {
+    public MessageLib setFormattingCode(@NotNull Template template, @NotNull char formattingCode) {
         templateData.get(template).put("formatting", formattingCode);
         return this;
     }
@@ -184,13 +184,13 @@ public class MessageLib {
     }
 
     /**
-     * @param sound Sound mehrerer Templates
-     *              <p>
-     *              Sound of mulitple templates
+     * @param sounds Sound mehrerer Templates
+     *               <p>
+     *               Sound of mulitple templates
      * @see #setSound(Template, Sound)
      */
-    public MessageLib setSound(HashMap<Template, Sound> sound) {
-        for (Map.Entry<Template, Sound> entry : sound.entrySet()) {
+    public MessageLib setSound(HashMap<Template, Sound> sounds) {
+        for (Map.Entry<Template, Sound> entry : sounds.entrySet()) {
             setSound(entry.getKey(), entry.getValue());
         }
         return this;
@@ -215,13 +215,13 @@ public class MessageLib {
     }
 
     /**
-     * @param suffix Suffix mehrerer Templates
-     *               <p>
-     *               Suffix of mulitple templates
+     * @param suffixes Suffix mehrerer Templates
+     *                 <p>
+     *                 Suffix of mulitple templates
      * @see #setSuffix(Template, String)
      */
-    public MessageLib setSuffix(HashMap<Template, String> suffix) {
-        for (Map.Entry<Template, String> entry : suffix.entrySet()) {
+    public MessageLib setSuffix(HashMap<Template, String> suffixes) {
+        for (Map.Entry<Template, String> entry : suffixes.entrySet()) {
             setSuffix(entry.getKey(), entry.getValue());
         }
         return this;
