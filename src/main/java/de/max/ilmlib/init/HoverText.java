@@ -1,4 +1,4 @@
-package de.max.ilmlib.utility;
+package de.max.ilmlib.init;
 
 @SuppressWarnings("all")
 public class HoverText {
