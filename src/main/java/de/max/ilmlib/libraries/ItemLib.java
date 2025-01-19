@@ -12,8 +12,8 @@ import java.util.List;
 
 @SuppressWarnings("all")
 public class ItemLib {
-    public ItemStack lastItem;
-    public ItemMeta lastMeta;
+    private ItemStack lastItem;
+    private ItemMeta lastMeta;
 
     /**
      * @see #item(Material, int)
@@ -133,6 +133,10 @@ public class ItemLib {
     }
 
     /**
+     * Fügt eine Verzauberung zu einem Item hinzu
+     * <p>
+     * Adds an enchantment to an item
+     *
      * @param enchantment Verzauberung zum Anwenden
      *                    <p>
      *                    Enchantment to apply
@@ -156,10 +160,22 @@ public class ItemLib {
      * <p>
      * Returns the item
      *
-     * @return ItemStack item
+     * @return Erstelltes Item <p> Created item
      */
     public ItemStack create() {
         lastItem.setItemMeta(lastMeta);
         return lastItem;
+    }
+
+    /**
+     * Entnimmt die zwischenzeitlich erstellte Meta
+     * <p>
+     * Returns the in the meantime created item meta
+     *
+     * @return Temporäre Meta <p> Temporary meta
+     * @author ItsLeMax
+     */
+    public ItemMeta getItemMeta() {
+        return lastMeta;
     }
 }
