@@ -20,11 +20,11 @@ Adds useful methods for Minecraft plugin developers to spare time and repetitive
 
 ## Libraries and their supported Minecraft versions
 
-| Library    | Description                                                                      | Version     |
-| ---------- | -------------------------------------------------------------------------------- | ----------- |
-| ConfigLib  | Allows the easy creation and management of `yml` files, both prefilled and empty | `1.5-1.20+` |
-| MessageLib | Lets you send messages with a pre-determined unified design                      | `1.8-1.20+` |
-| ItemLib    | Creates items easily without the need of having to extract the item meta         | `???`       |
+| Library    | Description                                                                                              | Version     |
+| ---------- | -------------------------------------------------------------------------------------------------------- | ----------- |
+| ConfigLib  | Allows the easy creation and management of `yml` config/storage files, both prefilled and empty          | `1.5-1.20+` |
+| MessageLib | Lets you send messages with a pre-determined unified design and templates for human errors, success etc. | `1.8-1.20+` |
+| ItemLib    | Creates items easily without the need of having to extract the item meta                                 | `???`       |
 
 # Documentation for the latest version
 
@@ -35,22 +35,23 @@ Adds useful methods for Minecraft plugin developers to spare time and repetitive
 > Gets the ConfigLib class with its methods
 
 ```java
-new ConfigLib() -> ConfigLib
+new ConfigLib(JavaPlugin: plugin) -> ConfigLib
 ```
+
+`plugin` is one from `onEnable` required for config creation.
 
 ### Methods
 
 > [!WARNING]
 > Call this method before creating configs or it will not take effect.
 
-> Sets the plugin necessary for creating configs and the path of the plugin config folder (allows path traversal)
+> Sets the path of the plugin config folder (allows path traversal)
 
 ```java
-#setPlugin(JavaPlugin: plugin, String?: pluginFolderPath) -> ConfigLib
+#setPluginFolderPath(String: pluginFolderPath) -> ConfigLib
 ```
 
-`plugin` is one from `onEnable`.\
-`pluginFolderPath` is mentioned one.
+`pluginFolderPath` is one of the used operating system (relative paths are allowed, i.e. `../../PluginData`).
 
 > Creates configs
 
@@ -58,14 +59,43 @@ new ConfigLib() -> ConfigLib
 #createDefaults(String...: configNames) -> ConfigLib
 ```
 
+`configNames` are those of the configurations, strings seperated by a comma.
+
 > Creates configs inside a directory
 
 ```java
 #createInsideDirectory(String: directoryName, String...: configNames) -> ConfigLib
 ```
 
-`directoryName` is one of the folder.\
-`configNames` are those of the configurations, strings seperated by a comma.
+`directoryName` is one of the folder.
+
+> Gets a config
+
+```java
+#getConfig(String: configName) -> FileConfiguration
+```
+
+`configName` is one for the configuration.
+
+> Gets a config file
+
+```java
+#getFile(String: configName) -> File
+```
+
+> Saves a config
+
+```java
+#save(String: configName) -> void
+```
+
+> Loads a language key
+
+```java
+#lang(String: path) -> String
+```
+
+`path` is one of the config content, seperated by dots.
 
 ### Prefilled configs
 
@@ -82,34 +112,6 @@ Add a key called `language` and assign it the language you want to use (i.e. `de
 Use `createDefaults` (or `createInsideDirectory` if the file is inside a sub directory) with parameter `fileNames`
 being at least `config` to create it on server start.
 
-> Gets a config
-
-```java
-#getConfig(String: configName) -> FileConfiguration
-```
-
-> Gets a config file
-
-```java
-#getFile(String: configName) -> File
-```
-
-> Saves a config
-
-```java
-#save(String: configName) -> void
-```
-
-`configName` is one for the configuration.
-
-> Loads a language key
-
-```java
-#lang(String: path) -> String
-```
-
-`path` is one of the config content, seperated by dots.
-
 ### Summarizing example
 
 Your folder structure could look like this:
@@ -119,7 +121,7 @@ src.main.java
 ├  de.max.plugin.init.Main
 ├  ...
 resources
-├  language_data
+├  languages
 ├  ├  de_DE.yml
 ├  └  en_US.yml
 ├  config.yml
@@ -133,7 +135,6 @@ resources
 general:
  initial: Hallo Welt!
  error: Ein Fehler ist aufgetreten.
- debug: sout erreicht.
 ```
 
 ...`storage.yml`:
@@ -156,19 +157,20 @@ public static ConfigLib configLib;
 
 @Override
 public void onEnable() {
-    configLib = new ConfigLib()
-        // plugin folder created (using the plugin) one directory above / inside the server folder
-        .setPlugin(this, this.getServer().getWorldContainer())
+    configLib = new ConfigLib(this)
+        // plugin folder created one directory above / inside the server folder
+        .setPluginFolderPath(this.getServer().getWorldContainer())
         // basic config files
         .createDefaults("config", "storage")
         // language config files
-        .createInsideDirectory("language_data", "de_DE", "en_US");
+        .createInsideDirectory("languages", "de_DE", "en_US");
 }
 ```
 
 ...with this language call inside a different class:
 
 ```java
+// path may vary depending on your plugin package/folder structure
 import static de.max.plugin.init.Main.configLib;
 
 // sends "Hallo Welt!"
@@ -187,7 +189,7 @@ if (storageConfig.getBoolean("badWordsEnabled")) {
 
 storageConfig.set("myBelovedBoolean", true);
 
-// Feel free to use however you want
+// Feel free to use the file however you want
 storageFile.*;
 ```
 
@@ -209,13 +211,13 @@ new MessageLib() -> MessageLib
 
 ### Methods
 
-> Creates an empty line before and after the message
+> Creates an empty line before and after any message
 
 ```java
 #addSpacing() -> MessageLib
 ```
 
-> Sets a prefix message that gets shown right before the information
+> Sets a prefix message that gets shown right before any message
 
 ```java
 #setPrefix(String: prefix, boolean?: seperateLine) -> MessageLib
@@ -224,10 +226,62 @@ new MessageLib() -> MessageLib
 `prefix` is a message you want as prefix.\
 `seperateLine` creates a new one for the message prefix alone when set to `true`.
 
-### Different types of messages
+> Creates default values for templates (format/color, sound and suffix, as seen later)
 
 ```java
-messageLib.setPrefix("Plugin Info >");
+#createDefaults() -> MessageLib
+```
+
+> [!WARNING]
+> If you choose to set the default values manually, you need to call these methods after `#createDefaults()`.
+> It will overwrite your settings otherwise.
+
+> Allows to overwrite the default format code for the messages
+
+```java
+#setFormattingCode(Template: template, char: formattingCode)
+#setFormattingCode(HashMap<Template, Character>: formattingCodes)
+```
+
+`template` is an enum one you can use.\
+`formattingCode` describes a single character one from Minecraft.\
+`formattingCodes` are multiple inside a map.
+
+> Allows to overwrite the default sound played to players when sending a message
+
+```java
+#setSound(Template: template, Sound: sound, Float?: volume)
+#setSound(HashMap<Template, Sound>: sounds)
+```
+
+`sound` is one played to a player when a message gets send.\
+`volume` is the playback loudness.\
+`sounds` are multiple inside a map.
+
+> Allows to overwrite the default suffix shown right after the prefix
+
+```java
+#setSuffix(Template: template, String: suffix)
+#setSuffix(HashMap<Template, String> suffixes)
+```
+
+`suffix` is an additional text.\
+`suffixes` are multiple inside a map.
+
+> Generates a message using the specifications from earlier and template or custom values
+
+```java
+#sendInfo(CommandSender: sender, char?: formattingCode | Template?: template, String: message, HoverText?: hoverText) -> void
+```
+
+`sender` is either a console or player.\
+`message` is one that the player is supposed to see.\
+`hoverText` is one showing when the mouse cursor is above the message using a special class.
+
+### Message variety
+
+```java
+new MessageLib().setPrefix("Plugin Info >");
 ```
 
 Using this method will create a message like this:
@@ -237,7 +291,7 @@ Using this method will create a message like this:
 A space will be added after the prefix automatically.
 
 ```java
-messageLib.setPrefix("Plugin Info:", true);
+new MessageLib().setPrefix("Plugin Info:", true);
 ```
 
 The method with `seperateLine` set to `true` creates one like this:
@@ -251,24 +305,6 @@ If `addSpacing()` was called before, the message would look like this:
 | **Plugin Info:**        |
 | This is an information. |
 | ⠀                       |
-
-> Creates default values for templates (format/color, sound and suffix, as seen later)
-
-```java
-#createDefaults() -> MessageLib
-```
-
-> Generates a message using the specifications from earlier or default values
-
-```java
-#sendInfo(CommandSender: sender, char?: formattingCode | Template?: template, String: message, HoverText?: hoverText) -> void
-```
-
-`sender` is either a console or player.\
-`formattingCode` describes the single character one from Minecraft.\
-`template` is an enum one you can use.\
-`message` is one that the player is supposed to see.\
-`hoverText` is one showing when the mouse cursor is above the message using a special class.
 
 ### Formatting codes
 
@@ -304,55 +340,15 @@ You may also use non color formatting:
 | Italic        | o               |
 | Reset         | r               |
 
-## Templates
+### Templates default values
 
-### Main classes
-
-> Initializing the library
-
-| Template initializer  | Return value       |
-| --------------------- | ------------------ |
-| new SuccessTemplate() | -> SuccessTemplate |
-| new WarningTemplate() | -> WarningTemplate |
-| new ErrorTemplate()   | -> ErrorTemplate   |
-
-### Default values
-
-| Template class  | Default format | Default sound                | Default suffix |
-| --------------- | -------------- | ---------------------------- | -------------- |
-| SuccessTemplate | a (green)      | ENTITY_EXPERIENCE_ORB_PICKUP | `Success! §7»` |
-| WarningTemplate | e (yellow)     | UI_BUTTON_CLICK              | `Warning! §7»` |
-| ErrorTemplate   | c (red)        | BLOCK_ANVIL_PLACE            | `Error! §7»`   |
-| Neither         | 7 (gray)       | None                         | None           |
-
-### Methods
-
-> [!WARNING]
-> If you choose to set the default values manually, you need to call these methods after `#createDefaults()`.
-> It will overwrite your settings otherwise.
-
-> Allows to overwrite the default format code for the messages
-
-```java
-#setFormattingCode(char: formattingCode)
-```
-
-> Allows to overwrite the default sound played to players on method call
-
-```java
-#setSound(Sound: sound, Float?: volume)
-```
-
-`sound` is one played to a player when the message gets send.\
-`volume` is the playback loudness.
-
-> Allows to overwrite the default suffix shown behind the prefix
-
-```java
-#setSuffix(String: suffix)
-```
-
-`suffix` is an additional text.
+| Template class (`MessageLib.Template.*`) | Default format | Default sound                | Default suffix |
+| ---------------------------------------- | -------------- | ---------------------------- | -------------- |
+| SUCCESS                                  | a (green)      | ENTITY_EXPERIENCE_ORB_PICKUP | `Success! §7»` |
+| WARNING                                  | e (yellow)     | UI_BUTTON_CLICK              | `Warning! §7»` |
+| ERROR                                    | c (red)        | BLOCK_ANVIL_PLACE            | `Error! §7»`   |
+| INFO                                     | 9 (blue)       | *None*                       | `Info! §7»`    |
+| *Neither*                                | 7 (gray)       | *None*                       | *None*         |
 
 ### Summarizing example
 
@@ -366,22 +362,24 @@ public void onEnable() {
     messageLib = new MessageLib()
         .addSpacing()
         .setPrefix("§e§lFPM §7§l>", true)
-        .createDefaults();
-
-    // Creates (or overwrites the specific default in this case) custom values for the warning template
-    new WarningTemplate()
-        // blue
-        .setFormattingCode('9')
-        // half as loud
-        .setSound(Sound.ENTITY_HORSE_AMBIENT, .5f)
-        // using the warning template as info instead
-        .setSuffix("[Info]:");
+        .createDefaults()
+        // setting (or in this case overwriting due to #createDefaults) the color of the info template alone
+        .setFormattingCode(MessageLib.Template.INFO, '3')
+        // same with the sound for the info template, additionally half as loud
+        .setSound(MessageLib.Template.INFO, Sound.ENTITY_ENDERMAN_TELEPORT, .5f)
+        // overwriting the suffix of multiple templates using a HashMap
+        .setSuffix(new HashMap<>() {{
+            put(MessageLib.Template.SUCCESS, "[✔]");
+            put(MessageLib.Template.WARNING, "[⚠]");
+            put(MessageLib.Template.ERROR, "[!]");
+        }});
 }
 ```
 
 ...and creating messages inside other classes is as easy as this:
 
 ```java
+// as seen before: the import depends on your project
 import static de.max.plugin.init.Main.messageLib;
 
 @Override
@@ -389,15 +387,16 @@ public boolean onCommand(@NotNull CommandSender sender /* and so on */) {
     // Sending a simple red message without template to the console
     messageLib.sendInfo(Bukkit.getConsoleSender(), 'c', "Command executed.");
 
+    // Sending a message using a template
     if (COMMAND_DISABLED) {
-        // MessageLib.Template.WARNING (custom blue color '9' from above) causes ENTITY_HORSE_AMBIENT to play
-        messageLib.sendInfo(sender, MessageLib.Template.WARNING, "This command was disabled by the author.", new HoverText("§7Contact an administrator for more details."));
+        // MessageLib.Template.INFO from the custom value above uses '3' as color and causes ENTITY_ENDERMAN_TELEPORT to play
+        messageLib.sendInfo(sender, MessageLib.Template.INFO, "This command was disabled by the author.", new HoverText("§7Contact an administrator for more details."));
         return true;
     }
 
-    if (sender instance of Player player) {
-        // MessageLib.Template.SUCCESS (default green color 'a' from *.createDefaults) causes ENTITY_EXPERIENCE_ORB_PICKUP to play
-        messageLib.sendInfo(player, MessageLib.Template.SUCCESS, "Client created successfully.");
+    if (sender instanceof Player) {
+        // MessageLib.Template.SUCCESS from *.createDefaults uses 'a' as color and causes ENTITY_EXPERIENCE_ORB_PICKUP to play
+        messageLib.sendInfo((Player) sender, MessageLib.Template.SUCCESS, "Client created successfully.");
     }
 
     return true;
@@ -442,6 +441,12 @@ new ItemLib(ItemStack?: item) -> ItemLib
 ```
 
 `lore` is the sub text below the name, visible inside any inventory
+
+> Gets the currently stored item meta
+
+```java
+#getItemMeta() -> ItemMeta
+```
 
 > Returns the item to use
 
