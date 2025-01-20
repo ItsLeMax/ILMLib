@@ -1,7 +1,7 @@
 # ILMLib
 
 Adds useful methods for Minecraft plugin developers to spare time and repetitive code
-![1 0 0-methods](https://github.com/user-attachments/assets/5ba9accf-274b-4c66-881f-fccdba0842bd)
+![1 0 0-methods](https://github.com/user-attachments/assets/91bdd179-2eb4-431b-9e66-58059b80999f)
 
 ## Setup
 
