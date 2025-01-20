@@ -240,6 +240,8 @@ new MessageLib() -> MessageLib
 
 ```java
 #setFormattingCode(Template: template, char: formattingCode)
+```
+```java
 #setFormattingCode(HashMap<Template, Character>: formattingCodes)
 ```
 
@@ -251,6 +253,8 @@ new MessageLib() -> MessageLib
 
 ```java
 #setSound(Template: template, Sound: sound, Float?: volume)
+```
+```java
 #setSound(HashMap<Template, Sound>: sounds)
 ```
 
@@ -262,6 +266,8 @@ new MessageLib() -> MessageLib
 
 ```java
 #setSuffix(Template: template, String: suffix)
+```
+```java
 #setSuffix(HashMap<Template, String> suffixes)
 ```
 
@@ -411,6 +417,8 @@ public boolean onCommand(@NotNull CommandSender sender /* and so on */) {
 
 ```java
 new ItemLib(Material: material, int?: amount) -> ItemLib
+```
+```java
 new ItemLib(ItemStack?: item) -> ItemLib
 ```
 
