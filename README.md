@@ -243,12 +243,12 @@ new MessageLib() -> MessageLib
 ```
 
 ```java
-#setFormattingCode(HashMap<Template, Character>: formattingCodes) -> MessageLib
+#setFormattingCode(HashMap: formattingCodes) -> MessageLib
 ```
 
 `template` is an enum one you can use.\
 `formattingCode` describes a single character one from Minecraft.\
-`formattingCodes` are multiple inside a map.
+`formattingCodes` are multiple inside a map with content `<Template, Character>`.
 
 > Allows to overwrite the default sound played to players when sending a message
 
@@ -257,12 +257,12 @@ new MessageLib() -> MessageLib
 ```
 
 ```java
-#setSound(HashMap<Template, Sound>: sounds) -> MessageLib
+#setSound(HashMap: sounds) -> MessageLib
 ```
 
 `sound` is one played to a player when a message gets send.\
 `volume` is the playback loudness.\
-`sounds` are multiple inside a map.
+`sounds` are multiple inside a map with content `<Template, Sound>`.
 
 > Allows to overwrite the default suffix shown right after the prefix
 
@@ -271,11 +271,11 @@ new MessageLib() -> MessageLib
 ```
 
 ```java
-#setSuffix(HashMap<Template, String> suffixes) -> MessageLib
+#setSuffix(HashMap: suffixes) -> MessageLib
 ```
 
 `suffix` is an additional text.\
-`suffixes` are multiple inside a map.
+`suffixes` are multiple inside a map with content `<Template, String>`.
 
 > Generates a message using the specifications from earlier and template or custom values
 
@@ -419,16 +419,8 @@ public boolean onCommand(@NotNull CommandSender sender /* and so on */) {
 > Gets the ItemLib class with its methods
 
 ```java
-new ItemLib(Material: material, int?: amount) -> ItemLib
+new ItemLib() -> ItemLib
 ```
-
-```java
-new ItemLib(ItemStack?: item) -> ItemLib
-```
-
-`material` is one you want the item to have.\
-`amount` is one of a stack.\
-`item` is an existing one you can use to edit
 
 ### Methods
 
@@ -437,6 +429,14 @@ new ItemLib(ItemStack?: item) -> ItemLib
 ```java
 #setItem(Material: material, int?: amount) -> ItemLib
 ```
+
+```java
+#setItem(ItemStack: item) -> ItemLib
+```
+
+`material` is one you want the item to have.\
+`amount` is one of a stack.\
+`item` is an existing one you can use to edit
 
 > Sets the title of the item
 
@@ -449,10 +449,10 @@ new ItemLib(ItemStack?: item) -> ItemLib
 > Sets the subtext of the item
 
 ```java
-#setLore(String...: lore | List<String>: lore) -> ItemLib
+#setLore(String...: lore | List: lore) -> ItemLib
 ```
 
-`lore` is the sub text below the name, visible inside any inventory
+`lore` is the sub text below the name with content `<String>`, visible inside any inventory
 
 > Gets the currently stored item meta
 
