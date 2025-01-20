@@ -239,10 +239,11 @@ new MessageLib() -> MessageLib
 > Allows to overwrite the default format code for the messages
 
 ```java
-#setFormattingCode(Template: template, char: formattingCode)
+#setFormattingCode(Template: template, char: formattingCode) -> MessageLib
 ```
+
 ```java
-#setFormattingCode(HashMap<Template, Character>: formattingCodes)
+#setFormattingCode(HashMap<Template, Character>: formattingCodes) -> MessageLib
 ```
 
 `template` is an enum one you can use.\
@@ -252,10 +253,11 @@ new MessageLib() -> MessageLib
 > Allows to overwrite the default sound played to players when sending a message
 
 ```java
-#setSound(Template: template, Sound: sound, Float?: volume)
+#setSound(Template: template, Sound: sound, Float?: volume) -> MessageLib
 ```
+
 ```java
-#setSound(HashMap<Template, Sound>: sounds)
+#setSound(HashMap<Template, Sound>: sounds) -> MessageLib
 ```
 
 `sound` is one played to a player when a message gets send.\
@@ -265,10 +267,11 @@ new MessageLib() -> MessageLib
 > Allows to overwrite the default suffix shown right after the prefix
 
 ```java
-#setSuffix(Template: template, String: suffix)
+#setSuffix(Template: template, String: suffix) -> MessageLib
 ```
+
 ```java
-#setSuffix(HashMap<Template, String> suffixes)
+#setSuffix(HashMap<Template, String> suffixes) -> MessageLib
 ```
 
 `suffix` is an additional text.\
@@ -418,6 +421,7 @@ public boolean onCommand(@NotNull CommandSender sender /* and so on */) {
 ```java
 new ItemLib(Material: material, int?: amount) -> ItemLib
 ```
+
 ```java
 new ItemLib(ItemStack?: item) -> ItemLib
 ```
