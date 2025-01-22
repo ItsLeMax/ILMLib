@@ -39,7 +39,7 @@ public class ConfigLib {
      *                         Path to the plugin folder destiny
      * @author Kurty00
      */
-    public void setPluginFolderPath(String pluginFolderPath) {
+    public void setPluginFolderPath(@NotNull String pluginFolderPath) {
         this.pluginFolderPath = pluginFolderPath;
     }
 

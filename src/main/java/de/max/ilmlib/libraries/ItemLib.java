@@ -111,7 +111,7 @@ public class ItemLib {
     /**
      * @see #add(Enchantment, int)
      */
-    public ItemLib addEnchantment(@NotNull Enchantment enchantment, int level) {
+    public ItemLib addEnchantment(@NotNull Enchantment enchantment, @NotNull int level) {
         add(enchantment, level, false);
         return this;
     }
@@ -119,7 +119,7 @@ public class ItemLib {
     /**
      * @see #add(Enchantment, int)
      */
-    public ItemLib addEnchantment(@NotNull Enchantment enchantment, boolean hideNBT) {
+    public ItemLib addEnchantment(@NotNull Enchantment enchantment, @NotNull boolean hideNBT) {
         add(enchantment, 1, hideNBT);
         return this;
     }
@@ -127,7 +127,7 @@ public class ItemLib {
     /**
      * @see #add(Enchantment, int)
      */
-    public ItemLib addEnchantment(@NotNull Enchantment enchantment, int level, boolean hideNBT) {
+    public ItemLib addEnchantment(@NotNull Enchantment enchantment, @NotNull int level, @NotNull boolean hideNBT) {
         add(enchantment, level, hideNBT);
         return this;
     }
