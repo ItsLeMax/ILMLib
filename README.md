@@ -13,9 +13,9 @@ I decided to make it public if other people are interested.
 
 | Library    | Description                                                                                              | Theoretical Compatibilty | Tested                           |
 | ---------- | -------------------------------------------------------------------------------------------------------- | ------------------------ | -------------------------------- |
-| ConfigLib  | Allows the easy creation and management of `yml` config/storage files, both prefilled and empty          | `1.5`-`1.21+`            | `1.12.2`<br>`1.20.\*`<br>1.21.4` |
-| MessageLib | Lets you send messages with a pre-determined unified design and templates for human errors, success etc. | `1.8`-`1.21+`            | `1.12.2`<br>`1.20.\*`<br>1.21.4` |
-| ItemLib    | Creates items easily without the need of having to extract the item meta                                 | `1.8`-`1.21+`            | `1.12.2`<br>`1.20.\*`<br>1.21.4` |
+| ConfigLib  | Allows the easy creation and management of `yml` config/storage files, both prefilled and empty          | `1.5`-`1.21+`            | `1.12.2`<br>`1.20.*`<br>`1.21.4` |
+| MessageLib | Lets you send messages with a pre-determined unified design and templates for human errors, success etc. | `1.8`-`1.21+`            | `1.12.2`<br>`1.20.*`<br>`1.21.4` |
+| ItemLib    | Creates items easily without the need of having to extract the item meta                                 | `1.8`-`1.21+`            | `1.12.2`<br>`1.20.*`<br>`1.21.4` |
 
 ## Setup
 
