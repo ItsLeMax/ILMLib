@@ -3,6 +3,20 @@
 Adds useful methods for Minecraft plugin developers to spare time and repetitive code
 ![1 0 0-methods](https://github.com/user-attachments/assets/91bdd179-2eb4-431b-9e66-58059b80999f)
 
+## Purpose of this library
+
+I am aware that there do indeed exist a ton of other libraries but I had the urge to create one myself for the experience and individual preferences I was able to implement.
+I decided to make it public if other people are interested.
+> One goal kept in mind while developing this library was to make it <b>compatible with most of the Minecraft versions</b>, including future releases.
+
+## Sub-libraries and their supported Minecraft versions
+
+| Library    | Description                                                                                              | Theoretical Compatibilty | Tested                    |
+| ---------- | -------------------------------------------------------------------------------------------------------- | ------------------------ | ------------------------- |
+| ConfigLib  | Allows the easy creation and management of `yml` config/storage files, both prefilled and empty          | `1.5`-`1.21+`            | 1.12.2, 1.20.\*, 1.21.4   |
+| MessageLib | Lets you send messages with a pre-determined unified design and templates for human errors, success etc. | `1.8`-`1.21+`            | 1.12.2, 1.20.\*, 1.21.4   |
+| ItemLib    | Creates items easily without the need of having to extract the item meta                                 | `1.8`-`1.21+`            | 1.12.2, 1.20.\*, 1.21.4   |
+
 ## Setup
 
 1. Download the latest jar file [here](https://github.com/ItsLeMax/ILMLib/releases/latest).\
@@ -17,14 +31,6 @@ Adds useful methods for Minecraft plugin developers to spare time and repetitive
 ![1 0 0-select](https://github.com/user-attachments/assets/17b1b5c5-a327-4eba-abab-495e4517e88a)
 6. Click on `Apply`.\
 ![1 0 0-apply](https://github.com/user-attachments/assets/21bcba00-332d-479c-9290-b4cc5d1cc956)
-
-## Libraries and their supported Minecraft versions
-
-| Library    | Description                                                                                              | Version     |
-| ---------- | -------------------------------------------------------------------------------------------------------- | ----------- |
-| ConfigLib  | Allows the easy creation and management of `yml` config/storage files, both prefilled and empty          | `1.5-1.20+` |
-| MessageLib | Lets you send messages with a pre-determined unified design and templates for human errors, success etc. | `1.8-1.20+` |
-| ItemLib    | Creates items easily without the need of having to extract the item meta                                 | `???`       |
 
 # Documentation for the latest version
 
