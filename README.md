@@ -19,18 +19,72 @@ I decided to make it public if other people are interested.
 
 ## Setup
 
+> jar file:
 1. Download the latest jar file [here](https://github.com/ItsLeMax/ILMLib/releases/latest).\
 ![1 0 0-download](https://github.com/user-attachments/assets/67d8dd0e-159c-4439-a517-07217bb8c2a6)
-2. Put it into the plugins folder of your server.\
-![plugins](https://github.com/user-attachments/assets/f220cbd4-c510-4441-803a-7ff7abd101b3)
-3. Open your IDE (IntelliJ in this example) and navigate to either `File > Project Structure > Global Libraries` or inside your project alone to `Libraries`.\
+2. Open your IDE (IntelliJ in this example) and navigate to either `File > Project Structure > Global Libraries` or inside your project alone to `Libraries`.\
 ![1 0 0-project_structure](https://github.com/user-attachments/assets/2e0169b9-df05-4503-a7ec-4ab9185cfa03)
-4. Add a new Library with the plus sign and choose `Java`.\
+3. Add a new Library with the plus sign and choose `Java`.\
 ![1 0 0-library](https://github.com/user-attachments/assets/8fc6fd00-9873-472a-8bea-a7c482c1b19f)
-5. Navigate to the library jar file, select it and press `OK`.
+4. Navigate to the library jar file, select it and press `OK`.
 ![1 0 0-select](https://github.com/user-attachments/assets/17b1b5c5-a327-4eba-abab-495e4517e88a)
-6. Click on `Apply`.\
+5. Click on `Apply`.\
 ![1 0 0-apply](https://github.com/user-attachments/assets/21bcba00-332d-479c-9290-b4cc5d1cc956)
+
+> Maven:
+1. Open your IDE (IntelliJ in this example) and open the `pom.xml` file inside your project
+2. Add the following to the `repositories` section:
+```xml
+<repositories>
+    <repository>
+        <id>jitpack.io</id>
+        <url>https://jitpack.io</url>
+    </repository>
+</repositories>
+```
+3. Add this to the `dependencies` section:
+```xml
+<dependency>
+    <groupId>com.github.itslemax</groupId>
+    <artifactId>ilmlib</artifactId>
+    <version>1.2.1</version> <!-- change as desired. -->
+</dependency>
+```
+
+## Providing the library
+
+You can do one of the following to get your plugin to work:
+- put the jar file into the plugins folder of your server\
+![plugins](https://github.com/user-attachments/assets/f220cbd4-c510-4441-803a-7ff7abd101b3)
+- shade the plugin by setting this section into your `pom.xml` and building the plugin using `mvn package`:
+
+```xml
+<build>
+    <plugins>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-shade-plugin</artifactId>
+            <version>3.4.1</version> <!-- change as desired. -->
+            <executions>
+                <execution>
+                    <phase>package</phase>
+                    <goals>
+                        <goal>shade</goal>
+                    </goals>
+                    <configuration>
+                        <relocations>
+                            <relocation>
+                                <pattern>de.fpm_studio.ilmlib</pattern>
+                                <shadedPattern>de.fpm_studio.plugin.shaded.ilmlib</shadedPattern>
+                            </relocation>
+                        </relocations>
+                    </configuration>
+                </execution>
+            </executions>
+        </plugin>
+    </plugins>
+</build>
+```
 
 # Documentation for the latest version
 
