@@ -54,7 +54,7 @@ I decided to make it public if other people are interested.
 You can do one of the following to get your plugin to work:
 - put the jar file into the plugins folder of your server\
 ![plugins](https://github.com/user-attachments/assets/f220cbd4-c510-4441-803a-7ff7abd101b3)
-- shade the plugin by setting this section into your `pom.xml` and building the plugin using `mvn package`:
+- shade the plugin by setting this section into your `pom.xml` and build the plugin using `mvn package`:
 
 ```xml
 <build>
