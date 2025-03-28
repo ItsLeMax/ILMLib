@@ -1,4 +1,4 @@
-package de.max.ilmlib.libraries;
+package de.fpm_studio.ilmlib.libraries;
 
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -10,15 +10,22 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Arrays;
 import java.util.List;
 
-@SuppressWarnings("all")
-public class ItemLib {
+/**
+ * Contains methods to create items
+ * <br>
+ * Beinhaltet Methoden zum Erstellen von Items
+ *
+ * @author ItsLeMax
+ */
+@SuppressWarnings("unused")
+public final class ItemLib {
     private ItemStack lastItem;
     private ItemMeta lastMeta;
 
     /**
      * @see #item(Material, int)
      */
-    public ItemLib setItem(@NotNull Material material) {
+    public ItemLib setItem(@NotNull final Material material) {
         item(material, 1);
         return this;
     }
@@ -26,22 +33,22 @@ public class ItemLib {
     /**
      * @see #item(Material, int)
      */
-    public ItemLib setItem(@NotNull Material material, @NotNull int amount) {
+    public ItemLib setItem(@NotNull final Material material, final int amount) {
         item(material, amount);
         return this;
     }
 
     /**
-     * Bildet die Grundlage zum Bearbeiten eines bereits existierenden Items
-     * <p>
      * Creates the fundamentals of editing an already existing item
+     * <br>
+     * Bildet die Grundlage zum Bearbeiten eines bereits existierenden Items
      *
-     * @param item Item zum Bearbeiten
-     *             <p>
-     *             Item to edit
+     * @param item Item to edit
+     *             <br>
+     *             Item zum Bearbeiten
      * @author ItsLeMax
      */
-    public ItemLib setItem(@NotNull ItemStack item) {
+    public ItemLib setItem(@NotNull final ItemStack item) {
         this.lastItem = item;
         this.lastMeta = item.getItemMeta();
         return this;
