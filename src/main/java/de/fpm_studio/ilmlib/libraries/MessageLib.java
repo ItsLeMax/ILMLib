@@ -219,9 +219,9 @@ public final class MessageLib {
     }
 
     /**
-     * @param suffixes Suffix of mulitple templates
+     * @param suffixes Suffixes of mulitple templates
      *                 <br>
-     *                 Suffix mehrerer Templates
+     *                 Suffixe mehrerer Templates
      * @see #setSuffix(Template, String)
      */
     public MessageLib setSuffix(final HashMap<Template, String> suffixes) {
@@ -235,7 +235,7 @@ public final class MessageLib {
     /**
      * @see #info(CommandSender, Object, String, HoverText)
      */
-    public void sendMessage(
+    public void sendInfo(
             @NotNull final CommandSender sender,
             @NotNull final String message) {
         info(sender, null, message, null);
@@ -244,7 +244,7 @@ public final class MessageLib {
     /**
      * @see #info(CommandSender, Object, String, HoverText)
      */
-    public void sendMessage(
+    public void sendInfo(
             @NotNull final CommandSender sender,
             @NotNull final String message,
             @NotNull final HoverText hoverText) {
@@ -254,7 +254,7 @@ public final class MessageLib {
     /**
      * @see #info(CommandSender, Object, String, HoverText)
      */
-    public void sendMessage(
+    public void sendInfo(
             @NotNull final CommandSender sender,
             final char formattingCode,
             @NotNull final String message) {
@@ -264,7 +264,7 @@ public final class MessageLib {
     /**
      * @see #info(CommandSender, Object, String, HoverText)
      */
-    public void sendMessage(
+    public void sendInfo(
             @NotNull final CommandSender sender,
             final char formattingCode,
             @NotNull final String message,
@@ -275,7 +275,7 @@ public final class MessageLib {
     /**
      * @see #info(CommandSender, Object, String, HoverText)
      */
-    public void sendMessage(
+    public void sendInfo(
             @NotNull final CommandSender sender,
             @NotNull final Template template,
             @NotNull final String message) {
@@ -285,7 +285,7 @@ public final class MessageLib {
     /**
      * @see #info(CommandSender, Object, String, HoverText)
      */
-    public void sendMessage(@NotNull CommandSender sender, @NotNull Template template, @NotNull String message, @NotNull HoverText hoverText) {
+    public void sendInfo(@NotNull CommandSender sender, @NotNull Template template, @NotNull String message, @NotNull HoverText hoverText) {
         info(sender, template, message, hoverText);
     }
 
@@ -294,29 +294,29 @@ public final class MessageLib {
      * <br>
      * Sendet eine schematische Nachricht an einen Benutzer
      *
-     * @param sender       Sender, player or console
-     *                     <br>
-     *                     Sendender, Spieler oder Konsole
-     * @param formatOrEnum Color or formatting code from Minecraft or template enum
-     *                     <br>
-     *                     Farb- oder Formatierungscode von Minecraft oder Template-Enum
-     * @param message      Message for a person
-     *                     <br>
-     *                     Nachricht für eine Person
-     * @param hoverText    Hover text, which will show with the mouse cursor above the text
-     *                     <br>
-     *                     Hovertext, welcher erscheint mit dem Mauszeiger über dem Text
+     * @param sender           Sender, player or console
+     *                         <br>
+     *                         Sendender, Spieler oder Konsole
+     * @param formatOrTemplate format or template (format = color or similar from Minecraft)
+     *                         <br>
+     *                         Format oder Vorlage (Format = Farbe oder ähnliches von Minecraft)
+     * @param message          Message for a person
+     *                         <br>
+     *                         Nachricht für eine Person
+     * @param hoverText        Hover text, which will show with the mouse cursor above the text
+     *                         <br>
+     *                         Hovertext, welcher erscheint mit dem Mauszeiger über dem Text
      * @author ItsLeMax
      */
     @SuppressWarnings("deprecation")
-    private void info(final CommandSender sender, Object formatOrEnum, final String message, final HoverText hoverText) {
+    private void info(final CommandSender sender, Object formatOrTemplate, final String message, final HoverText hoverText) {
 
         if (sender == null || message == null) {
             throw new NullPointerException("The #sendInfo method of MessageLib requires parameter 'sender' and 'message' to not be null. Use it accordingly.");
         }
 
-        if (!(formatOrEnum instanceof Template) && !(formatOrEnum instanceof Character)) {
-            formatOrEnum = '7';
+        if (!(formatOrTemplate instanceof Template) && !(formatOrTemplate instanceof Character)) {
+            formatOrTemplate = '7';
         }
 
         TextComponent textContainer = new TextComponent();
@@ -326,13 +326,13 @@ public final class MessageLib {
         Sound sound = null;
         Float volume = null;
 
-        if (formatOrEnum instanceof Enum) {
-            formatting = templateData.get(formatOrEnum).get("formatting");
-            suffix = (String) templateData.get(formatOrEnum).get("suffix");
-            sound = (Sound) templateData.get(formatOrEnum).get("sound");
-            volume = (Float) templateData.get(formatOrEnum).get("volume");
+        if (formatOrTemplate instanceof Enum) {
+            formatting = templateData.get(formatOrTemplate).get("formatting");
+            suffix = (String) templateData.get(formatOrTemplate).get("suffix");
+            sound = (Sound) templateData.get(formatOrTemplate).get("sound");
+            volume = (Float) templateData.get(formatOrTemplate).get("volume");
         } else {
-            formatting = formatOrEnum;
+            formatting = formatOrTemplate;
         }
 
         if (addSpacing) {

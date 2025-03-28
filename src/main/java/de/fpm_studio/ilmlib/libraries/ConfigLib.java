@@ -46,9 +46,9 @@ public final class ConfigLib {
      * <br>
      * Setzt den Pfad des Pluginordners
      *
-     * @param pluginFolderPath Path to the plugin folder destiny
+     * @param pluginFolderPath Plugin folder path to the plugin folder destiny
      *                         <br>
-     *                         Pfad zum Pluginordnerziel
+     *                         Pluginordnerpfad zum Pluginordnerziel
      * @author Kurty00
      */
     public void setPluginFolderPath(@NotNull final String pluginFolderPath) {
@@ -104,9 +104,9 @@ public final class ConfigLib {
      * <br>
      * Initialisiert eine Variable der HashMap
      *
-     * @param data File or Config
+     * @param data Data as File or Config
      *             <br>
-     *             Datei oder Config
+     *             Daten als Datei oder Config
      * @author ItsLeMax
      * @see #configs
      */
@@ -172,17 +172,17 @@ public final class ConfigLib {
      * <br>
      * Erstellt die Konfigurationsdateien (mitsamt Ordner) sofern nicht vorhanden
      *
-     * @param directoryName Sub directory name
-     *                      <br>
-     *                      Unterordnername
-     * @param fileNames     Files, that should be created
-     *                      <br>
-     *                      Dateien, welche erstellt werden sollen
+     * @param subDirectoryName Sub directory name if present
+     *                         <br>
+     *                         Unterordnername, gegebenenfalls
+     * @param fileNames        File names of files that should be created
+     *                         <br>
+     *                         Dateinamen für Dateien, welche erstellt werden sollen
      * @author ItsLeMax, Spigot
      * @link <a href="https://spigotmc.org/wiki/config-files/">Spigot Wiki</a>
      */
     @SuppressWarnings("ResultOfMethodCallIgnored")
-    private void create(final String directoryName, @NotNull final String... fileNames) {
+    private void create(final String subDirectoryName, @NotNull final String... fileNames) {
         if (pluginFolderPath == null) {
             pluginFolderPath = instance.getDataFolder().toString();
         }
@@ -190,8 +190,8 @@ public final class ConfigLib {
         for (final String fileName : fileNames) {
             String filePath = fileName + ".yml";
 
-            if (directoryName != null) {
-                filePath = directoryName + "/" + filePath;
+            if (subDirectoryName != null) {
+                filePath = subDirectoryName + "/" + filePath;
             }
 
             final File newlyCreatedConfig = new File(pluginFolderPath, filePath);
