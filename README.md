@@ -235,11 +235,11 @@ new MessageLib() -> MessageLib
 > Creates default values for templates (format/color, sound and suffix, as seen later)
 
 ```java
-#createDefaults() -> MessageLib
+#createTemplateDefaults() -> MessageLib
 ```
 
 > [!WARNING]
-> If you choose to set the default values manually, you need to call these methods after `#createDefaults()`.
+> If you choose to set the default values manually, you need to call these methods after `#createTemplateDefaults()`.
 > It will overwrite your settings otherwise.
 
 > Allows to overwrite the default format code for the messages
@@ -377,8 +377,8 @@ public void onEnable() {
     messageLib = new MessageLib()
         .addSpacing()
         .setPrefix("§e§lFPM §7§l>", true)
-        .createDefaults()
-        // setting (or in this case overwriting due to #createDefaults) the color of the info template alone
+        .createTemplateDefaults()
+        // setting (or in this case overwriting due to #createTemplateDefaults) the color of the info template alone
         .setFormattingCode(MessageLib.Template.INFO, '3')
         // same with the sound for the info template, additionally half as loud
         .setSound(MessageLib.Template.INFO, Sound.ENTITY_ENDERMAN_TELEPORT, .5f)
@@ -410,7 +410,7 @@ public boolean onCommand(@NotNull CommandSender sender /* and so on */) {
     }
 
     if (sender instanceof Player) {
-        // MessageLib.Template.SUCCESS from *.createDefaults uses 'a' as color and causes ENTITY_EXPERIENCE_ORB_PICKUP to play
+        // MessageLib.Template.SUCCESS from *.createTemplateDefaults uses 'a' as color and causes ENTITY_EXPERIENCE_ORB_PICKUP to play
         messageLib.sendInfo((Player) sender, MessageLib.Template.SUCCESS, "Client created successfully.");
     }
 

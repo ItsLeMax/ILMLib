@@ -100,7 +100,7 @@ public final class MessageLib {
      *
      * @author ItsLeMax
      */
-    public MessageLib createDefaults() {
+    public MessageLib createTemplateDefaults() {
         templateData.get(Template.SUCCESS).put("formatting", 'a');
         templateData.get(Template.WARNING).put("formatting", 'e');
         templateData.get(Template.ERROR).put("formatting", 'c');
