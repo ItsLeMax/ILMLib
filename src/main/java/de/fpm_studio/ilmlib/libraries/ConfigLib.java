@@ -88,7 +88,7 @@ public final class ConfigLib {
      *
      * @author ItsLeMax
      */
-    public void save(@NotNull final String configName) {
+    public void saveConfig(@NotNull final String configName) {
         final FileConfiguration config = getConfig(configName);
         final File file = getFile(configName);
 
@@ -154,7 +154,7 @@ public final class ConfigLib {
     /**
      * @see #create(String, String...)
      */
-    public ConfigLib createDefaults(@NotNull final String... configNames) {
+    public ConfigLib createDefaultConfigs(@NotNull final String... configNames) {
         create(null, configNames);
         return this;
     }
@@ -162,7 +162,7 @@ public final class ConfigLib {
     /**
      * @see #create(String, String...)
      */
-    public ConfigLib createInsideDirectory(@NotNull final String folderName, @NotNull final String... configNames) {
+    public ConfigLib createConfigsInsideDirectory(@NotNull final String folderName, @NotNull final String... configNames) {
         create(folderName, configNames);
         return this;
     }

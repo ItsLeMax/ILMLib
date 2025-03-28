@@ -62,7 +62,7 @@ new ConfigLib(JavaPlugin: plugin) -> ConfigLib
 > Creates configs
 
 ```java
-#createDefaults(String...: configNames) -> ConfigLib
+#createDefaultConfigs(String...: configNames) -> ConfigLib
 ```
 
 `configNames` are those of the configurations, strings seperated by a comma.
@@ -70,7 +70,7 @@ new ConfigLib(JavaPlugin: plugin) -> ConfigLib
 > Creates configs inside a directory
 
 ```java
-#createInsideDirectory(String: directoryName, String...: configNames) -> ConfigLib
+#createConfigsInsideDirectory(String: directoryName, String...: configNames) -> ConfigLib
 ```
 
 `directoryName` is one of the folder.
@@ -92,13 +92,13 @@ new ConfigLib(JavaPlugin: plugin) -> ConfigLib
 > Saves a config
 
 ```java
-#save(String: configName) -> void
+#saveConfig(String: configName) -> void
 ```
 
 > Loads a language key
 
 ```java
-#lang(String: path) -> String
+#text(String: path) -> String
 ```
 
 `path` is one of the config content, seperated by dots.
@@ -106,8 +106,8 @@ new ConfigLib(JavaPlugin: plugin) -> ConfigLib
 ### Prefilled configs
 
 The above methods will create empty configs except if they do already exist in the same path inside your projects `resources`.
-If so, their content will be copied. Using `createDefaults` requires the configs to exist inside `resources` directly, while
-`createInsideDirectory` requires an additional folder with the configs inside with the same name as mentioned in the method call.
+If so, their content will be copied. Using `createDefaultConfigs` requires the configs to exist inside `resources` directly, while
+`createConfigsInsideDirectory` requires an additional folder with the configs inside with the same name as mentioned in the method call.
 
 ### Using the prefilled configs to load languages
 
@@ -115,7 +115,7 @@ You can fill the configs with language keys and values. A Method for loading lan
 If you want to use other language files besides the default `en_US.yml` (not provided), you need a custom `config.yml`.
 Create it inside `resources` or any sub directory of your project if it does not exist yet.
 Add a key called `language` and assign it the language you want to use (i.e. `de_DE` without `.yml`).
-Use `createDefaults` (or `createInsideDirectory` if the file is inside a sub directory) with parameter `fileNames`
+Use `createDefaultConfigs` (or `createConfigsInsideDirectory` if the file is inside a sub directory) with parameter `fileNames`
 being at least `config` to create it on server start.
 
 ### Summarizing example
@@ -167,9 +167,9 @@ public void onEnable() {
         // plugin folder created one directory above / inside the server folder
         .setPluginFolderPath(this.getServer().getWorldContainer())
         // basic config files
-        .createDefaults("config", "storage")
+        .createDefaultConfigs("config", "storage")
         // language config files
-        .createInsideDirectory("languages", "de_DE", "en_US");
+        .createConfigsInsideDirectory("languages", "de_DE", "en_US");
 }
 ```
 
@@ -180,7 +180,7 @@ public void onEnable() {
 import static de.max.plugin.init.Main.configLib;
 
 // sends "Hallo Welt!"
-Bukkit.getConsoleSender().sendMessage(configLib.lang("general.initial"));
+Bukkit.getConsoleSender().sendMessage(configLib.text("general.initial"));
 ```
 
 ...getting a file and config like this:
@@ -202,7 +202,7 @@ storageFile.*;
 ...and last but not least saving it:
 
 ```java
-configLib.save("storage");
+configLib.saveConfig("storage");
 ```
 
 ## MessageLib
