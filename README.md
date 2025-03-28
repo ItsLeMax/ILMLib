@@ -19,7 +19,7 @@ I decided to make it public if other people are interested.
 
 ## Setup
 
-> jar file:
+### jar file:
 1. Download the latest jar file [here](https://github.com/ItsLeMax/ILMLib/releases/latest).\
 ![1 0 0-download](https://github.com/user-attachments/assets/67d8dd0e-159c-4439-a517-07217bb8c2a6)
 2. Open your IDE (IntelliJ in this example) and navigate to either `File > Project Structure > Global Libraries` or inside your project alone to `Libraries`.\
@@ -31,8 +31,9 @@ I decided to make it public if other people are interested.
 5. Click on `Apply`.\
 ![1 0 0-apply](https://github.com/user-attachments/assets/21bcba00-332d-479c-9290-b4cc5d1cc956)
 
-> Maven:
-1. Open your IDE (IntelliJ in this example) and open the `pom.xml` file inside your project
+### Maven:
+1. Open your IDE (IntelliJ in this example) and open the `pom.xml` file inside your project\
+![1 2 1-pom](https://github.com/user-attachments/assets/4cdae496-53b5-4c6c-85a6-7c221412f704)
 2. Add the following to the `repositories` section:
 ```xml
 <repository>
