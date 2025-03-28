@@ -35,12 +35,10 @@ I decided to make it public if other people are interested.
 1. Open your IDE (IntelliJ in this example) and open the `pom.xml` file inside your project
 2. Add the following to the `repositories` section:
 ```xml
-<repositories>
-    <repository>
-        <id>jitpack.io</id>
-        <url>https://jitpack.io</url>
-    </repository>
-</repositories>
+<repository>
+    <id>jitpack.io</id>
+    <url>https://jitpack.io</url>
+</repository>
 ```
 3. Add this to the `dependencies` section:
 ```xml
