@@ -19,7 +19,7 @@ I decided to make it public if other people are interested.
 
 ## Setup
 
-### jar file:
+### JAR file:
 1. Download the latest jar file [here](https://github.com/ItsLeMax/ILMLib/releases/latest).\
 ![1 0 0-download](https://github.com/user-attachments/assets/67d8dd0e-159c-4439-a517-07217bb8c2a6)
 2. Open your IDE (IntelliJ in this example) and navigate to either `File > Project Structure > Global Libraries` or inside your project alone to `Libraries`.\
