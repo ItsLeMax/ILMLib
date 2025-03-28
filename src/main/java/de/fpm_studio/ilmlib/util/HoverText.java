@@ -24,7 +24,7 @@ public final class HoverText {
      * @return String of hovertext <br> String des Hovertextes
      * @author ItsLeMax
      */
-    public String retrieve() {
+    public String get() {
         return hoverText;
     }
 }

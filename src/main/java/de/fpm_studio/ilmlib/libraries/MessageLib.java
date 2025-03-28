@@ -361,7 +361,7 @@ public final class MessageLib {
         textContainer.setText(text);
 
         if (hoverText != null) {
-            textContainer.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§7" + hoverText.retrieve()).create()));
+            textContainer.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§7" + hoverText.get()).create()));
         }
 
         sender.spigot().sendMessage(textContainer);
