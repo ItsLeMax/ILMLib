@@ -12,7 +12,7 @@ I decided to make it public if other people are interested.
 ## Sub-libraries and their supported Minecraft versions
 
 | Library    | Description                                                                                              | Theoretical Compatibilty | Tested                           |
-| ---------- | -------------------------------------------------------------------------------------------------------- | ------------------------ | -------------------------------- |
+|------------|----------------------------------------------------------------------------------------------------------|--------------------------|----------------------------------|
 | ConfigLib  | Allows the easy creation and management of `yml` config/storage files, both prefilled and empty          | `1.5`-`1.21+`            | `1.12.2`<br>`1.20.*`<br>`1.21.4` |
 | MessageLib | Lets you send messages with a pre-determined unified design and templates for human errors, success etc. | `1.8`-`1.21+`            | `1.12.2`<br>`1.20.*`<br>`1.21.4` |
 | ItemLib    | Creates items easily without the need of having to extract the item meta                                 | `1.8`-`1.21+`            | `1.12.2`<br>`1.20.*`<br>`1.21.4` |
@@ -192,15 +192,15 @@ resources
 
 ```yaml
 general:
- initial: Hallo Welt!
- error: Ein Fehler ist aufgetreten.
+  initial: Hallo Welt!
+  error: Ein Fehler ist aufgetreten.
 ```
 
 ...`storage.yml`:
 
 ```yaml
 badWordsEnabled: true
-badWords: [damn, darn it]
+badWords: [ damn, darn it ]
 ```
 
 ...and `config.yml`:
@@ -212,35 +212,45 @@ language: de_DE
 ...while having an initialization like this:
 
 ```java
-public static ConfigLib configLib;
+public ConfigLib configLib;
 
 @Override
 public void onEnable() {
+
     configLib = new ConfigLib(this)
-        // plugin folder created one directory above / inside the server folder
-        .setPluginFolderPath(this.getServer().getWorldContainer())
-        // basic config files
-        .createDefaultConfigs("config", "storage")
-        // language config files
-        .createConfigsInsideDirectory("languages", "de_DE", "en_US");
+            // plugin folder created one directory above / inside the server folder
+            .setPluginFolderPath(this.getServer().getWorldContainer())
+            // basic config files
+            .createDefaultConfigs("config", "storage")
+            // language config files
+            .createConfigsInsideDirectory("languages", "de_DE", "en_US");
+
+    // Passing configLib to another class (alternative would be using static imports)
+    new UtilClass(configLib);
+
 }
 ```
 
 ...with this language call inside a different class:
 
 ```java
-// path may vary depending on your plugin package/folder structure
-import static de.max.plugin.init.Main.configLib;
+private final ConfigLib configLib;
+
+public UtilClass(@NotNull final ConfigLib configLib) {
+    this.configLib = configLib;
+}
+
+final String initialMessage = configLib.text("general.initial");
 
 // sends "Hallo Welt!"
-Bukkit.getConsoleSender().sendMessage(configLib.text("general.initial"));
+Bukkit.getConsoleSender().sendMessage(initialMessage);
 ```
 
 ...getting a file and config like this:
 
 ```java
-File storageFile = configLib.getFile("storage");
-FileConfiguration storageConfig = configLib.getConfig("storage");
+final File storageFile = configLib.getFile("storage");
+final FileConfiguration storageConfig = configLib.getConfig("storage");
 
 if (storageConfig.getBoolean("badWordsEnabled")) {
     Bukkit.getConsoleSender().sendMessage("Filter up and running.");
@@ -379,7 +389,7 @@ If `addSpacing()` was called before, the message would look like this:
 Color codes can be seen here:
 
 | Color        | Code | Hex aquivalent |
-| ------------ | ---- | -------------- |
+|--------------|------|----------------|
 | Black        | 0    | `#000000`      |
 | Dark Blue    | 1    | `#0000AA`      |
 | Dark Green   | 2    | `#00AA00`      |
@@ -400,7 +410,7 @@ Color codes can be seen here:
 You may also use non color formatting:
 
 | Description   | Formatting code |
-| ------------- | --------------- |
+|---------------|-----------------|
 | Obfuscated    | k               |
 | Bold          | l               |
 | Strikethrough | m               |
@@ -411,7 +421,7 @@ You may also use non color formatting:
 ### Templates default values
 
 | Template class (`MessageLib.Template.*`) | Default format | Default sound                | Default suffix |
-| ---------------------------------------- | -------------- | ---------------------------- | -------------- |
+|------------------------------------------|----------------|------------------------------|----------------|
 | SUCCESS                                  | a (green)      | ENTITY_EXPERIENCE_ORB_PICKUP | `Success! §7»` |
 | WARNING                                  | e (yellow)     | UI_BUTTON_CLICK              | `Warning! §7»` |
 | ERROR                                    | c (red)        | BLOCK_ANVIL_PLACE            | `Error! §7»`   |
@@ -423,35 +433,44 @@ You may also use non color formatting:
 The initialization may look like this:
 
 ```java
-public static MessageLib messageLib;
+private MessageLib messageLib;
 
 @Override
 public void onEnable() {
+
     messageLib = new MessageLib()
-        .addSpacing()
-        .setPrefix("§e§lFPM §7§l>", true)
-        .createTemplateDefaults()
-        // setting (or in this case overwriting due to #createTemplateDefaults) the color of the info template alone
-        .setFormattingCode(MessageLib.Template.INFO, '3')
-        // same with the sound for the info template, additionally half as loud
-        .setSound(MessageLib.Template.INFO, Sound.ENTITY_ENDERMAN_TELEPORT, .5f)
-        // overwriting the suffix of multiple templates using a HashMap
-        .setSuffix(new HashMap<>() {{
-            put(MessageLib.Template.SUCCESS, "[✔]");
-            put(MessageLib.Template.WARNING, "[⚠]");
-            put(MessageLib.Template.ERROR, "[!]");
-        }});
+            .addSpacing()
+            .setPrefix("§e§lFPM §7§l>", true)
+            .createTemplateDefaults()
+            // setting (or in this case overwriting due to #createTemplateDefaults) the color of the info template alone
+            .setFormattingCode(MessageLib.Template.INFO, '3')
+            // same with the sound for the info template, additionally half as loud
+            .setSound(MessageLib.Template.INFO, Sound.ENTITY_ENDERMAN_TELEPORT, .5f)
+            // overwriting the suffix of multiple templates using a HashMap
+            .setSuffix(new HashMap<>() {{
+                put(MessageLib.Template.SUCCESS, "[✔]");
+                put(MessageLib.Template.WARNING, "[⚠]");
+                put(MessageLib.Template.ERROR, "[!]");
+            }});
+
+    // Passing messageLib to another class (alternative would be using static imports)
+    getCommand("customcommand").setExecutor(new CustomCommand(messageLib));
+
 }
 ```
 
 ...and creating messages inside other classes is as easy as this:
 
 ```java
-// as seen before: the import depends on your project
-import static de.max.plugin.init.Main.messageLib;
+private final MessageLib messageLib;
+
+public CustomCommand(@NotNull final MessageLib messageLib) {
+    this.messageLib = messageLib;
+}
 
 @Override
-public boolean onCommand(@NotNull CommandSender sender /* and so on */) {
+public boolean onCommand(@NotNull final CommandSender sender /* and so on */) {
+
     // Sending a simple red message without template to the console
     messageLib.sendInfo(Bukkit.getConsoleSender(), 'c', "Command executed.");
 
@@ -468,6 +487,7 @@ public boolean onCommand(@NotNull CommandSender sender /* and so on */) {
     }
 
     return true;
+
 }
 ```
 
@@ -535,19 +555,21 @@ This way you have the option to use if statements instead of using unpleasent te
 ```java
 @EventHandler
 public static void inventoryClick(InventoryClickEvent event) {
-    ItemLib itemLib = new ItemLib();
+
+    final ItemLib repairAnvilBuilder = new ItemLib();
 
     // creating a basic item
-    itemLib.setItem(Material.ANVIL).setName("§cRepair Anvil");
+    repairAnvilBuilder.setItem(Material.ANVIL).setName("§cRepair Anvil");
 
     if (event.getCurrentItem() == null) return;
     if (event.getCurrentItem().getType().equals(Material.ANVIL) && event.getClick().isRightClick()) {
         // adding an enchantment under certain circumstances
-        itemLib.addEnchantment(Enchantment.ARROW_INFINITE, true);
+        repairAnvilBuilder.addEnchantment(Enchantment.ARROW_INFINITE, true);
     }
 
     // finalized item with #setItem, #setName and, if true, #addEnchantment
-    ItemStack finalItem = itemLib.create();
+    final ItemStack repairAnvil = repairAnvilBuilder.create();
+
 }
 ```
 
@@ -556,12 +578,12 @@ public static void inventoryClick(InventoryClickEvent event) {
 You can create an item like this:
 
 ```java
-ItemStack compass = new ItemLib()
-    // four cookies
-    .setItem(Material.COOKIE, 4)
-    .setName("§dGrandmas Cookie")
-    .setLore("§7Made with love. §c❤")
-    // Sharpness IV, not visible as usual below lore
-    .addEnchantment(Enchantment.SHARPNESS, 4, true)
-    .create();
+final ItemStack compass = new ItemLib()
+        // four cookies
+        .setItem(Material.COOKIE, 4)
+        .setName("§dGrandmas Cookie")
+        .setLore("§7Made with love. §c❤")
+        // Sharpness IV, not visible as usual below lore
+        .addEnchantment(Enchantment.SHARPNESS, 4, true)
+        .create();
 ```
