@@ -66,18 +66,26 @@ You can do one of the following to get your plugin to work:
             <version>3.4.1</version> <!-- change as desired. -->
             <executions>
                 <execution>
+
                     <phase>package</phase>
                     <goals>
                         <goal>shade</goal>
                     </goals>
+
                     <configuration>
+
+                        <shadedArtifactAttached>false</shadedArtifactAttached>
+                        <minimizeJar>true</minimizeJar>
+
                         <relocations>
                             <relocation>
                                 <pattern>de.fpm_studio.ilmlib</pattern>
-                                <shadedPattern>de.fpm_studio.plugin.shaded.ilmlib</shadedPattern>
+                                <shadedPattern>de.fpm_studio.shaded.ilmlib</shadedPattern>
                             </relocation>
                         </relocations>
+
                     </configuration>
+
                 </execution>
             </executions>
         </plugin>
