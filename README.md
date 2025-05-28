@@ -5,9 +5,11 @@ Adds useful methods for Minecraft plugin developers to spare time and repetitive
 
 ## Purpose of this library
 
-I am aware that there do indeed exist a ton of other libraries but I had the urge to create one myself for the experience and individual preferences I was able to implement.
+I am aware that there do indeed exist a ton of other libraries but I had the urge to create one myself for the
+experience and individual preferences I was able to implement.
 I decided to make it public if other people are interested.
-> One goal kept in mind while developing this library was to make it <b>compatible with most of the Minecraft versions</b>, including future releases.
+> One goal kept in mind while developing this library was to make it <b>compatible with most of the Minecraft
+> versions</b>, including future releases.
 
 ## Sub-libraries and their supported Minecraft versions
 
@@ -20,28 +22,34 @@ I decided to make it public if other people are interested.
 ## Setup
 
 ### JAR file:
+
 1. Download the latest jar file [here](https://github.com/ItsLeMax/ILMLib/releases/latest).\
-![1 0 0-download](https://github.com/user-attachments/assets/67d8dd0e-159c-4439-a517-07217bb8c2a6)
-2. Open your IDE (IntelliJ in this example) and navigate to either `File > Project Structure > Global Libraries` or inside your project alone to `Libraries`.\
-![1 0 0-project_structure](https://github.com/user-attachments/assets/2e0169b9-df05-4503-a7ec-4ab9185cfa03)
+   ![1 0 0-download](https://github.com/user-attachments/assets/67d8dd0e-159c-4439-a517-07217bb8c2a6)
+2. Open your IDE (IntelliJ in this example) and navigate to either `File > Project Structure > Global Libraries` or
+   inside your project alone to `Libraries`.\
+   ![1 0 0-project_structure](https://github.com/user-attachments/assets/2e0169b9-df05-4503-a7ec-4ab9185cfa03)
 3. Add a new Library with the plus sign and choose `Java`.\
-![1 0 0-library](https://github.com/user-attachments/assets/8fc6fd00-9873-472a-8bea-a7c482c1b19f)
+   ![1 0 0-library](https://github.com/user-attachments/assets/8fc6fd00-9873-472a-8bea-a7c482c1b19f)
 4. Navigate to the library jar file, select it and press `OK`.
-![1 0 0-select](https://github.com/user-attachments/assets/17b1b5c5-a327-4eba-abab-495e4517e88a)
+   ![1 0 0-select](https://github.com/user-attachments/assets/17b1b5c5-a327-4eba-abab-495e4517e88a)
 5. Click on `Apply`.\
-![1 0 0-apply](https://github.com/user-attachments/assets/21bcba00-332d-479c-9290-b4cc5d1cc956)
+   ![1 0 0-apply](https://github.com/user-attachments/assets/21bcba00-332d-479c-9290-b4cc5d1cc956)
 
 ### Maven:
+
 1. Open your IDE (IntelliJ in this example) and open the `pom.xml` file inside your project\
-![1 2 1-pom](https://github.com/user-attachments/assets/4cdae496-53b5-4c6c-85a6-7c221412f704)
+   ![1 2 1-pom](https://github.com/user-attachments/assets/4cdae496-53b5-4c6c-85a6-7c221412f704)
 2. Add the following to the `repositories` section:
+
 ```xml
 <repository>
     <id>jitpack.io</id>
     <url>https://jitpack.io</url>
 </repository>
 ```
+
 3. Add this to the `dependencies` section:
+
 ```xml
 <dependency>
     <groupId>com.github.itslemax</groupId>
@@ -53,9 +61,11 @@ I decided to make it public if other people are interested.
 ## Providing the library
 
 You can do one of the following to get your plugin to work:
+
 - put the jar file into the plugins folder of your server\
-![plugins](https://github.com/user-attachments/assets/f220cbd4-c510-4441-803a-7ff7abd101b3)
-- shade the plugin by setting this section into your `pom.xml` and build the plugin using `mvn package`:
+  ![plugins](https://github.com/user-attachments/assets/f220cbd4-c510-4441-803a-7ff7abd101b3)
+- shade the plugin by setting this section into your `pom.xml` and build the plugin using `mvn package` (and optionally
+  `clean`; with the result being inside your projects `/target/` by default):
 
 ```xml
 <build>
@@ -166,9 +176,10 @@ new ConfigLib(JavaPlugin: plugin) -> ConfigLib
 
 ### Prefilled configs
 
-The above methods will create empty configs except if they do already exist in the same path inside your projects `resources`.
-If so, their content will be copied. Using `createDefaultConfigs` requires the configs to exist inside `resources` directly, while
-`createConfigsInsideDirectory` requires an additional folder with the configs inside with the same name as mentioned in the method call.
+The above methods will create empty configs except if they do already exist in the same path inside your projects
+`resources`. If so, their content will be copied. Using `createDefaultConfigs` requires the configs to exist inside
+`resources` directly, while `createConfigsInsideDirectory` requires an additional folder with the configs inside with
+the same name as mentioned in the method call.
 
 ### Using the prefilled configs to load languages
 
@@ -176,8 +187,8 @@ You can fill the configs with language keys and values. A Method for loading lan
 If you want to use other language files besides the default `en_US.yml` (not provided), you need a custom `config.yml`.
 Create it inside `resources` or any sub directory of your project if it does not exist yet.
 Add a key called `language` and assign it the language you want to use (i.e. `de_DE` without `.yml`).
-Use `createDefaultConfigs` (or `createConfigsInsideDirectory` if the file is inside a sub directory) with parameter `fileNames`
-being at least `config` to create it on server start.
+Use `createDefaultConfigs` (or `createConfigsInsideDirectory` if the file is inside a sub directory) with parameter
+`fileNames` being at least `config` to create it on server start.
 
 ### Summarizing example
 
@@ -396,24 +407,24 @@ If `addSpacing()` was called before, the message would look like this:
 
 Color codes can be seen here:
 
-| Color        | Code | Hex aquivalent |
-|--------------|------|----------------|
-| Black        | 0    | `#000000`      |
-| Dark Blue    | 1    | `#0000AA`      |
-| Dark Green   | 2    | `#00AA00`      |
-| Dark Aqua    | 3    | `#00AAAA`      |
-| Dark Red     | 4    | `#AA0000`      |
-| Dark Purple  | 5    | `#AA00AA`      |
-| Gold         | 6    | `#FFAA00`      |
-| Gray         | 7    | `#AAAAAA`      |
-| Dark Gray    | 8    | `#555555`      |
-| Blue         | 9    | `#5555FF`      |
-| Green        | a    | `#55FF55`      |
-| Aqua         | b    | `#55FFFF`      |
-| Red          | c    | `#FF5555`      |
-| Purple       | d    | `#FF55FF`      |
-| Yellow       | e    | `#FFFF55`      |
-| White        | f    | `#FFFFFF`      |
+| Color       | Code | Hex aquivalent |
+|-------------|------|----------------|
+| Black       | 0    | `#000000`      |
+| Dark Blue   | 1    | `#0000AA`      |
+| Dark Green  | 2    | `#00AA00`      |
+| Dark Aqua   | 3    | `#00AAAA`      |
+| Dark Red    | 4    | `#AA0000`      |
+| Dark Purple | 5    | `#AA00AA`      |
+| Gold        | 6    | `#FFAA00`      |
+| Gray        | 7    | `#AAAAAA`      |
+| Dark Gray   | 8    | `#555555`      |
+| Blue        | 9    | `#5555FF`      |
+| Green       | a    | `#55FF55`      |
+| Aqua        | b    | `#55FFFF`      |
+| Red         | c    | `#FF5555`      |
+| Purple      | d    | `#FF55FF`      |
+| Yellow      | e    | `#FFFF55`      |
+| White       | f    | `#FFFFFF`      |
 
 You may also use non color formatting:
 
