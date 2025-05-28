@@ -23,6 +23,7 @@ import java.util.Map;
  */
 @SuppressWarnings("unused")
 public final class MessageLib {
+
     private boolean addSpacing;
     private String prefix;
     private boolean seperateLine;
@@ -101,16 +102,20 @@ public final class MessageLib {
      * @author ItsLeMax
      */
     public MessageLib createTemplateDefaults() {
+
         templateData.get(Template.SUCCESS).put("formatting", 'a');
         templateData.get(Template.WARNING).put("formatting", 'e');
         templateData.get(Template.ERROR).put("formatting", 'c');
         templateData.get(Template.INFO).put("formatting", '9');
 
         try {
+
             templateData.get(Template.SUCCESS).put("sound", Sound.ENTITY_EXPERIENCE_ORB_PICKUP);
             templateData.get(Template.WARNING).put("sound", Sound.UI_BUTTON_CLICK);
             templateData.get(Template.ERROR).put("sound", Sound.BLOCK_ANVIL_PLACE);
+
         } catch (NoSuchFieldError ignored) {
+
             Bukkit.getLogger().warning("\n" +
                     "A sound from the #createDefaults method call inside one of your plugins is not available " +
                     "in your server version. Please set the sounds manually using the template classes (as seen in the docs)." + "\n" +
@@ -118,6 +123,7 @@ public final class MessageLib {
                     Bukkit.getServer().getVersion().split("MC: ")[1].split("\\)")[0] +
                     "/overview-summary.html"
             );
+
         }
 
         templateData.get(Template.SUCCESS).put("suffix", "Success! §7»");
@@ -126,6 +132,7 @@ public final class MessageLib {
         templateData.get(Template.INFO).put("suffix", "Info! §7»");
 
         return this;
+
     }
 
     /**
@@ -151,11 +158,13 @@ public final class MessageLib {
      * @see #setFormattingCode(Template, char)
      */
     public MessageLib setFormattingCode(final HashMap<Template, Character> formattingCodes) {
+
         for (final Map.Entry<Template, Character> entry : formattingCodes.entrySet()) {
             setFormattingCode(entry.getKey(), entry.getValue());
         }
 
         return this;
+
     }
 
     /**
@@ -181,9 +190,12 @@ public final class MessageLib {
      * @see #setSound(Template, Sound)
      */
     public MessageLib setSound(@NotNull final Template template, @NotNull final Sound sound, @NotNull final Float volume) {
+
         setSound(template, sound);
         templateData.get(template).put("volume", volume);
+
         return this;
+
     }
 
     /**
@@ -193,11 +205,13 @@ public final class MessageLib {
      * @see #setSound(Template, Sound)
      */
     public MessageLib setSound(final HashMap<Template, Sound> sounds) {
+
         for (final Map.Entry<Template, Sound> entry : sounds.entrySet()) {
             setSound(entry.getKey(), entry.getValue());
         }
 
         return this;
+
     }
 
     /**
@@ -225,11 +239,13 @@ public final class MessageLib {
      * @see #setSuffix(Template, String)
      */
     public MessageLib setSuffix(final HashMap<Template, String> suffixes) {
+
         for (final Map.Entry<Template, String> entry : suffixes.entrySet()) {
             setSuffix(entry.getKey(), entry.getValue());
         }
 
         return this;
+
     }
 
     /**
@@ -370,10 +386,11 @@ public final class MessageLib {
             sender.sendMessage("");
         }
 
-        if (!(sender instanceof final Player player) || sound == null) {
+        if (!(sender instanceof final Player player) || sound == null)
             return;
-        }
 
         player.playSound(player.getLocation(), sound, volume != null ? volume : 1, 1);
+
     }
+
 }

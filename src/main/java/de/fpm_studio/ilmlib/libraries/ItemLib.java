@@ -19,6 +19,7 @@ import java.util.List;
  */
 @SuppressWarnings("unused")
 public final class ItemLib {
+
     private ItemStack lastItem;
     private ItemMeta lastMeta;
 
@@ -49,9 +50,12 @@ public final class ItemLib {
      * @author ItsLeMax
      */
     public ItemLib setItem(@NotNull final ItemStack item) {
+
         this.lastItem = item;
         this.lastMeta = item.getItemMeta();
+
         return this;
+
     }
 
     /**
@@ -156,11 +160,13 @@ public final class ItemLib {
      * @author ItsLeMax
      */
     private void enchantment(@NotNull final Enchantment enchantment, final int level, final boolean hideNBT) {
+
         lastMeta.addEnchant(enchantment, level, true);
 
         if (hideNBT) {
             lastMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         }
+
     }
 
     /**
@@ -171,6 +177,7 @@ public final class ItemLib {
      * @return ItemStack with created item <br> Item-Stack mit erstelltem Item
      */
     public ItemStack create() {
+
         lastItem.setItemMeta(lastMeta);
         final ItemStack newItem = lastItem;
 
@@ -178,6 +185,7 @@ public final class ItemLib {
         lastMeta = null;
 
         return newItem;
+
     }
 
     /**
@@ -191,4 +199,5 @@ public final class ItemLib {
     public ItemMeta getItemMeta() {
         return lastMeta;
     }
+
 }

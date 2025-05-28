@@ -22,6 +22,7 @@ import java.util.logging.Logger;
  */
 @SuppressWarnings("unused")
 public final class ConfigLib {
+
     private final HashMap<String, HashMap<String, Object>> configs = new HashMap<>();
 
     private final JavaPlugin instance;
@@ -89,14 +90,16 @@ public final class ConfigLib {
      * @author ItsLeMax
      */
     public void saveConfig(@NotNull final String configName) {
+
         final FileConfiguration config = getConfig(configName);
         final File file = getFile(configName);
 
         try {
             config.save(file);
-        } catch (final IOException exception) {
+        } catch (IOException exception) {
             throw new RuntimeException(exception);
         }
+
     }
 
     /**
@@ -111,6 +114,7 @@ public final class ConfigLib {
      * @see #configs
      */
     private void initialize(@NotNull final String configName, @NotNull final Object data) {
+
         final String key = data instanceof File ? "file" : data instanceof FileConfiguration ? "configuration" : null;
 
         if (key == null) {
@@ -118,6 +122,7 @@ public final class ConfigLib {
         }
 
         configs.get(configName).put(key, data);
+
     }
 
     /**
@@ -132,6 +137,7 @@ public final class ConfigLib {
      * @author ItsLeMax
      */
     public String text(@NotNull final String path) {
+
         final String language = getConfig("config").getString("language");
         assert language != null;
 
@@ -148,6 +154,7 @@ public final class ConfigLib {
         }
 
         return config.getString(path);
+
     }
 
 
@@ -183,6 +190,7 @@ public final class ConfigLib {
      */
     @SuppressWarnings("ResultOfMethodCallIgnored")
     private void create(final String subDirectoryName, @NotNull final String... fileNames) {
+
         if (pluginFolderPath == null) {
             pluginFolderPath = instance.getDataFolder().toString();
         }
@@ -221,6 +229,9 @@ public final class ConfigLib {
             } catch (final IOException ioException) {
                 throw new RuntimeException(ioException);
             }
+
         }
+
     }
+
 }

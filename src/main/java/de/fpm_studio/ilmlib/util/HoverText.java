@@ -10,6 +10,7 @@ import org.jetbrains.annotations.NotNull;
  * @author ItsLeMax
  */
 public final class HoverText {
+
     private final String hoverText;
 
     public HoverText(@NotNull final String hoverText) {
@@ -27,4 +28,5 @@ public final class HoverText {
     public String get() {
         return hoverText;
     }
+
 }

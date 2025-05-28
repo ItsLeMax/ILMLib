@@ -10,8 +10,10 @@ import org.bukkit.plugin.java.JavaPlugin;
  * @author ItsLeMax
  */
 public final class Plugin extends JavaPlugin {
+
     @Override
     public void onEnable() {
         // Placeholder
     }
+
 }

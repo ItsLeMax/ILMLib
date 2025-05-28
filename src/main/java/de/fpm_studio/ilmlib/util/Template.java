@@ -8,8 +8,10 @@ package de.fpm_studio.ilmlib.util;
  * @author ItsLeMax
  */
 public enum Template {
+
     SUCCESS,
     WARNING,
     ERROR,
     INFO
+
 }
