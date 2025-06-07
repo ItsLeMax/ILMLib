@@ -16,8 +16,6 @@ import java.util.Map;
 
 /**
  * Contains several methods to create messages with a unified design
- * <br>
- * Beinhaltet einige Methoden zum Erstellen von Nachrichten mit einheitlichem Design
  *
  * @author ItsLeMax
  */
@@ -32,8 +30,6 @@ public final class MessageLib {
 
     /**
      * Initializes the templates
-     * <br>
-     * Initialisiert die Templates
      *
      * @author ItsLeMax
      */
@@ -50,8 +46,6 @@ public final class MessageLib {
 
     /**
      * Adds an empty line at the beginning and ending of the message
-     * <br>
-     * Fügt eine leere Zeile zu Beginn und Ende der Nachricht hinzu
      *
      * @author ItsLeMax
      */
@@ -78,15 +72,9 @@ public final class MessageLib {
 
     /**
      * Sets the prefix of the messages
-     * <br>
-     * Setzt den Präfix der Nachrichten
      *
      * @param prefix       Prefix in front of the message
-     *                     <br>
-     *                     Präfix vor der Nachricht
      * @param seperateLine Should an additional line be used?
-     *                     <br>
-     *                     Soll eine Extrazeile belegt werden?
      * @author ItsLeMax
      */
     private void prefix(final String prefix, final boolean seperateLine) {
@@ -96,8 +84,6 @@ public final class MessageLib {
 
     /**
      * Sets the default values of every template
-     * <br>
-     * Setzt die Standardwerte aller Templates
      *
      * @author ItsLeMax
      */
@@ -137,12 +123,8 @@ public final class MessageLib {
 
     /**
      * Sets the formatting code for usage inside the templates
-     * <br>
-     * Setzt den Formatierungscode zur Anwendung in den Templates
      *
      * @param formattingCode Formatting code that is supposed to be set
-     *                       <br>
-     *                       Formatierungscode, welcher gesetzt werden soll
      * @author ItsLeMax
      * @see #setSuffix(Template, String)
      */
@@ -153,8 +135,6 @@ public final class MessageLib {
 
     /**
      * @param formattingCodes Formatting codes of mulitple templates
-     *                        <br>
-     *                        Formatierungscodes mehrerer Templates
      * @see #setFormattingCode(Template, char)
      */
     public MessageLib setFormattingCode(final HashMap<Template, Character> formattingCodes) {
@@ -169,12 +149,8 @@ public final class MessageLib {
 
     /**
      * Sets the sound for usage inside the templates
-     * <br>
-     * Setzt den Ton zur Anwendung in den Templates
      *
      * @param sound Sound that is supposed to be set
-     *              <br>
-     *              Sound, welcher gesetzt werden soll
      * @author ItsLeMax
      * @see #setSuffix(Template, String)
      */
@@ -185,8 +161,6 @@ public final class MessageLib {
 
     /**
      * @param volume Volume that is supposed to be set
-     *               <br>
-     *               Lautstärke, welche gesetzt werden soll
      * @see #setSound(Template, Sound)
      */
     public MessageLib setSound(@NotNull final Template template, @NotNull final Sound sound, @NotNull final Float volume) {
@@ -200,8 +174,6 @@ public final class MessageLib {
 
     /**
      * @param sounds Sound of mulitple templates
-     *               <br>
-     *               Sound mehrerer Templates
      * @see #setSound(Template, Sound)
      */
     public MessageLib setSound(final HashMap<Template, Sound> sounds) {
@@ -216,15 +188,9 @@ public final class MessageLib {
 
     /**
      * Sets the suffix for usage inside the templates
-     * <br>
-     * Setzt den Suffix zur Anwendung in den Templates
      *
      * @param template Template to overwrite
-     *                 <br>
-     *                 Template zum Überschreiben
      * @param suffix   Suffix that is supposed to be set
-     *                 <br>
-     *                 Suffix, welcher gesetzt werden soll
      * @author ItsLeMax
      */
     public MessageLib setSuffix(@NotNull final Template template, @NotNull final String suffix) {
@@ -234,8 +200,6 @@ public final class MessageLib {
 
     /**
      * @param suffixes Suffixes of mulitple templates
-     *                 <br>
-     *                 Suffixe mehrerer Templates
      * @see #setSuffix(Template, String)
      */
     public MessageLib setSuffix(final HashMap<Template, String> suffixes) {
@@ -307,21 +271,11 @@ public final class MessageLib {
 
     /**
      * Sends a message with scheme to a user
-     * <br>
-     * Sendet eine schematische Nachricht an einen Benutzer
      *
      * @param sender           Sender, player or console
-     *                         <br>
-     *                         Sendender, Spieler oder Konsole
      * @param formatOrTemplate format or template (format = color or similar from Minecraft)
-     *                         <br>
-     *                         Format oder Vorlage (Format = Farbe oder ähnliches von Minecraft)
      * @param message          Message for a person
-     *                         <br>
-     *                         Nachricht für eine Person
      * @param hoverText        Hover text, which will show with the mouse cursor above the text
-     *                         <br>
-     *                         Hovertext, welcher erscheint mit dem Mauszeiger über dem Text
      * @author ItsLeMax
      */
     @SuppressWarnings("deprecation")

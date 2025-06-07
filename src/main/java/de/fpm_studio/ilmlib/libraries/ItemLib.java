@@ -12,8 +12,6 @@ import java.util.List;
 
 /**
  * Contains methods to create items
- * <br>
- * Beinhaltet Methoden zum Erstellen von Items
  *
  * @author ItsLeMax
  */
@@ -41,12 +39,8 @@ public final class ItemLib {
 
     /**
      * Creates the fundamentals of editing an already existing item
-     * <br>
-     * Bildet die Grundlage zum Bearbeiten eines bereits existierenden Items
      *
      * @param item Item to edit
-     *             <br>
-     *             Item zum Bearbeiten
      * @author ItsLeMax
      */
     public ItemLib setItem(@NotNull final ItemStack item) {
@@ -60,15 +54,9 @@ public final class ItemLib {
 
     /**
      * Creates an ItemStack with ItemMeta, ready to edit
-     * <br>
-     * Erstellt ein ItemStack mitsamt ItemMeta, bereit zur Bearbeitung
      *
      * @param material Material that the item is supposed to have
-     *                 <br>
-     *                 Material, welches das Item haben soll
      * @param amount   Amount of the item
-     *                 <br>
-     *                 Anzahl der Items
      */
     private void item(@NotNull final Material material, final int amount) {
         this.lastItem = new ItemStack(material, amount);
@@ -77,12 +65,8 @@ public final class ItemLib {
 
     /**
      * Sets the name of the ItemStack
-     * <br>
-     * Setzt den Namen des ItemStack
      *
      * @param name name of the item
-     *             <br>
-     *             Name des Items
      */
     public ItemLib setName(@NotNull final String name) {
         lastMeta.setDisplayName(name);
@@ -99,12 +83,8 @@ public final class ItemLib {
 
     /**
      * Sets the lores of the ItemStack
-     * <br>
-     * Setzt die Loren des ItemStack
      *
      * @param lores Lores (subtitles)
-     *              <br>
-     *              Loren (Untertitel)
      */
     public ItemLib setLore(@NotNull final String... lores) {
         lastMeta.setLore(Arrays.asList(lores));
@@ -149,14 +129,8 @@ public final class ItemLib {
      * Fügt eine Verzauberung zu einem Item hinzu
      *
      * @param enchantment Enchantment to apply
-     *                    <br>
-     *                    Verzauberung zum Anwenden
      * @param level       Level of the enchantment
-     *                    <br>
-     *                    Stufe der Verzauberung
      * @param hideNBT     Should the enchantment be hidden while hovering over the item?
-     *                    <br>
-     *                    Soll die Verzauberung beim Hovern über das Item versteckt sein?
      * @author ItsLeMax
      */
     private void enchantment(@NotNull final Enchantment enchantment, final int level, final boolean hideNBT) {
@@ -171,10 +145,8 @@ public final class ItemLib {
 
     /**
      * Returns the item
-     * <br>
-     * Gibt das Item wieder
      *
-     * @return ItemStack with created item <br> Item-Stack mit erstelltem Item
+     * @return ItemStack with created item
      */
     public ItemStack create() {
 
@@ -190,8 +162,6 @@ public final class ItemLib {
 
     /**
      * Returns the in the meantime created item meta
-     * <br>
-     * Entnimmt die zwischenzeitlich erstellte Meta
      *
      * @return Item Meta
      * @author ItsLeMax

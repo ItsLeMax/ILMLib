@@ -15,8 +15,6 @@ import java.util.logging.Logger;
 
 /**
  * Contains methods to create simple configurations
- * <br>
- * Birgt Methoden zum Erstellen von einfachen Konfigurationen
  *
  * @author ItsLeMax, Kurty00
  */
@@ -32,8 +30,6 @@ public final class ConfigLib {
 
     /**
      * Sets the plugin
-     * <br>
-     * Legt das Plugin fest
      *
      * @author Kurty00
      */
@@ -44,12 +40,8 @@ public final class ConfigLib {
 
     /**
      * Sets the path of the plugin folder
-     * <br>
-     * Setzt den Pfad des Pluginordners
      *
      * @param pluginFolderPath Plugin folder path to the plugin folder destiny
-     *                         <br>
-     *                         Pluginordnerpfad zum Pluginordnerziel
      * @author Kurty00
      */
     public void setPluginFolderPath(@NotNull final String pluginFolderPath) {
@@ -58,10 +50,8 @@ public final class ConfigLib {
 
     /**
      * Retrieves the config file from the HashMap
-     * <br>
-     * Entnimmt die verlangte Konfigurationsdatei der HashMap
      *
-     * @return File <br> File-Datei
+     * @return File
      * @author ItsLeMax
      * @see #configs
      */
@@ -71,10 +61,8 @@ public final class ConfigLib {
 
     /**
      * Retrieves the config from the HashMap
-     * <br>
-     * Entnimmt die verlangte Config der HashMap
      *
-     * @return FileConfiguration Config <br> FileConfiguration-Konfiguration
+     * @return FileConfiguration Config
      * @author ItsLeMax
      * @see #configs
      */
@@ -84,8 +72,6 @@ public final class ConfigLib {
 
     /**
      * Saves a config
-     * <br>
-     * Speichert eine Config
      *
      * @author ItsLeMax
      */
@@ -104,12 +90,8 @@ public final class ConfigLib {
 
     /**
      * Initializes a variable of the HashMap
-     * <br>
-     * Initialisiert eine Variable der HashMap
      *
      * @param data Data as File or Config
-     *             <br>
-     *             Daten als Datei oder Config
      * @author ItsLeMax
      * @see #configs
      */
@@ -127,13 +109,9 @@ public final class ConfigLib {
 
     /**
      * Loads text depending on the chosen language inside the config
-     * <br>
-     * Lädt Text je nach gewählter Sprache in der Config
      *
      * @param path Path to the text in the language configs
-     *             <br>
-     *             Pfad zum Text in den Sprachconfigs
-     * @return String with text in the chosen language <br> String mit Text in der gewählten Sprache
+     * @return String with text in the chosen language
      * @author ItsLeMax
      */
     public String text(@NotNull final String path) {
@@ -176,15 +154,9 @@ public final class ConfigLib {
 
     /**
      * Creates the configuration files (with folder) if they do not exist
-     * <br>
-     * Erstellt die Konfigurationsdateien (mitsamt Ordner) sofern nicht vorhanden
      *
      * @param subDirectoryName Sub directory name if present
-     *                         <br>
-     *                         Unterordnername, gegebenenfalls
      * @param fileNames        File names of files that should be created
-     *                         <br>
-     *                         Dateinamen für Dateien, welche erstellt werden sollen
      * @author ItsLeMax, Spigot
      * @link <a href="https://spigotmc.org/wiki/config-files/">Spigot Wiki</a>
      */
