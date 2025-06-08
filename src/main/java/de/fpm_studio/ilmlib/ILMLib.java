@@ -8,7 +8,7 @@ import org.bukkit.plugin.java.JavaPlugin;
  * @author ItsLeMax
  * @since 1.1.0
  */
-public final class Plugin extends JavaPlugin {
+public final class ILMLib extends JavaPlugin {
 
     @Override
     public void onEnable() {

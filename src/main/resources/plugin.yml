@@ -4,5 +4,5 @@ author: ItsLeMax
 version: ${project.version}
 website: ${project.url}
 
-main: de.fpm_studio.ilmlib.Plugin
+main: de.fpm_studio.ilmlib.ILMLib
 api-version: 1.20
