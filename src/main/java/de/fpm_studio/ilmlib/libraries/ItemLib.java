@@ -14,6 +14,7 @@ import java.util.List;
  * Contains methods to create items
  *
  * @author ItsLeMax
+ * @since 1.2.0
  */
 @SuppressWarnings("unused")
 public final class ItemLib {
@@ -42,6 +43,7 @@ public final class ItemLib {
      *
      * @param item Item to edit
      * @author ItsLeMax
+     * @since 1.2.0
      */
     public ItemLib setItem(@NotNull final ItemStack item) {
 
@@ -57,6 +59,8 @@ public final class ItemLib {
      *
      * @param material Material that the item is supposed to have
      * @param amount   Amount of the item
+     * @author ItsLeMax
+     * @since 1.2.0
      */
     private void item(@NotNull final Material material, final int amount) {
         this.lastItem = new ItemStack(material, amount);
@@ -67,6 +71,8 @@ public final class ItemLib {
      * Sets the name of the ItemStack
      *
      * @param name name of the item
+     * @author ItsLeMax
+     * @since 1.2.0
      */
     public ItemLib setName(@NotNull final String name) {
         lastMeta.setDisplayName(name);
@@ -85,6 +91,8 @@ public final class ItemLib {
      * Sets the lores of the ItemStack
      *
      * @param lores Lores (subtitles)
+     * @author ItsLeMax
+     * @since 1.2.0
      */
     public ItemLib setLore(@NotNull final String... lores) {
         lastMeta.setLore(Arrays.asList(lores));
@@ -132,6 +140,7 @@ public final class ItemLib {
      * @param level       Level of the enchantment
      * @param hideNBT     Should the enchantment be hidden while hovering over the item?
      * @author ItsLeMax
+     * @since 1.2.0
      */
     private void enchantment(@NotNull final Enchantment enchantment, final int level, final boolean hideNBT) {
 
@@ -147,6 +156,8 @@ public final class ItemLib {
      * Returns the item
      *
      * @return ItemStack with created item
+     * @author ItsLeMax
+     * @since 1.2.0
      */
     public ItemStack create() {
 
@@ -165,6 +176,7 @@ public final class ItemLib {
      *
      * @return Item Meta
      * @author ItsLeMax
+     * @since 1.2.0
      */
     public ItemMeta getItemMeta() {
         return lastMeta;

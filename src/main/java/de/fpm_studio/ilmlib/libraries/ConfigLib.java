@@ -17,6 +17,7 @@ import java.util.logging.Logger;
  * Contains methods to create simple configurations
  *
  * @author ItsLeMax, Kurty00
+ * @since 1.0.0
  */
 @SuppressWarnings("unused")
 public final class ConfigLib {
@@ -28,11 +29,6 @@ public final class ConfigLib {
 
     private String pluginFolderPath;
 
-    /**
-     * Sets the plugin
-     *
-     * @author Kurty00
-     */
     public ConfigLib(@NotNull final JavaPlugin instance) {
         this.instance = instance;
         this.logger = instance.getLogger();
@@ -43,6 +39,7 @@ public final class ConfigLib {
      *
      * @param pluginFolderPath Plugin folder path to the plugin folder destiny
      * @author Kurty00
+     * @since 1.1.0
      */
     public void setPluginFolderPath(@NotNull final String pluginFolderPath) {
         this.pluginFolderPath = pluginFolderPath;
@@ -54,6 +51,7 @@ public final class ConfigLib {
      * @return File
      * @author ItsLeMax
      * @see #configs
+     * @since 1.0.0
      */
     public File getFile(@NotNull final String configName) {
         return (File) configs.get(configName).get("file");
@@ -65,6 +63,7 @@ public final class ConfigLib {
      * @return FileConfiguration Config
      * @author ItsLeMax
      * @see #configs
+     * @since 1.0.0
      */
     public FileConfiguration getConfig(@NotNull final String configName) {
         return (FileConfiguration) configs.get(configName).get("configuration");
@@ -74,6 +73,7 @@ public final class ConfigLib {
      * Saves a config
      *
      * @author ItsLeMax
+     * @since 1.0.0
      */
     public void saveConfig(@NotNull final String configName) {
 
@@ -94,6 +94,7 @@ public final class ConfigLib {
      * @param data Data as File or Config
      * @author ItsLeMax
      * @see #configs
+     * @since 1.0.0
      */
     private void initialize(@NotNull final String configName, @NotNull final Object data) {
 
@@ -113,6 +114,7 @@ public final class ConfigLib {
      * @param path Path to the text in the language configs
      * @return String with text in the chosen language
      * @author ItsLeMax
+     * @since 1.0.0
      */
     public String text(@NotNull final String path) {
 
@@ -159,6 +161,7 @@ public final class ConfigLib {
      * @param fileNames        File names of files that should be created
      * @author ItsLeMax, Spigot
      * @link <a href="https://spigotmc.org/wiki/config-files/">Spigot Wiki</a>
+     * @since 1.0.0
      */
     @SuppressWarnings("ResultOfMethodCallIgnored")
     private void create(final String subDirectoryName, @NotNull final String... fileNames) {

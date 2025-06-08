@@ -6,6 +6,7 @@ import org.jetbrains.annotations.NotNull;
  * Contains the hovertext for method overloading parameter differentiation
  *
  * @author ItsLeMax
+ * @since 1.2.0
  */
 public final class HoverText {
 
@@ -20,6 +21,7 @@ public final class HoverText {
      *
      * @return String of hovertext
      * @author ItsLeMax
+     * @since 1.2.0
      */
     public String get() {
         return hoverText;

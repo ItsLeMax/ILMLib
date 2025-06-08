@@ -18,6 +18,7 @@ import java.util.Map;
  * Contains several methods to create messages with a unified design
  *
  * @author ItsLeMax
+ * @since 1.2.0
  */
 @SuppressWarnings("unused")
 public final class MessageLib {
@@ -28,11 +29,6 @@ public final class MessageLib {
 
     private final HashMap<Template, HashMap<String, Object>> templateData = new HashMap<>();
 
-    /**
-     * Initializes the templates
-     *
-     * @author ItsLeMax
-     */
     public MessageLib() {
         for (final Template template : Template.values()) {
             templateData.put(template, new HashMap<>() {{
@@ -48,6 +44,7 @@ public final class MessageLib {
      * Adds an empty line at the beginning and ending of the message
      *
      * @author ItsLeMax
+     * @since 1.2.0
      */
     public MessageLib addSpacing() {
         addSpacing = true;
@@ -76,6 +73,7 @@ public final class MessageLib {
      * @param prefix       Prefix in front of the message
      * @param seperateLine Should an additional line be used?
      * @author ItsLeMax
+     * @since 1.2.0
      */
     private void prefix(final String prefix, final boolean seperateLine) {
         this.prefix = prefix;
@@ -86,6 +84,7 @@ public final class MessageLib {
      * Sets the default values of every template
      *
      * @author ItsLeMax
+     * @since 1.2.0
      */
     public MessageLib createTemplateDefaults() {
 
@@ -152,7 +151,7 @@ public final class MessageLib {
      *
      * @param sound Sound that is supposed to be set
      * @author ItsLeMax
-     * @see #setSuffix(Template, String)
+     * @since 1.2.0
      */
     public MessageLib setSound(@NotNull final Template template, @NotNull final Sound sound) {
         templateData.get(template).put("sound", sound);
@@ -192,6 +191,7 @@ public final class MessageLib {
      * @param template Template to overwrite
      * @param suffix   Suffix that is supposed to be set
      * @author ItsLeMax
+     * @since 1.2.0
      */
     public MessageLib setSuffix(@NotNull final Template template, @NotNull final String suffix) {
         templateData.get(template).put("suffix", suffix);
@@ -277,6 +277,7 @@ public final class MessageLib {
      * @param message          Message for a person
      * @param hoverText        Hover text, which will show with the mouse cursor above the text
      * @author ItsLeMax
+     * @since 1.2.0
      */
     @SuppressWarnings("deprecation")
     private void info(final CommandSender sender, Object formatOrTemplate, final String message, final HoverText hoverText) {
