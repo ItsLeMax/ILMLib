@@ -90,7 +90,22 @@ public final class ConfigLib {
     }
 
     /**
-     * Initializes a variable of the HashMap
+     * Initializes a variable of the Map
+     * <br><br>
+     * Said map may have this structure after initializing everything for each set up configuration:
+     * <pre>{@code
+     * {
+     *     "config", { // .yml
+     *         FILE, file_data // placeholder for the file
+     *         CONFIGURATION, config_data // placeholder for the config
+     *     },
+     *
+     *     "media", {
+     *         FILE, file_data
+     *         CONFIGURATION, config_data
+     *     }
+     * }
+     * }</pre>
      *
      * @param data Data as File or Config
      * @author ItsLeMax
