@@ -11,6 +11,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Logger;
 
 /**
@@ -22,7 +23,7 @@ import java.util.logging.Logger;
 @SuppressWarnings("unused")
 public final class ConfigLib {
 
-    private final HashMap<String, HashMap<String, Object>> configs = new HashMap<>();
+    private final Map<String, Map<Key, Object>> configs = new HashMap<>();
 
     private final JavaPlugin instance;
     private final Logger logger;
@@ -54,7 +55,7 @@ public final class ConfigLib {
      * @since 1.0.0
      */
     public File getFile(@NotNull final String configName) {
-        return (File) configs.get(configName).get("file");
+        return (File) configs.get(configName).get(Key.FILE);
     }
 
     /**
@@ -66,7 +67,7 @@ public final class ConfigLib {
      * @since 1.0.0
      */
     public FileConfiguration getConfig(@NotNull final String configName) {
-        return (FileConfiguration) configs.get(configName).get("configuration");
+        return (FileConfiguration) configs.get(configName).get(Key.CONFIGURATION);
     }
 
     /**
@@ -98,7 +99,7 @@ public final class ConfigLib {
      */
     private void initialize(@NotNull final String configName, @NotNull final Object data) {
 
-        final String key = data instanceof File ? "file" : data instanceof FileConfiguration ? "configuration" : null;
+        final Key key = data instanceof File ? Key.FILE : data instanceof FileConfiguration ? Key.CONFIGURATION : null;
 
         if (key == null) {
             throw new NullPointerException("Config " + configName + " couldn't be initialized!");
@@ -106,6 +107,11 @@ public final class ConfigLib {
 
         configs.get(configName).put(key, data);
 
+    }
+
+    private enum Key {
+        FILE,
+        CONFIGURATION
     }
 
     /**
@@ -123,9 +129,13 @@ public final class ConfigLib {
 
         FileConfiguration config = getConfig(language);
 
+        // Fallback language
+
         if (config == null) {
             config = getConfig("en_US");
         }
+
+        // If a text was not found inside a config, the console will receive a warning, null will be returned
 
         if (config.getString(path) == null) {
             logger.warning("Missing string returned while looking for one in the language files!" + "\n" +
@@ -170,22 +180,32 @@ public final class ConfigLib {
             pluginFolderPath = instance.getDataFolder().toString();
         }
 
+        // Register each mentioned config
+
         for (final String fileName : fileNames) {
+
+            // File path with optional sub directory name
+
             String filePath = fileName + ".yml";
 
             if (subDirectoryName != null) {
                 filePath = subDirectoryName + "/" + filePath;
             }
 
+            // Create file...
+
             final File newlyCreatedConfig = new File(pluginFolderPath, filePath);
+
+            // Cache both config and file inside the newly initialized Map
 
             configs.put(fileName, new HashMap<>());
             initialize(fileName, newlyCreatedConfig);
             initialize(fileName, YamlConfiguration.loadConfiguration(newlyCreatedConfig));
 
-            if (newlyCreatedConfig.exists()) {
+            // Actual file creation with subdirectory
+
+            if (newlyCreatedConfig.exists())
                 continue;
-            }
 
             if (!newlyCreatedConfig.getParentFile().exists()) {
                 newlyCreatedConfig.getParentFile().mkdirs();
@@ -193,6 +213,8 @@ public final class ConfigLib {
 
             try {
                 final InputStream configFromResources = instance.getResource(filePath);
+
+                // Copy content of resources file if given
 
                 if (configFromResources != null) {
                     Files.copy(configFromResources, newlyCreatedConfig.toPath());

@@ -164,6 +164,8 @@ public final class ItemLib {
         lastItem.setItemMeta(lastMeta);
         final ItemStack newItem = lastItem;
 
+        // Clear variables
+
         lastItem = null;
         lastMeta = null;
 

@@ -88,12 +88,16 @@ public final class MessageLib {
      */
     public MessageLib createTemplateDefaults() {
 
+        // Format
+
         templateData.get(Template.SUCCESS).put("formatting", 'a');
         templateData.get(Template.WARNING).put("formatting", 'e');
         templateData.get(Template.ERROR).put("formatting", 'c');
         templateData.get(Template.INFO).put("formatting", '9');
 
         try {
+
+            // Sound with special warning
 
             templateData.get(Template.SUCCESS).put("sound", Sound.ENTITY_EXPERIENCE_ORB_PICKUP);
             templateData.get(Template.WARNING).put("sound", Sound.UI_BUTTON_CLICK);
@@ -110,6 +114,8 @@ public final class MessageLib {
             );
 
         }
+
+        // Suffix
 
         templateData.get(Template.SUCCESS).put("suffix", "Success! §7»");
         templateData.get(Template.WARNING).put("suffix", "Warning! §7»");
@@ -286,6 +292,8 @@ public final class MessageLib {
             throw new NullPointerException("The #sendInfo method of MessageLib requires parameter 'sender' and 'message' to not be null. Use it accordingly.");
         }
 
+        // Default value for format/color
+
         if (!(formatOrTemplate instanceof Template) && !(formatOrTemplate instanceof Character)) {
             formatOrTemplate = '7';
         }
@@ -293,9 +301,12 @@ public final class MessageLib {
         TextComponent textContainer = new TextComponent();
 
         final Object formatting;
+
         String suffix = null;
         Sound sound = null;
         Float volume = null;
+
+        // Get template data (format, suffix, sound, volume) if an enum was passed or only the format if it is one
 
         if (formatOrTemplate instanceof Enum) {
             formatting = templateData.get(formatOrTemplate).get("formatting");
@@ -312,9 +323,13 @@ public final class MessageLib {
 
         String text = "";
 
+        // Automatic space added so words dont collide
+
         if (prefix != null) {
             text += prefix + " ";
         }
+
+        // Apply color
 
         text += "§" + formatting;
 
@@ -340,6 +355,8 @@ public final class MessageLib {
         if (addSpacing) {
             sender.sendMessage("");
         }
+
+        // Play sound if applicable
 
         if (!(sender instanceof final Player player) || sound == null)
             return;
