@@ -12,7 +12,7 @@ public final class ILMLib extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        // Placeholder
+        // Placeholder if used as library plugin
     }
 
 }
