@@ -47,7 +47,7 @@ public final class ConfigLib {
     }
 
     /**
-     * Retrieves the config file from the HashMap
+     * Retrieves the config file from the Map
      *
      * @return File
      * @author ItsLeMax
@@ -59,7 +59,7 @@ public final class ConfigLib {
     }
 
     /**
-     * Retrieves the config from the HashMap
+     * Retrieves the config from the Map
      *
      * @return FileConfiguration Config
      * @author ItsLeMax
