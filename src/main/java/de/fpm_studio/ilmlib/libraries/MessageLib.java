@@ -30,14 +30,20 @@ public final class MessageLib {
     private final HashMap<Template, HashMap<String, Object>> templateData = new HashMap<>();
 
     public MessageLib() {
+
         for (final Template template : Template.values()) {
+
             templateData.put(template, new HashMap<>() {{
+
                 put("formatting", null);
                 put("sound", null);
                 put("volume", null);
                 put("suffix", null);
+
             }});
+
         }
+
     }
 
     /**
@@ -72,6 +78,7 @@ public final class MessageLib {
      *
      * @param prefix       Prefix in front of the message
      * @param seperateLine Should an additional line be used?
+     *
      * @author ItsLeMax
      * @since 1.2.0
      */
@@ -130,6 +137,7 @@ public final class MessageLib {
      * Sets the formatting code for usage inside the templates
      *
      * @param formattingCode Formatting code that is supposed to be set
+     *
      * @author ItsLeMax
      * @see #setSuffix(Template, String)
      */
@@ -140,13 +148,13 @@ public final class MessageLib {
 
     /**
      * @param formattingCodes Formatting codes of mulitple templates
+     *
      * @see #setFormattingCode(Template, char)
      */
     public MessageLib setFormattingCode(final HashMap<Template, Character> formattingCodes) {
 
-        for (final Map.Entry<Template, Character> entry : formattingCodes.entrySet()) {
+        for (final Map.Entry<Template, Character> entry : formattingCodes.entrySet())
             setFormattingCode(entry.getKey(), entry.getValue());
-        }
 
         return this;
 
@@ -156,6 +164,7 @@ public final class MessageLib {
      * Sets the sound for usage inside the templates
      *
      * @param sound Sound that is supposed to be set
+     *
      * @author ItsLeMax
      * @since 1.2.0
      */
@@ -166,6 +175,7 @@ public final class MessageLib {
 
     /**
      * @param volume Volume that is supposed to be set
+     *
      * @see #setSound(Template, Sound)
      */
     public MessageLib setSound(@NotNull final Template template, @NotNull final Sound sound, @NotNull final Float volume) {
@@ -179,13 +189,13 @@ public final class MessageLib {
 
     /**
      * @param sounds Sound of mulitple templates
+     *
      * @see #setSound(Template, Sound)
      */
     public MessageLib setSound(final HashMap<Template, Sound> sounds) {
 
-        for (final Map.Entry<Template, Sound> entry : sounds.entrySet()) {
+        for (final Map.Entry<Template, Sound> entry : sounds.entrySet())
             setSound(entry.getKey(), entry.getValue());
-        }
 
         return this;
 
@@ -196,6 +206,7 @@ public final class MessageLib {
      *
      * @param template Template to overwrite
      * @param suffix   Suffix that is supposed to be set
+     *
      * @author ItsLeMax
      * @since 1.2.0
      */
@@ -206,13 +217,13 @@ public final class MessageLib {
 
     /**
      * @param suffixes Suffixes of mulitple templates
+     *
      * @see #setSuffix(Template, String)
      */
     public MessageLib setSuffix(final HashMap<Template, String> suffixes) {
 
-        for (final Map.Entry<Template, String> entry : suffixes.entrySet()) {
+        for (final Map.Entry<Template, String> entry : suffixes.entrySet())
             setSuffix(entry.getKey(), entry.getValue());
-        }
 
         return this;
 
@@ -282,21 +293,20 @@ public final class MessageLib {
      * @param formatOrTemplate format or template (format = color or similar from Minecraft)
      * @param message          Message for a person
      * @param hoverText        Hover text, which will show with the mouse cursor above the text
+     *
      * @author ItsLeMax
      * @since 1.2.0
      */
     @SuppressWarnings("deprecation")
     private void info(final CommandSender sender, Object formatOrTemplate, final String message, final HoverText hoverText) {
 
-        if (sender == null || message == null) {
+        if (sender == null || message == null)
             throw new NullPointerException("The #sendInfo method of MessageLib requires parameter 'sender' and 'message' to not be null. Use it accordingly.");
-        }
 
         // Default value for format/color
 
-        if (!(formatOrTemplate instanceof Template) && !(formatOrTemplate instanceof Character)) {
+        if (!(formatOrTemplate instanceof Template) && !(formatOrTemplate instanceof Character))
             formatOrTemplate = '7';
-        }
 
         TextComponent textContainer = new TextComponent();
 
@@ -309,52 +319,48 @@ public final class MessageLib {
         // Get template data (format, suffix, sound, volume) if an enum was passed or only the format if it is one
 
         if (formatOrTemplate instanceof Enum) {
+
             formatting = templateData.get(formatOrTemplate).get("formatting");
             suffix = (String) templateData.get(formatOrTemplate).get("suffix");
             sound = (Sound) templateData.get(formatOrTemplate).get("sound");
             volume = (Float) templateData.get(formatOrTemplate).get("volume");
+
         } else {
             formatting = formatOrTemplate;
         }
 
-        if (addSpacing) {
+        if (addSpacing)
             sender.sendMessage("");
-        }
 
         String text = "";
 
         // Automatic space added so words dont collide
 
-        if (prefix != null) {
+        if (prefix != null)
             text += prefix + " ";
-        }
 
         // Apply color
 
         text += "§" + formatting;
 
-        if (suffix != null) {
+        if (suffix != null)
             text += suffix + " ";
-        }
 
-        if (seperateLine) {
+        if (seperateLine)
             text += "\n";
-        }
 
         text += "§" + formatting;
         text += message;
 
         textContainer.setText(text);
 
-        if (hoverText != null) {
+        if (hoverText != null)
             textContainer.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, new ComponentBuilder("§7" + hoverText.get()).create()));
-        }
 
         sender.spigot().sendMessage(textContainer);
 
-        if (addSpacing) {
+        if (addSpacing)
             sender.sendMessage("");
-        }
 
         // Play sound if applicable
 

@@ -20,6 +20,7 @@ public final class HoverText {
      * Gets the hovertext from the class
      *
      * @return String of hovertext
+     *
      * @author ItsLeMax
      * @since 1.2.0
      */

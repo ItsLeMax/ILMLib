@@ -42,6 +42,7 @@ public final class ItemLib {
      * Creates the fundamentals of editing an already existing item
      *
      * @param item Item to edit
+     *
      * @author ItsLeMax
      * @since 1.2.0
      */
@@ -59,6 +60,7 @@ public final class ItemLib {
      *
      * @param material Material that the item is supposed to have
      * @param amount   Amount of the item
+     *
      * @author ItsLeMax
      * @since 1.2.0
      */
@@ -71,6 +73,7 @@ public final class ItemLib {
      * Sets the name of the ItemStack
      *
      * @param name name of the item
+     *
      * @author ItsLeMax
      * @since 1.2.0
      */
@@ -91,6 +94,7 @@ public final class ItemLib {
      * Sets the lores of the ItemStack
      *
      * @param lores Lores (subtitles)
+     *
      * @author ItsLeMax
      * @since 1.2.0
      */
@@ -139,6 +143,7 @@ public final class ItemLib {
      * @param enchantment Enchantment to apply
      * @param level       Level of the enchantment
      * @param hideNBT     Should the enchantment be hidden while hovering over the item?
+     *
      * @author ItsLeMax
      * @since 1.2.0
      */
@@ -146,9 +151,8 @@ public final class ItemLib {
 
         lastMeta.addEnchant(enchantment, level, true);
 
-        if (hideNBT) {
+        if (hideNBT)
             lastMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
-        }
 
     }
 
@@ -156,6 +160,7 @@ public final class ItemLib {
      * Returns the item
      *
      * @return ItemStack with created item
+     *
      * @author ItsLeMax
      * @since 1.2.0
      */
@@ -177,6 +182,7 @@ public final class ItemLib {
      * Returns the in the meantime created item meta
      *
      * @return Item Meta
+     *
      * @author ItsLeMax
      * @since 1.2.0
      */

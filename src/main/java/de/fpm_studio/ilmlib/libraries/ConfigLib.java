@@ -39,6 +39,7 @@ public final class ConfigLib {
      * Sets the path of the plugin folder
      *
      * @param pluginFolderPath Plugin folder path to the plugin folder destiny
+     *
      * @author Kurty00
      * @since 1.1.0
      */
@@ -50,6 +51,7 @@ public final class ConfigLib {
      * Retrieves the config file from the Map
      *
      * @return File
+     *
      * @author ItsLeMax
      * @see #configs
      * @since 1.0.0
@@ -62,6 +64,7 @@ public final class ConfigLib {
      * Retrieves the config from the Map
      *
      * @return FileConfiguration Config
+     *
      * @author ItsLeMax
      * @see #configs
      * @since 1.0.0
@@ -96,8 +99,8 @@ public final class ConfigLib {
      * <pre>{@code
      * {
      *     "config", { // .yml
-     *         FILE, file_data // placeholder for the file
-     *         CONFIGURATION, config_data // placeholder for the config
+     *         FILE, file_data
+     *         CONFIGURATION, config_data
      *     },
      *
      *     "media", {
@@ -108,6 +111,7 @@ public final class ConfigLib {
      * }</pre>
      *
      * @param data Data as File or Config
+     *
      * @author ItsLeMax
      * @see #configs
      * @since 1.0.0
@@ -116,24 +120,27 @@ public final class ConfigLib {
 
         final Key key = data instanceof File ? Key.FILE : data instanceof FileConfiguration ? Key.CONFIGURATION : null;
 
-        if (key == null) {
+        if (key == null)
             throw new NullPointerException("Config " + configName + " couldn't be initialized!");
-        }
 
         configs.get(configName).put(key, data);
 
     }
 
     private enum Key {
+
         FILE,
         CONFIGURATION
+
     }
 
     /**
      * Loads text depending on the chosen language inside the config
      *
      * @param path Path to the text in the language configs
+     *
      * @return String with text in the chosen language
+     *
      * @author ItsLeMax
      * @since 1.0.0
      */
@@ -146,16 +153,17 @@ public final class ConfigLib {
 
         // Fallback language
 
-        if (config == null) {
+        if (config == null)
             config = getConfig("en_US");
-        }
 
         // If a text was not found inside a config, the console will receive a warning, null will be returned
 
         if (config.getString(path) == null) {
+
             logger.warning("Missing string returned while looking for one in the language files!" + "\n" +
                     Arrays.toString(Thread.currentThread().getStackTrace())
             );
+
         }
 
         return config.getString(path);
@@ -184,6 +192,7 @@ public final class ConfigLib {
      *
      * @param subDirectoryName Sub directory name if present
      * @param fileNames        File names of files that should be created
+     *
      * @author ItsLeMax, Spigot
      * @link <a href="https://spigotmc.org/wiki/config-files/">Spigot Wiki</a>
      * @since 1.0.0
@@ -191,9 +200,8 @@ public final class ConfigLib {
     @SuppressWarnings("ResultOfMethodCallIgnored")
     private void create(final String subDirectoryName, @NotNull final String... fileNames) {
 
-        if (pluginFolderPath == null) {
+        if (pluginFolderPath == null)
             pluginFolderPath = instance.getDataFolder().toString();
-        }
 
         // Register each mentioned config
 
@@ -203,9 +211,8 @@ public final class ConfigLib {
 
             String filePath = fileName + ".yml";
 
-            if (subDirectoryName != null) {
+            if (subDirectoryName != null)
                 filePath = subDirectoryName + "/" + filePath;
-            }
 
             // Create file...
 
@@ -214,6 +221,7 @@ public final class ConfigLib {
             // Cache both config and file inside the newly initialized Map
 
             configs.put(fileName, new HashMap<>());
+
             initialize(fileName, newlyCreatedConfig);
             initialize(fileName, YamlConfiguration.loadConfiguration(newlyCreatedConfig));
 
@@ -222,22 +230,26 @@ public final class ConfigLib {
             if (newlyCreatedConfig.exists())
                 continue;
 
-            if (!newlyCreatedConfig.getParentFile().exists()) {
+            if (!newlyCreatedConfig.getParentFile().exists())
                 newlyCreatedConfig.getParentFile().mkdirs();
-            }
 
             try {
+
                 final InputStream configFromResources = instance.getResource(filePath);
 
                 // Copy content of resources file if given
 
                 if (configFromResources != null) {
+
                     Files.copy(configFromResources, newlyCreatedConfig.toPath());
                     initialize(fileName, YamlConfiguration.loadConfiguration(newlyCreatedConfig));
+
                     continue;
+
                 }
 
                 newlyCreatedConfig.createNewFile();
+
             } catch (final IOException ioException) {
                 throw new RuntimeException(ioException);
             }
