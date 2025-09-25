@@ -1,4 +1,4 @@
-package de.fpm_studio.ilmlib.util;
+package de.fpm_studio.ilmlib.data;
 
 /**
  * Contains the template enums

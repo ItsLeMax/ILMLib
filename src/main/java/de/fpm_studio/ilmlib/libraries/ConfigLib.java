@@ -9,7 +9,6 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
@@ -22,6 +21,17 @@ import java.util.logging.Logger;
  */
 @SuppressWarnings("unused")
 public final class ConfigLib {
+
+    /**
+     * Holds relevant configuration types as enum
+     *
+     * @author ItsLeMax
+     * @since 1.2.3
+     */
+    private enum Key {
+        FILE,
+        CONFIGURATION
+    }
 
     private final Map<String, Map<Key, Object>> configs = new HashMap<>();
 
@@ -99,13 +109,15 @@ public final class ConfigLib {
      * <pre>{@code
      * {
      *     "config", { // .yml
-     *         FILE, file_data
-     *         CONFIGURATION, config_data
+     *         Key.FILE, file_data // latter is dynamically generated
+     *         Key.CONFIGURATION, config_data
      *     },
      *
+     *     // Another example:
+     *
      *     "media", {
-     *         FILE, file_data
-     *         CONFIGURATION, config_data
+     *         Key.FILE, file_data
+     *         Key.CONFIGURATION, config_data
      *     }
      * }
      * }</pre>
@@ -124,13 +136,6 @@ public final class ConfigLib {
             throw new NullPointerException("Config " + configName + " couldn't be initialized!");
 
         configs.get(configName).put(key, data);
-
-    }
-
-    private enum Key {
-
-        FILE,
-        CONFIGURATION
 
     }
 
@@ -158,13 +163,8 @@ public final class ConfigLib {
 
         // If a text was not found inside a config, the console will receive a warning, null will be returned
 
-        if (config.getString(path) == null) {
-
-            logger.warning("Missing string returned while looking for one in the language files!" + "\n" +
-                    Arrays.toString(Thread.currentThread().getStackTrace())
-            );
-
-        }
+        if (config.getString(path) == null)
+            logger.warning("Could not find " + path + " inside the language file, returned null");
 
         return config.getString(path);
 

@@ -1,7 +1,7 @@
 package de.fpm_studio.ilmlib.libraries;
 
-import de.fpm_studio.ilmlib.util.HoverText;
-import de.fpm_studio.ilmlib.util.Template;
+import de.fpm_studio.ilmlib.data.HoverText;
+import de.fpm_studio.ilmlib.data.Template;
 import net.md_5.bungee.api.chat.ComponentBuilder;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -23,11 +23,10 @@ import java.util.Map;
 @SuppressWarnings("unused")
 public final class MessageLib {
 
-    private boolean addSpacing;
+    private boolean addSpacing, seperateLine;
     private String prefix;
-    private boolean seperateLine;
 
-    private final HashMap<Template, HashMap<String, Object>> templateData = new HashMap<>();
+    private final Map<Template, HashMap<String, Object>> templateData = new HashMap<>();
 
     public MessageLib() {
 

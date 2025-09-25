@@ -1,4 +1,4 @@
-package de.fpm_studio.ilmlib.util;
+package de.fpm_studio.ilmlib.data;
 
 import org.jetbrains.annotations.NotNull;
 
